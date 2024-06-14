@@ -67,15 +67,15 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Preparing frontend image
-        working-directory: ./src/frontend
+        working-directory: ./src/shop
         run: docker build -t ${{ secrets.DOCKER_BASE_REPO }}-shop -f ./Dockerfile .
 
       - name: Tagging image
-        working-directory: ./src/frontend
+        working-directory: ./src/shop
         run: docker image tag ${{ secrets.DOCKER_BASE_REPO }}-shop ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-shop:latest
 
       - name: Push image
-        working-directory: ./src/frontend
+        working-directory: ./src/shop
         run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-shop:latest
 
   admin-build:
