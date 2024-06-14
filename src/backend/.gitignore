@@ -11,4 +11,4 @@
 **/sql_app.db
 **/__pycache__
 .env
-
+**/.ruff_cache

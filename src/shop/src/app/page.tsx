@@ -1,9 +1,5 @@
-import { ReactNode } from "react";
+interface HomeProps {}
 
-interface HomeProps {
-  children: ReactNode;
-}
-
-export default async function HomePage({ children }: HomeProps) {
-  return <>{children}</>;
+export default async function HomePage({}: HomeProps) {
+  return <div>asdf</div>;
 }

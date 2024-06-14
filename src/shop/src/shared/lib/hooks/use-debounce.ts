@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export const useDebounceValue = <T>(value: T, timeout: number = 500) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -12,7 +12,7 @@ export const useDebounceValue = <T>(value: T, timeout: number = 500) => {
     return () => {
       clearTimeout(handler);
     };
-  }, [value]);
+  }, [value, timeout]);
 
   return debouncedValue;
 };

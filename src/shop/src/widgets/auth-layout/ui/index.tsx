@@ -1,10 +1,9 @@
-"use client";
+'use client';
 
-import { FormBaseLayout } from "@/features";
-import { AuthStyles, BaseStyle } from "@/shared";
-import clsx from "clsx";
-import { ReactNode } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FormBaseLayout } from '@/features';
+import { BaseStyle } from '@/shared';
+import { ReactNode } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface AuthLayoutProps {
   title: string;
@@ -17,13 +16,13 @@ export const AuthLayout = ({
   children,
   submit,
   title,
-  description
+  description,
 }: AuthLayoutProps) => {
   const methods = useForm();
 
   return (
-    <section className={clsx(AuthStyles.authSection)}>
-      <h1 className={clsx(AuthStyles.authTitle)}>{title}</h1>
+    <section>
+      <h1>{title}</h1>
       <FormBaseLayout
         onSub={submit}
         methods={methods}

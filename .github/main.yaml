@@ -1,0 +1,127 @@
+name: Production CI CD
+on:
+  push:
+    branches: ["prod", "dev"]
+
+jobs:
+  shop-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        working-directory: ./src/shop
+        run: yarn install
+
+      - name: Linting
+        working-directory: ./src/shop
+        run: yarn lint
+
+      - name: TSC
+        working-directory: ./src/shop
+        run: yarn tsc
+
+  admin-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        working-directory: ./src/admin
+        run: yarn install
+
+      - name: Linting
+        working-directory: ./src/admin
+        run: yarn lint
+
+      - name: TSC
+        working-directory: ./src/admin
+        run: yarn tsc
+
+  backend-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        working-directory: ./src/backend
+        run: pip install -r requirements.dev.txt
+
+      - name: Linting
+        working-directory: ./src/backend
+        run: ruff check .
+
+  shop-build:
+    runs-on: ubuntu-latest
+    needs: [shop-linting, backend-linting, admin-linting]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Preparing frontend image
+        working-directory: ./src/frontend
+        run: docker build -t ${{ secrets.DOCKER_BASE_REPO }}-shop -f ./Dockerfile .
+
+      - name: Tagging image
+        working-directory: ./src/frontend
+        run: docker image tag ${{ secrets.DOCKER_BASE_REPO }}-shop ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-shop:latest
+
+      - name: Push image
+        working-directory: ./src/frontend
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-shop:latest
+
+  admin-build:
+    runs-on: ubuntu-latest
+    needs: [shop-linting, backend-linting, admin-linting]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Preparing admin image
+        working-directory: ./src/admin
+        run: docker build -t ${{ secrets.DOCKER_BASE_REPO }}-admin -f ./Dockerfile .
+
+      - name: Tagging image
+        working-directory: ./src/admin
+        run: docker image tag ${{ secrets.DOCKER_BASE_REPO }}-admin ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-admin:latest
+
+      - name: Push image
+        working-directory: ./src/admin
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-admin:latest
+
+  backend-build:
+    runs-on: ubuntu-latest
+    needs: [shop-linting, backend-linting, admin-linting]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Preparing backend image
+        working-directory: ./src/backend
+        run: docker build -t ${{ secrets.DOCKER_BASE_REPO }}-backend -f ./Dockerfile .
+
+      - name: Tagging image
+        working-directory: ./src/backend
+        run: docker image tag ${{ secrets.DOCKER_BASE_REPO }}-backend ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-backend:latest
+
+      - name: Push image
+        working-directory: ./src/backend
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_BASE_REPO }}-backend:latest
