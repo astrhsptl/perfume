@@ -1,0 +1,103 @@
+/*  */
+$defaultGap: 24px;
+
+/* sizes */
+$headerHeight: 60px;
+
+/* base colors */
+$main-color: #fff;
+
+/* z-indexes */
+$base-index: 1;
+$content-index: 2;
+$modal-background-index: 3;
+$modal-index: 4;
+$alert-index: 5;
+
+@mixin flex {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flexCenter {
+  @include flex();
+  justify-content: center;
+}
+
+@mixin flexCenterColumn {
+  @include flexColumn();
+  align-items: center;
+}
+
+@mixin font($size, $weight: 400, $line-height: 1.1em, $color: var(--c-black)) {
+  color: $color;
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+}
+
+@mixin coverBackground {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+@mixin container {
+  padding: 0 10%;
+}
+
+@mixin baseLink {
+  @include font(14px);
+  text-decoration: none;
+
+  &:active {
+    text-decoration: none;
+    color: var(--c-black);
+  }
+}
+
+@mixin baseModal {
+  display: none;
+  position: absolute;
+
+  left: 0;
+  top: 0;
+
+  width: 100dvw;
+  height: 100dvh;
+
+  overflow: hidden;
+}
+
+.container {
+  @include container();
+}
+
+.baseButton {
+}
+
+.backButton {
+}
+
+.defaultInputContainer {
+}
+
+.nestedInput {
+}
+
+.inputImageContainer {
+}
+
+.toastStyles {
+}
+
+.inputError {
+}
+
+.baseForm {
+}
