@@ -1,12 +1,14 @@
-import { Home } from '@/pages';
-import { Some } from '@/pages/some';
-import { Route, Routes } from 'react-router-dom';
+import { Admin, Home } from '@/pages';
+import { Route } from 'react-router-dom';
+import { compileRouter } from './providers';
 
-export const AppRouter = () => {
+const Router = () => {
   return (
-    <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='*' element={<Some />} />
-    </Routes>
+    <>
+      <Route index element={<Home />} />
+      <Route path=':id' element={<Admin />} />
+    </>
   );
 };
+
+export const router = compileRouter(Router);

@@ -1,11 +1,10 @@
-import { ToastProvider } from '@/features';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import React, { ReactNode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
 import '../shared/styles/base.css';
+import { ToastProvider } from './providers';
 
 interface ProvidersProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const queryClient = new QueryClient({
@@ -19,11 +18,9 @@ const queryClient = new QueryClient({
 export const Providers: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <React.StrictMode>
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <ToastProvider>{children}</ToastProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>{children}</ToastProvider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 };
