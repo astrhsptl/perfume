@@ -9,13 +9,15 @@ import {
 } from '@/shared';
 import { API_SERVER_URL } from '@/shared/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { BaseAPICore } from '../base';
 
 const DefaultTriesCount = 2;
 
-class _Auth {
+class _Auth extends BaseAPICore {
   public url: string;
 
   constructor() {
+    super();
     this.url = `${API_SERVER_URL}/auth`;
   }
 
@@ -25,12 +27,11 @@ class _Auth {
   ): Promise<AxiosResponse<TokenPair>> {
     return await axios
       .post<TokenPair>(`${this.url}/sign-in`, data)
-      .catch((e: AxiosError<WrongResponse>) => {
-        return this._retry<ISignIn, ReturnType<typeof this.signIn>>(
-          this.signIn,
-          tries,
-          e,
-          data
+      .catch((error: AxiosError<WrongResponse>) => {
+        return this.retry<ReturnType<typeof this.signIn>>(
+          (tries) => this.signIn(data, tries),
+          error,
+          tries
         );
       });
   }
@@ -41,12 +42,11 @@ class _Auth {
   ): Promise<AxiosResponse<User>> {
     return await axios
       .post<User>(`${this.url}/sign-up`, data)
-      .catch((e: AxiosError<WrongResponse>) => {
-        return this._retry<ISignUp, ReturnType<typeof this.signUp>>(
-          this.signUp,
-          tries,
-          e,
-          data
+      .catch((error: AxiosError<WrongResponse>) => {
+        return this.retry<ReturnType<typeof this.signUp>>(
+          (tries) => this.signUp(data, tries),
+          error,
+          tries
         );
       });
   }
@@ -57,12 +57,11 @@ class _Auth {
   ): Promise<AxiosResponse<IAccessToken>> {
     return await axios
       .post<IAccessToken>(`${this.url}/refresh`, data)
-      .catch((e: AxiosError<WrongResponse>) => {
-        return this._retry<IRefreshToken, ReturnType<typeof this.refresh>>(
-          this.refresh,
-          tries,
-          e,
-          data
+      .catch((error: AxiosError<WrongResponse>) => {
+        return this.retry<ReturnType<typeof this.refresh>>(
+          (tries) => this.refresh(data, tries),
+          error,
+          tries
         );
       });
   }
@@ -75,36 +74,14 @@ class _Auth {
       .get<User>(`${this.url}/user`, {
         headers: { Authorization: `Bearer ${token}` },
       })
-      .catch((e: AxiosError<WrongResponse>) => {
-        return this._retry<string, ReturnType<typeof this.userByToken>>(
-          this.userByToken,
-          tries,
-          e,
-          token
+      .catch((error: AxiosError<WrongResponse>) => {
+        return this.retry<ReturnType<typeof this.userByToken>>(
+          (tries) => this.userByToken(token, tries),
+          error,
+          tries
         );
       });
   }
-
-  _retry = async <DataType, ResponseType>(
-    cb: (data: DataType, tries: number) => ResponseType,
-    tries: number,
-    { response }: AxiosError<WrongResponse>,
-    ...data: [DataType]
-  ) => {
-    if (response?.status && response.status >= 500) {
-      throw new Error('Somethings wrong... Try later');
-    }
-
-    if (response?.status && response.status === 401) {
-      throw new Error(response?.data.detail);
-    }
-
-    if (tries === 0) {
-      throw new Error(response?.data.detail);
-    }
-
-    return cb.bind(this)(...data, tries - 1);
-  };
 }
 
 export const AuthApiCore = new _Auth();

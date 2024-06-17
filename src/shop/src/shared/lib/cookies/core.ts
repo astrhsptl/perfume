@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { CredentialOptions } from "./types";
+import { CredentialOptions } from './types';
 
-class _Storage {
+export class _CredentialStorage {
   get(key: string): string | null {
     const matches = document.cookie.match(
       new RegExp(
-        "(?:^|; )" +
-          key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-          "=([^;]*)"
+        '(?:^|; )' +
+          key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
+          '=([^;]*)'
       )
     );
     return matches ? decodeURIComponent(matches[1]) : null;
   }
   getAll() {
     const cookies = document.cookie
-      .split("; ")
-      .map((cookString) => cookString.split("="));
+      .split('; ')
+      .map((cookString) => cookString.split('='));
     let data = {};
 
     cookies.forEach((cookie) => {
@@ -40,14 +40,14 @@ class _Storage {
     )}; path=/;`;
 
     for (let [optionKey, optionValue] of Object.entries(options)) {
-      if (optionKey === "maxAge") {
-        optionKey = "max-age";
+      if (optionKey === 'maxAge') {
+        optionKey = 'max-age';
       }
 
-      updatedCookie += "; " + optionKey;
+      updatedCookie += '; ' + optionKey;
 
       if (optionValue !== true) {
-        updatedCookie += "=" + optionValue;
+        updatedCookie += '=' + optionValue;
       }
     }
 
@@ -55,8 +55,8 @@ class _Storage {
   }
 
   delete(key: string): void {
-    this.set(key, "", {
-      maxAge: -1
+    this.set(key, '', {
+      maxAge: -1,
     });
   }
 
@@ -66,4 +66,4 @@ class _Storage {
   }
 }
 
-export const CredentialStorage = new _Storage();
+export const CredentialStorage = new _CredentialStorage();
