@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   perfume-backend:
-    image: xoriax/perfume-shop-backend:latest
+    image: xoriax/perfume-backend:latest
     restart: always
     labels:
       - "traefik.enable=true"
@@ -20,28 +20,28 @@ services:
       - "4005:4005"
 
   perfume-admin:
-    image: xoriax/perfume-shop-admin:latest
+    build: ./src/admin
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
       - "traefik.http.routers.perfume-admin.service=perfume-admin"
-      - "traefik.http.routers.perfume-admin.rule=Host(`admin.localhost`)"
+      - "traefik.http.routers.perfume-admin.rule=Host(`shop.localhost`)"
       - "traefik.http.services.perfume-admin.loadbalancer.server.port=80"
     networks:
       - web
 
-  perfume-frontend:
-    image: xoriax/perfume-shop-frontend:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.perfume-frontend.service=perfume-frontend"
-      - "traefik.http.routers.perfume-frontend.rule=Host(`shop.localhost`)"
-      - "traefik.http.services.perfume-frontend.loadbalancer.server.port=3000"
-    networks:
-      - web
-    ports:
-      - "3000:3000"
+  # perfume-frontend:
+  #   image: xoriax/perfume-shop:latest
+  #   labels:
+  #     - "traefik.enable=true"
+  #     - "traefik.docker.network=web"
+  #     - "traefik.http.routers.perfume-frontend.service=perfume-frontend"
+  #     - "traefik.http.routers.perfume-frontend.rule=Host(`shop.localhost`)"
+  #     - "traefik.http.services.perfume-frontend.loadbalancer.server.port=3000"
+  #   networks:
+  #     - web
+  #   ports:
+  #     - "3000:3000"
 
 networks:
   web:
