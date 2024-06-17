@@ -1,7 +1,9 @@
-import clsx from "clsx";
-import Link, { LinkProps } from "next/link";
-import { usePathname } from "next/navigation";
-import { ReactNode } from "react";
+'use client';
+
+import clsx from 'clsx';
+import Link, { LinkProps } from 'next/link';
+import { usePathname } from 'next/navigation';
+import { ReactNode } from 'react';
 
 interface NavLinkProps extends LinkProps {
   children: ReactNode;
@@ -13,7 +15,7 @@ export const NavLink = ({ children, className, ...props }: NavLinkProps) => {
   return (
     <Link
       {...props}
-      className={className ? clsx(className(pathname === props.href)) : ""}
+      className={className ? clsx(className(pathname === props.href)) : ''}
     >
       {children}
     </Link>

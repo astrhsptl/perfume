@@ -1,5 +1,5 @@
-import "@/shared/styles/base.css";
-import { RootProvider } from "@/widgets";
+import '@/shared/styles/base.css';
+import { RootProvider } from '@/widgets';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -7,11 +7,11 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang='en' suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#fff" />
+        <meta name='theme-color' content='#fff' />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <RootProvider>{children}</RootProvider>
       </body>
     </html>
