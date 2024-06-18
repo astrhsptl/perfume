@@ -1,0 +1,7 @@
+@import './base.module.scss';
+
+.header {
+  @include container();
+  width: 100%;
+  background: var(--black);
+}

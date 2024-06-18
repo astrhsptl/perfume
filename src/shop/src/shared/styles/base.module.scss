@@ -51,16 +51,6 @@ $alert-index: 5;
   padding: 0 10%;
 }
 
-@mixin baseLink {
-  @include font(14px);
-  text-decoration: none;
-
-  &:active {
-    text-decoration: none;
-    color: var(--c-black);
-  }
-}
-
 @mixin baseModal {
   display: none;
   position: absolute;
