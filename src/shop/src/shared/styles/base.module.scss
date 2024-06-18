@@ -34,7 +34,7 @@ $alert-index: 5;
   align-items: center;
 }
 
-@mixin font($size, $weight: 400, $line-height: 1.1em, $color: var(--c-black)) {
+@mixin font($size, $weight: 400, $color: var(--white), $line-height: 1.1em) {
   color: $color;
   font-size: $size;
   font-weight: $weight;
@@ -66,6 +66,14 @@ $alert-index: 5;
 
 .container {
   @include container();
+}
+
+.baseLink {
+  @include font(14px, var(--white));
+  text-decoration: none;
+
+  &:active {
+  }
 }
 
 .baseButton {
