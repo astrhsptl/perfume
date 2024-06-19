@@ -1,8 +1,5 @@
-/*  */
-$defaultGap: 24px;
-
 /* sizes */
-$headerHeight: 60px;
+$mobileWidth: 800px;
 
 /* base colors */
 $main-color: #fff;
@@ -47,10 +44,6 @@ $alert-index: 5;
   background-position: center center;
 }
 
-@mixin container {
-  padding: 0 10%;
-}
-
 @mixin baseModal {
   display: none;
   position: absolute;
@@ -65,14 +58,21 @@ $alert-index: 5;
 }
 
 .container {
-  @include container();
+  padding: 0 10%;
 }
 
 .baseLink {
   @include font(14px, var(--white));
+  text-underline-offset: 0.2em;
   text-decoration: none;
+  cursor: sw-resize;
 
   &:active {
+    text-decoration: none;
+  }
+
+  &.active {
+    text-decoration: underline;
   }
 }
 
@@ -98,4 +98,10 @@ $alert-index: 5;
 }
 
 .baseForm {
+}
+
+@media (max-width: $mobileWidth) {
+  .container {
+    padding: 0 5%;
+  }
 }
