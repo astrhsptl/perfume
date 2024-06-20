@@ -1,5 +1,8 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import { headerModalReducer } from './slices';
 
 export const store = configureStore({
-  reducer: {}
+  reducer: {
+    headerModal: headerModalReducer,
+  },
 });
