@@ -1,15 +1,12 @@
-/* sizes */
-$mobileWidth: 800px;
-
-/* base colors */
-$main-color: #fff;
-
 /* z-indexes */
 $base-index: 1;
 $content-index: 2;
 $modal-background-index: 3;
 $modal-index: 4;
 $alert-index: 5;
+
+/* consts */
+$mobileWidth: 800px;
 
 @mixin flex {
   display: flex;
@@ -77,9 +74,33 @@ $alert-index: 5;
 }
 
 .baseButton {
-}
+  @include font(14px);
+  font-weight: 500;
 
-.backButton {
+  width: 100%;
+  max-width: 250px;
+
+  padding: 14px 20px;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  &.light {
+    background-color: var(--white);
+    color: var(--black);
+    border: none;
+  }
+
+  &.dark {
+    background-color: var(--black);
+    color: var(--white);
+    border: 1px solid var(--white);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .defaultInputContainer {
@@ -100,7 +121,7 @@ $alert-index: 5;
 .baseForm {
 }
 
-@media (max-width: $mobileWidth) {
+@media (max-width: var(--mobile-width)) {
   .container {
     padding: 0 5%;
   }

@@ -2,20 +2,26 @@
 
 .header {
   @include flex();
-  @include font(16px);
+  @include font(20px);
 
   width: 100%;
-  height: 84px;
+  height: var(--header-height);
   background: var(--black);
 
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+
+  z-index: $content-index;
 }
 
 .headerLinks {
   @include flex();
   gap: 28px;
+
+  & > a {
+    font-size: 20px;
+  }
 }
 
 .headerIcons {
@@ -81,7 +87,7 @@
 
 .nav {
   @include font(20px);
-  display: grid;
+  display: none;
   position: absolute;
 
   grid-template-rows: 70px 1fr;
@@ -125,6 +131,9 @@
 }
 
 @media (max-width: $mobileWidth) {
+  .nav {
+    display: grid;
+  }
   .headerIcons {
     display: none;
   }
@@ -135,7 +144,7 @@
 
   .header {
     font-size: 20px;
-    height: 70px;
+    height: var(--header-height);
   }
 
   .headerBurger {
