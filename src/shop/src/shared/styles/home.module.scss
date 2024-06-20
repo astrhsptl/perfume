@@ -1,0 +1,50 @@
+@import './base.module.scss';
+
+.page {
+  position: relative;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+
+  height: calc(100dvh - var(--header-height));
+}
+
+.homeTitle {
+  @include font(40px);
+  @include flexCenterColumn();
+  gap: 40px;
+  padding-top: 50px;
+  z-index: $content-index;
+}
+
+.perfume {
+  width: 90%;
+  max-width: 228px;
+  z-index: $content-index;
+}
+
+.videoContainer {
+  position: fixed;
+  overflow: clip;
+  bottom: -1500px;
+  left: -50%;
+  z-index: $base-index;
+}
+
+@media (max-width: $mobileWidth) {
+  .perfume {
+    display: none;
+  }
+
+  .page {
+    padding-top: 20%;
+  }
+
+  .homeTitle {
+    text-align: center;
+  }
+
+  .videoContainer {
+    bottom: -1450px;
+  }
+}

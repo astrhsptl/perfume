@@ -2,8 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
-import StoreProvider from './store-provider';
-import ToastProvider from './toast-provider';
+import { StoreProvider, ToastProvider } from './lib';
 
 interface RootProviderProps {
   children: ReactNode;

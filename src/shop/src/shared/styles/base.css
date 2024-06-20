@@ -1,4 +1,11 @@
 :root {
+  --white: #ffffff;
+  --black: #000000;
+  --gray-blur: #898989;
+  --modal-background: rgba(0, 0, 0, 0.4);
+
+  --header-height: 84px;
+  --mobile-width: 800px;
 }
 
 *,
@@ -131,7 +138,7 @@ blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-  content: "";
+  content: '';
   content: none;
 }
 
@@ -146,8 +153,18 @@ main {
   min-height: 100dvh;
 }
 
+#root {
+  min-width: 100dvw;
+  min-height: 100dvh;
+  background-color: var(--black);
+}
+
 @media (max-width: 750px) {
   .container {
     max-width: 95%;
+  }
+
+  :root {
+    --header-height: 70px;
   }
 }

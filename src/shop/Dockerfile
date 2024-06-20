@@ -4,7 +4,7 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY yarn.lock* ./
 RUN yarn --frozen-lockfile
 
 FROM base AS builder
