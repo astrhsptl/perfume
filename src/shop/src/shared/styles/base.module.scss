@@ -103,19 +103,69 @@ $mobileWidth: 800px;
   }
 }
 
-.defaultInputContainer {
+.defaultInput {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+
+  margin-top: 20px;
 }
 
-.nestedInput {
+.input {
+  height: 40px;
+  width: 100%;
+
+  border: 1.5px solid var(--base-black);
+  border-radius: 5px;
+
+  padding: 20px 20px;
+
+  @include font(16px);
+
+  &:focus {
+    border: 1.5px solid var(--base-blue);
+    outline: none;
+  }
+
+  &.error {
+    border: 1.5px solid var(--base-red);
+  }
 }
 
-.inputImageContainer {
-}
+.defaultInputPlaceholder {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: 20px;
+  transition: all 0.15s ease-in-out;
 
-.toastStyles {
+  @include font(14px);
+
+  &.active {
+    top: -7px !important;
+    background-color: var(--base-white);
+    @include font(14px);
+  }
+
+  &.error {
+    color: var(--base-red);
+    top: calc(50% - 20px);
+  }
 }
 
 .inputError {
+  @include font(14px);
+
+  &.message {
+    @include flex();
+    gap: 6px;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding-left: 20px;
+
+    color: var(--base-red);
+  }
 }
 
 .baseForm {

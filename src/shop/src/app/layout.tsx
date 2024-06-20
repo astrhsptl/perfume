@@ -9,7 +9,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <meta name='theme-color' content='#fff' />
+        <meta name='theme-color' content='#000' />
       </head>
       <body suppressHydrationWarning>
         <RootProvider>

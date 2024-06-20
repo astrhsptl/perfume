@@ -1,8 +1,7 @@
 'use client';
 
 import { ErrorMessage } from '@hookform/error-message';
-import { ClassValue } from 'clsx';
-import Image from 'next/image';
+import clsx, { ClassValue } from 'clsx';
 import React, { useState } from 'react';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
 import { BaseStyle } from '../styles';
@@ -10,7 +9,6 @@ import { InputError } from './input-error';
 
 type DefaultInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
-  icon?: string;
   registerOptions: RegisterOptions;
   placeholder?: string;
   className?: ClassValue;
@@ -18,40 +16,43 @@ type DefaultInputProps = JSX.IntrinsicElements['input'] & {
 
 export const DefaultInput: React.FC<DefaultInputProps> = ({
   name,
+  type,
   registerOptions,
   placeholder,
-  icon,
   ...props
 }) => {
-  const [_, setIsActiveInput] = useState<boolean>(false);
+  const [isActiveInput, setIsActiveInput] = useState<boolean>(false);
   const {
     formState: { errors },
     register,
   } = useFormContext();
 
   return (
-    <div>
-      <div className={BaseStyle.defaultInputContainer}>
-        <div className={BaseStyle.inputImageContainer}>
-          {icon ? (
-            <Image src={icon} alt={name} height={24} width={24} />
-          ) : (
-            <></>
-          )}
-          <input
-            {...props}
-            {...register(name, registerOptions)}
-            className={BaseStyle.nestedInput}
-            onFocus={() => {
-              setIsActiveInput(true);
-            }}
-            onBlur={(e) => {
-              setIsActiveInput(false || e.target.value !== '');
-            }}
-            placeholder={placeholder}
-          />
-        </div>
-      </div>
+    <div className={clsx(BaseStyle.defaultInput)}>
+      <input
+        {...props}
+        {...register(name, registerOptions)}
+        className={clsx(
+          BaseStyle.input,
+          isActiveInput ? BaseStyle.active : '',
+          Object.keys(errors).length > 0 && errors[name] ? BaseStyle.error : ''
+        )}
+        onFocus={() => {
+          setIsActiveInput(true);
+        }}
+        onBlur={(e) => {
+          setIsActiveInput(false || e.target.value !== '');
+        }}
+      />
+      <span
+        className={clsx(
+          BaseStyle.defaultInputPlaceholder,
+          isActiveInput ? BaseStyle.active : '',
+          Object.keys(errors).length > 0 && errors[name] ? BaseStyle.error : ''
+        )}
+      >
+        {placeholder ?? name}
+      </span>
       <ErrorMessage
         errors={errors}
         name={name}
