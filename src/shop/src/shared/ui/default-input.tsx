@@ -4,7 +4,7 @@ import { ErrorMessage } from '@hookform/error-message';
 import clsx, { ClassValue } from 'clsx';
 import React, { useState } from 'react';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
-import { BaseStyle } from '../styles';
+import { BaseStyle, montserrat } from '../styles';
 import { InputError } from './input-error';
 
 type DefaultInputProps = JSX.IntrinsicElements['input'] & {
@@ -28,7 +28,7 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
   } = useFormContext();
 
   return (
-    <div className={clsx(BaseStyle.defaultInput)}>
+    <div className={clsx(BaseStyle.defaultInput, montserrat.className)}>
       <input
         {...props}
         {...register(name, registerOptions)}

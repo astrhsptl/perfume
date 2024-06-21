@@ -78,7 +78,7 @@ $mobileWidth: 800px;
   font-weight: 500;
 
   width: 100%;
-  max-width: 250px;
+  max-width: 300px;
 
   padding: 14px 20px;
   border-radius: 10px;
@@ -106,7 +106,7 @@ $mobileWidth: 800px;
 .defaultInput {
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
 
   margin-top: 20px;
 }
@@ -115,20 +115,29 @@ $mobileWidth: 800px;
   height: 40px;
   width: 100%;
 
-  border: 1.5px solid var(--base-black);
+  border: 1.5px solid var(--white);
   border-radius: 5px;
 
   padding: 20px 20px;
 
+  background-color: var(--black);
+
   @include font(16px);
 
   &:focus {
-    border: 1.5px solid var(--base-blue);
+    border: 1.5px solid var(--white);
     outline: none;
   }
 
   &.error {
-    border: 1.5px solid var(--base-red);
+    border: 1.5px solid var(--white);
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
+    background-color: green !important;
+    color: aqua !important;
+    // color: var(--black);
   }
 }
 
@@ -142,12 +151,12 @@ $mobileWidth: 800px;
 
   &.active {
     top: -7px !important;
-    background-color: var(--base-white);
+    background-color: var(--black);
     @include font(14px);
   }
 
   &.error {
-    color: var(--base-red);
+    color: var(--white);
     top: calc(50% - 20px);
   }
 }
@@ -169,6 +178,11 @@ $mobileWidth: 800px;
 }
 
 .baseForm {
+  @include flexCenterColumn();
+  gap: 20px;
+
+  width: 100%;
+  max-width: 300px;
 }
 
 @media (max-width: var(--mobile-width)) {

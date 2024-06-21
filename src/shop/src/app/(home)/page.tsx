@@ -1,4 +1,4 @@
-import { DefaultButton, HomeStyle, montserrat, oldenburg } from '@/shared';
+import { DefaultButton, HomeStyle, lora, montserrat } from '@/shared';
 import clsx from 'clsx';
 import { Metadata } from 'next';
 import Image from 'next/image';
@@ -33,7 +33,7 @@ export default async function Page() {
   return (
     <div className={HomeStyle.page}>
       <section className={HomeStyle.homeTitle}>
-        <h1 className={clsx(oldenburg.className)}>Famous perfume</h1>
+        <h1 className={clsx(lora.className)}>Famous perfume</h1>
         <h2 className={clsx(montserrat.className)}>
           Новая коллекция уже в продаже
         </h2>
