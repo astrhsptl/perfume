@@ -1,3 +1,5 @@
+import { AuthStyle } from '@/shared';
+import { SignUpForm } from '@/widgets/auth/ui/sign-up';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -6,5 +8,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  return <div>Page</div>;
+  return (
+    <div className={AuthStyle.pageAuthLayout}>
+      <SignUpForm />
+    </div>
+  );
 }

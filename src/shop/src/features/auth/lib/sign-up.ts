@@ -1,19 +1,24 @@
+import { Result, User } from '@/entities';
 import { AuthApiCore, ISignUp } from '@/shared';
-import toast from 'react-hot-toast';
 import { signIn } from './sign-in';
 
 export const signUp = async (authData: ISignUp) => {
-  const user = await AuthApiCore.signUp(authData).catch(({ message }) => {
-    toast.error(message);
-    return null;
-  });
+  const result = await AuthApiCore.signUp(authData)
+    .then(({ data }) => {
+      const result = new Result<User>();
+      return result.setResult(data, 'Успешно!');
+    })
+    .catch(({ message }) => {
+      const result = new Result<User>();
+      return result.setError(message);
+    });
 
-  if (!user) {
-    return;
+  if (result.isError) {
+    return result;
   }
 
   return await signIn({
-    email: user.data.email,
+    email: authData.email,
     password: authData.password,
   });
 };
