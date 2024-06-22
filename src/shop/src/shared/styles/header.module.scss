@@ -2,14 +2,152 @@
 
 .header {
   @include flex();
-  @include font(16px);
-  @include container();
+  @include font(20px);
 
   width: 100%;
-  height: 84px;
+  height: var(--header-height);
   background: var(--black);
 
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+
+  z-index: $content-index;
+}
+
+.headerLinks {
+  @include flex();
+  gap: 28px;
+
+  & > a {
+    font-size: 20px;
+  }
+}
+
+.headerIcons {
+  @include flex();
+  gap: 28px;
+}
+
+.headerBurger {
+  display: none;
+  position: relative;
+
+  height: 24px;
+  width: 40px;
+
+  flex-flow: column nowrap;
+  justify-content: space-between;
+
+  & > div {
+    height: 3.5px;
+    background-color: var(--white);
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+  }
+
+  & > div[id='rect-1'] {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  & > div[id='rect-2'] {
+    position: absolute;
+    top: 10px;
+    left: 0px;
+  }
+
+  & > div[id='rect-3'] {
+    position: absolute;
+    top: 20px;
+    right: 0;
+  }
+
+  &.open > div[id='rect-1'] {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    transform: rotate(45deg);
+  }
+
+  &.open > div[id='rect-2'] {
+    top: 10px;
+    left: 0;
+    transform: rotate(45deg);
+  }
+
+  &.open > div[id='rect-3'] {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    transform: rotate(-45deg);
+  }
+}
+
+.nav {
+  @include font(20px);
+  display: none;
+  position: absolute;
+
+  grid-template-rows: 70px 1fr;
+  align-items: center;
+
+  top: 70px;
+  left: -100%;
+
+  width: 400px;
+  max-width: 100dvw;
+  height: calc(100dvh - 70px);
+  max-height: calc(100dvh - 70px);
+
+  padding-left: 10%;
+
+  background-color: var(--black);
+
+  transition: all 0.3s linear;
+
+  z-index: $modal-background-index;
+
+  &.open {
+    left: 0;
+  }
+
+  &.open > body {
+    overflow: hidden;
+  }
+}
+
+.navLinks {
+  @include flexColumn();
+  align-self: start;
+  gap: 20px;
+  padding-top: 30px;
+  font-weight: 500;
+
+  & > a {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: $mobileWidth) {
+  .nav {
+    display: grid;
+  }
+  .headerIcons {
+    display: none;
+  }
+
+  .headerLinks {
+    display: none;
+  }
+
+  .header {
+    font-size: 20px;
+    height: var(--header-height);
+  }
+
+  .headerBurger {
+    display: flex;
+  }
 }

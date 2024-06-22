@@ -1,28 +1,23 @@
 'use client';
 
 import { FormBaseLayout } from '@/features';
-import { BaseStyle } from '@/shared';
+import { AuthStyle, BaseStyle, montserrat } from '@/shared';
+import clsx from 'clsx';
 import { ReactNode } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface AuthLayoutProps {
   title: string;
-  description: ReactNode;
   children: ReactNode;
   submit: SubmitHandler<any>;
 }
 
-export const AuthLayout = ({
-  children,
-  submit,
-  title,
-  description,
-}: AuthLayoutProps) => {
+export const AuthLayout = ({ children, submit, title }: AuthLayoutProps) => {
   const methods = useForm();
 
   return (
-    <section>
-      <h1>{title}</h1>
+    <section className={clsx(AuthStyle.authLayout, montserrat.className)}>
+      <h1 className={clsx(montserrat.className)}>{title}</h1>
       <FormBaseLayout
         onSub={submit}
         methods={methods}

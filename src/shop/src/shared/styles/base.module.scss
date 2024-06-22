@@ -1,18 +1,12 @@
-/*  */
-$defaultGap: 24px;
-
-/* sizes */
-$headerHeight: 60px;
-
-/* base colors */
-$main-color: #fff;
-
 /* z-indexes */
 $base-index: 1;
 $content-index: 2;
 $modal-background-index: 3;
 $modal-index: 4;
 $alert-index: 5;
+
+/* consts */
+$mobileWidth: 800px;
 
 @mixin flex {
   display: flex;
@@ -47,10 +41,6 @@ $alert-index: 5;
   background-position: center center;
 }
 
-@mixin container {
-  padding: 0 10%;
-}
-
 @mixin baseModal {
   display: none;
   position: absolute;
@@ -65,37 +55,138 @@ $alert-index: 5;
 }
 
 .container {
-  @include container();
+  padding: 0 10%;
 }
 
 .baseLink {
   @include font(14px, var(--white));
+  text-underline-offset: 0.2em;
   text-decoration: none;
+  cursor: sw-resize;
 
   &:active {
+    text-decoration: none;
+  }
+
+  &.active {
+    text-decoration: underline;
   }
 }
 
 .baseButton {
+  @include font(14px);
+  font-weight: 500;
+
+  width: 100%;
+  max-width: 300px;
+
+  padding: 14px 20px;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  &.light {
+    background-color: var(--white);
+    color: var(--black);
+    border: none;
+  }
+
+  &.dark {
+    background-color: var(--black);
+    color: var(--white);
+    border: 1px solid var(--white);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
-.backButton {
+.defaultInput {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+
+  margin-top: 20px;
 }
 
-.defaultInputContainer {
+.input {
+  height: 40px;
+  width: 100%;
+
+  border: 1.5px solid var(--white);
+  border-radius: 5px;
+
+  padding: 20px 20px;
+
+  background-color: var(--black);
+
+  @include font(16px);
+
+  &:focus {
+    border: 1.5px solid var(--white);
+    outline: none;
+  }
+
+  &.error {
+    border: 1.5px solid var(--white);
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:focus {
+    background-color: green !important;
+    color: aqua !important;
+    // color: var(--black);
+  }
 }
 
-.nestedInput {
-}
+.defaultInputPlaceholder {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: 20px;
+  transition: all 0.15s ease-in-out;
 
-.inputImageContainer {
-}
+  @include font(14px);
 
-.toastStyles {
+  &.active {
+    top: -7px !important;
+    background-color: var(--black);
+    @include font(14px);
+  }
+
+  &.error {
+    color: var(--white);
+    top: calc(50% - 20px);
+  }
 }
 
 .inputError {
+  @include font(14px);
+
+  &.message {
+    @include flex();
+    gap: 6px;
+
+    width: 100%;
+
+    margin-top: 10px;
+    padding-left: 20px;
+
+    color: var(--base-red);
+  }
 }
 
 .baseForm {
+  @include flexCenterColumn();
+  gap: 20px;
+
+  width: 100%;
+  max-width: 300px;
+}
+
+@media (max-width: var(--mobile-width)) {
+  .container {
+    padding: 0 5%;
+  }
 }
