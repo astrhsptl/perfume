@@ -1,0 +1,17 @@
+@import '../base.module.scss';
+
+.headContainer {
+  @include font(32px);
+  @include flex();
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterToggleContainer {
+  padding: 5px 10px 5px 0;
+}
+
+.__filterPlug {
+  width: 31px;
+  height: 45px;
+}

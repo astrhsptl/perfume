@@ -101,7 +101,7 @@ export const SignUpForm = ({}: SignUpFormProps) => {
         registerOptions={{
           required: {
             value: true,
-            message: 'Подтверждение обязательно',
+            message: 'Подтвердите пароль',
           },
         }}
       />

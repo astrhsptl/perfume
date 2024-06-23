@@ -132,13 +132,6 @@ $mobileWidth: 800px;
   &.error {
     border: 1.5px solid var(--white);
   }
-
-  &:-webkit-autofill,
-  &:-webkit-autofill:focus {
-    background-color: green !important;
-    color: aqua !important;
-    // color: var(--black);
-  }
 }
 
 .defaultInputPlaceholder {
@@ -163,18 +156,12 @@ $mobileWidth: 800px;
 
 .inputError {
   @include font(14px);
+  @include flex();
 
-  &.message {
-    @include flex();
-    gap: 6px;
+  gap: 6px;
+  width: 100%;
 
-    width: 100%;
-
-    margin-top: 10px;
-    padding-left: 20px;
-
-    color: var(--base-red);
-  }
+  margin-top: 10px;
 }
 
 .baseForm {
