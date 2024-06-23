@@ -1,7 +1,5 @@
-import { BaseStyle, ProductListStyle, montserrat } from '@/shared';
-import clsx from 'clsx';
+import { ProductsHeader } from '@/widgets';
 import { Metadata } from 'next';
-import Image from 'next/image';
 
 interface ProductProps {}
 
@@ -33,24 +31,7 @@ export const metadata: Metadata = {
 export default async function ProductPage({}: ProductProps) {
   return (
     <>
-      <section
-        className={clsx(
-          ProductListStyle.headContainer,
-          BaseStyle.container,
-          montserrat.className
-        )}
-      >
-        <div className={ProductListStyle.filterToggleContainer}>
-          <Image
-            src={'/filter.svg'}
-            alt={'filter icon perfume парфюм фильтр ростов ростов-на-дону'}
-            height={17}
-            width={21}
-          />
-        </div>
-        <h1>Парфюм для вас</h1>
-        <div className={ProductListStyle.__filterPlug}></div>
-      </section>
+      <ProductsHeader />
     </>
   );
 }

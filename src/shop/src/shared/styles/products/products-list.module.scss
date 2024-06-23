@@ -5,6 +5,8 @@
   @include flex();
   align-items: center;
   justify-content: space-between;
+
+  margin-top: 36px;
 }
 
 .filterToggleContainer {
@@ -14,4 +16,10 @@
 .__filterPlug {
   width: 31px;
   height: 45px;
+}
+
+@media (max-width: $mobileWidth) {
+  .headContainer > h1 {
+    font-size: 20px;
+  }
 }

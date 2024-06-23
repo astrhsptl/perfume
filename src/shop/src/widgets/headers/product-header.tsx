@@ -25,14 +25,14 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
       }
       headerIcons={
         <>
-          <Link href={'/products?search=1'}>
+          <div>
             <Image
               src={'/search.svg'}
               alt={'духи поиск search'}
               width={28}
               height={28}
             />
-          </Link>
+          </div>
           <Link href={'/favorite'}>
             <Image
               src={'/favorite.svg'}
