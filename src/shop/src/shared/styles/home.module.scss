@@ -20,13 +20,14 @@
 .perfume {
   width: 90%;
   max-width: 228px;
+  user-select: none;
   z-index: $content-index;
 }
 
 .videoContainer {
   position: fixed;
   overflow: clip;
-  bottom: -1500px;
+  bottom: -400px;
   left: -50%;
   z-index: $base-index;
 }
@@ -45,6 +46,6 @@
   }
 
   .videoContainer {
-    bottom: -1450px;
+    bottom: -350px;
   }
 }

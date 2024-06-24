@@ -1,0 +1,34 @@
+@import './base.module.scss';
+
+.pageAuthLayout {
+  display: grid;
+  justify-content: center;
+  padding-top: 5%;
+  width: 100%;
+  min-width: 100dvw;
+  // height: calc(100dvh - var(--header-height));
+}
+
+.authLayout {
+  @include flexCenterColumn();
+
+  width: 250px;
+  margin: 0 auto;
+
+  & > h1 {
+    @include font(32px);
+    margin-bottom: 50px;
+    font-weight: 700;
+  }
+}
+
+.button {
+  margin-top: 20px;
+  color: var(--black) !important;
+}
+
+@media (max-width: $mobileWidth) {
+  .pageAuthLayout {
+    padding-top: 10%;
+  }
+}

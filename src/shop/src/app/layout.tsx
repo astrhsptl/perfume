@@ -1,5 +1,5 @@
 import '@/shared/styles/base.css';
-import { Header, HeaderModal, RootProvider } from '@/widgets';
+import { FilterModal, HeaderModal, RootProvider } from '@/widgets';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -9,16 +9,14 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang='en' suppressHydrationWarning>
       <head>
-        <meta name='theme-color' content='#fff' />
+        <meta name='theme-color' content='#000' />
       </head>
       <body suppressHydrationWarning>
         <RootProvider>
-          <div id='root'>
-            <Header />
-            {children}
-          </div>
+          <div id='root'>{children}</div>
           <div id='modal-root'>
             <HeaderModal />
+            <FilterModal />
           </div>
         </RootProvider>
       </body>

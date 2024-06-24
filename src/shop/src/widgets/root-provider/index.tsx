@@ -1,5 +1,6 @@
 'use client';
 
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
 import { StoreProvider, ToastProvider } from './lib';
@@ -20,7 +21,9 @@ export const RootProvider: FC<RootProviderProps> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
-        <ToastProvider>{children}</ToastProvider>
+        <AppRouterCacheProvider options={{ key: 'css' }}>
+          <ToastProvider>{children}</ToastProvider>
+        </AppRouterCacheProvider>
       </StoreProvider>
     </QueryClientProvider>
   );

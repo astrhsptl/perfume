@@ -62,7 +62,7 @@ $mobileWidth: 800px;
   @include font(14px, var(--white));
   text-underline-offset: 0.2em;
   text-decoration: none;
-  cursor: sw-resize;
+  cursor: pointer;
 
   &:active {
     text-decoration: none;
@@ -78,7 +78,7 @@ $mobileWidth: 800px;
   font-weight: 500;
 
   width: 100%;
-  max-width: 250px;
+  max-width: 300px;
 
   padding: 14px 20px;
   border-radius: 10px;
@@ -103,22 +103,73 @@ $mobileWidth: 800px;
   }
 }
 
-.defaultInputContainer {
+.defaultInput {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+
+  margin-top: 20px;
 }
 
-.nestedInput {
+.input {
+  height: 40px;
+  width: 100%;
+
+  border: 1.5px solid var(--white);
+  border-radius: 5px;
+
+  padding: 20px 20px;
+
+  background-color: var(--black);
+
+  @include font(16px);
+
+  &:focus {
+    border: 1.5px solid var(--white);
+    outline: none;
+  }
+
+  &.error {
+    border: 1.5px solid var(--white);
+  }
 }
 
-.inputImageContainer {
-}
+.defaultInputPlaceholder {
+  position: absolute;
+  top: calc(50% - 7px);
+  left: 20px;
+  transition: all 0.15s ease-in-out;
 
-.toastStyles {
+  @include font(14px);
+
+  &.active {
+    top: -7px !important;
+    background-color: var(--black);
+    @include font(14px);
+  }
+
+  &.error {
+    color: var(--white);
+    top: calc(50% - 20px);
+  }
 }
 
 .inputError {
+  @include font(14px);
+  @include flex();
+
+  gap: 6px;
+  width: 100%;
+
+  margin-top: 10px;
 }
 
 .baseForm {
+  @include flexCenterColumn();
+  gap: 20px;
+
+  width: 100%;
+  max-width: 300px;
 }
 
 @media (max-width: var(--mobile-width)) {

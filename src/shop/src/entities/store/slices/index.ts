@@ -1,1 +1,2 @@
+export * from './filter-modal-slice';
 export * from './header-modal-slice';

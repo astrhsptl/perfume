@@ -2,7 +2,7 @@
 
 .header {
   @include flex();
-  @include font(20px);
+  @include font(16px);
 
   width: 100%;
   height: var(--header-height);
@@ -20,7 +20,7 @@
   gap: 28px;
 
   & > a {
-    font-size: 20px;
+    font-size: 16px;
   }
 }
 
@@ -101,7 +101,7 @@
   height: calc(100dvh - 70px);
   max-height: calc(100dvh - 70px);
 
-  padding-left: 5%;
+  padding-left: 10%;
 
   background-color: var(--black);
 
@@ -145,6 +145,10 @@
   .header {
     font-size: 20px;
     height: var(--header-height);
+
+    & > a {
+      font-size: 20px;
+    }
   }
 
   .headerBurger {
