@@ -1,0 +1,57 @@
+@import '../base.module.scss';
+
+.asideFilterContainer {
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  height: 100dvh;
+  width: 100dvw;
+
+  transition: left 0.3s ease-in-out;
+  z-index: $modal-background-index;
+
+  &.active {
+    left: 0;
+  }
+}
+
+.asideFilter {
+  display: grid;
+
+  height: 100%;
+  width: 100%;
+  max-width: 412px;
+
+  background-color: var(--black);
+  border-right: 1px solid var(--white);
+}
+
+.filterHead {
+  @include font(24px, 600);
+  @include flex();
+  justify-content: space-between;
+  height: min-content;
+
+  padding: 15dvh 10% 0 10%;
+}
+
+.filterTitle {
+  @include flex();
+
+  & > h2 {
+    width: fit-content;
+  }
+  & > span {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-dark);
+    cursor: pointer;
+    margin-left: 6px;
+  }
+}
+
+.crossContainer {
+  cursor: pointer;
+}

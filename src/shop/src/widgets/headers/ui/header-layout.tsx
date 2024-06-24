@@ -1,7 +1,6 @@
 'use client';
 
-import { ModalTools } from '@/features';
-import { BaseStyle, HeaderStyle, montserrat } from '@/shared';
+import { BaseStyle, HeaderStyle, ModalTools, montserrat } from '@/shared';
 import clsx from 'clsx';
 
 interface HeaderLayoutProps {

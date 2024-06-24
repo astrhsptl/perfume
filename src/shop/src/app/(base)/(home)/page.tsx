@@ -44,7 +44,7 @@ export default async function Page() {
       <section className={HomeStyle.perfume}>
         <Image
           src={'/perfume.png'}
-          alt={'perfume shop магазин духов ростов ростов-на-дону'}
+          alt={'Магазин духов ростов ростов-на-дону'}
           width={228}
           height={328}
           layout='responsive'

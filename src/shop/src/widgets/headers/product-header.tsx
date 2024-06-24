@@ -13,8 +13,8 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
   const { state: searchState, toggle: toggleSearch } =
     useClientModalStatement();
   const dispatch = useAppDispatch();
-  const { state } = useAppSelector(currentHeaderModal);
-  const { toggle } = headerModalActions;
+  const { state: navState } = useAppSelector(currentHeaderModal);
+  const { toggle: navToggle } = headerModalActions;
 
   return (
     <HeaderLayout
@@ -34,35 +34,25 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
       headerIcons={
         <>
           <div onClick={toggleSearch}>
-            <Image
-              src={'/search.svg'}
-              alt={'духи поиск search'}
-              width={28}
-              height={28}
-            />
+            <Image src={'/search.svg'} alt={'Поиск'} width={28} height={28} />
           </div>
           <Link href={'/favorite'}>
             <Image
               src={'/favorite.svg'}
-              alt={'духи favorite heart'}
+              alt={'Избранное'}
               width={28}
               height={28}
             />
           </Link>
           <Link href={'/products?cart=1'}>
-            <Image
-              src={'/cart.svg'}
-              alt={'духи корзина cart'}
-              width={28}
-              height={28}
-            />
+            <Image src={'/cart.svg'} alt={'Корзина'} width={28} height={28} />
           </Link>
         </>
       }
       tools={{
-        state: state,
+        state: navState,
         toggle: () => {
-          dispatch(toggle());
+          dispatch(navToggle());
         },
       }}
     />

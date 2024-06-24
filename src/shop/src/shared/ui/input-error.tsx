@@ -9,7 +9,12 @@ interface InputErrorProps {
 export const InputError: React.FC<InputErrorProps> = ({ message }) => {
   return (
     <div className={BaseStyle.inputError}>
-      <Image height={12} width={12} src='/message-alert.svg' alt='Alert' />
+      <Image
+        height={12}
+        width={12}
+        src='/message-alert.svg'
+        alt='Ошибка заполнения!'
+      />
       <span className={BaseStyle.message}>{message}</span>
     </div>
   );

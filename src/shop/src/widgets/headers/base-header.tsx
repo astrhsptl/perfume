@@ -26,17 +26,12 @@ export const BaseHeader = ({}: BaseHeaderProps) => {
       headerIcons={
         <>
           <Link href={'/products?search=1'}>
-            <Image
-              src={'/search.svg'}
-              alt={'духи поиск search'}
-              width={28}
-              height={28}
-            />
+            <Image src={'/search.svg'} alt={'Поиск'} width={28} height={28} />
           </Link>
           <Link href={'/favorite'}>
             <Image
               src={'/favorite.svg'}
-              alt={'духи favorite heart'}
+              alt={'Избранное'}
               width={28}
               height={28}
             />
@@ -44,7 +39,7 @@ export const BaseHeader = ({}: BaseHeaderProps) => {
           <Link href={'/products?cart=1'}>
             <Image
               src={'/cart.svg'}
-              alt={'духи корзина cart'}
+              alt={'Корзина духов'}
               width={28}
               height={28}
             />

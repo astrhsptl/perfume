@@ -4,7 +4,6 @@ import { ErrorMessage } from '@hookform/error-message';
 import clsx, { ClassValue } from 'clsx';
 import React, { useState } from 'react';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
-import { useIMask } from 'react-imask';
 import { BaseStyle, montserrat } from '../styles';
 import { InputError } from './input-error';
 
@@ -23,10 +22,10 @@ export const PhoneInput: React.FC<PhoneInputProps> = ({
   ...props
 }) => {
   const [isActiveInput, setIsActiveInput] = useState<boolean>(false);
-  const [opts, _] = useState({
-    mask: '+{7}(000)000-00-00',
-  });
-  const { ref } = useIMask<HTMLInputElement>(opts);
+  // const [opts, _] = useState({
+  //   mask: '+{7}(000)000-00-00',
+  // });
+  // const { ref } = useIMask<HTMLInputElement>(opts);
   const {
     formState: { errors },
     register,

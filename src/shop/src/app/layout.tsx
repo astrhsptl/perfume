@@ -1,5 +1,5 @@
 import '@/shared/styles/base.css';
-import { HeaderModal, RootProvider } from '@/widgets';
+import { FilterModal, HeaderModal, RootProvider } from '@/widgets';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -16,6 +16,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <div id='root'>{children}</div>
           <div id='modal-root'>
             <HeaderModal />
+            <FilterModal />
           </div>
         </RootProvider>
       </body>
