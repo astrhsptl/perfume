@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 interface ProductProps {}
 
 export const metadata: Metadata = {
-  title: 'Духи | Famous perfume',
+  title: 'Духи в Ростове-на-Дону | Famous perfume',
   description: 'Магазин духов в Ростове (Ростове-на-Дону). Вход',
   icons: {
     icon: '/favicon.svg',

@@ -18,8 +18,48 @@
   height: 45px;
 }
 
+.searchForm {
+  display: none;
+  width: 100%;
+}
+
+.searchInput {
+  @include font(16px, 600);
+  height: 32px;
+  width: 100%;
+
+  border: 1.5px solid var(--white);
+  border-radius: 20px;
+
+  padding: 20px 20px;
+
+  background-color: var(--black);
+
+  &::placeholder {
+    color: var(--white);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.searchFormModal {
+  min-width: 300px;
+  width: 100%;
+}
+
 @media (max-width: $mobileWidth) {
-  .headContainer > h1 {
-    font-size: 20px;
+  .headContainer > h1,
+  .__filterPlug {
+    display: none;
+  }
+
+  .headContainer {
+    gap: 10px;
+  }
+
+  .searchForm {
+    display: block;
   }
 }

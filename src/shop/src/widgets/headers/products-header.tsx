@@ -1,6 +1,7 @@
 import { BaseStyle, ProductListStyle, montserrat } from '@/shared';
 import clsx from 'clsx';
 import Image from 'next/image';
+import { SearchForm } from './ui';
 
 interface ProductsHeaderProps {}
 export const ProductsHeader = async ({}: ProductsHeaderProps) => {
@@ -22,6 +23,7 @@ export const ProductsHeader = async ({}: ProductsHeaderProps) => {
       </div>
       <h1>Парфюм для вас</h1>
       <div className={ProductListStyle.__filterPlug}></div>
+      <SearchForm />
     </section>
   );
 };
