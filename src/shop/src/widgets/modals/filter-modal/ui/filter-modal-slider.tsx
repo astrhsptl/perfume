@@ -16,7 +16,7 @@ export const FilterModalSlider = ({ min, max }: FilterModalSliderProps) => {
   console.log(value[0]);
 
   return (
-    <div>
+    <div style={{ marginTop: 30 }}>
       <div
         className={clsx(FilterStyle.asidePriceContainer, montserrat.className)}
       >
