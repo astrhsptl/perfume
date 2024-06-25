@@ -1,0 +1,42 @@
+@import '../base.module.scss';
+
+.asideCartContainer {
+  display: grid;
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  height: 100dvh;
+  width: 100dvw;
+
+  transition: left 0.3s ease-in-out;
+  z-index: $modal-background-index;
+
+  &.active {
+    right: 0;
+  }
+}
+
+.asideCart {
+  @include flexColumn();
+  flex-wrap: nowrap;
+
+  justify-self: end;
+
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+
+  background-color: var(--black);
+  border-left: 1px solid var(--white);
+
+  padding: 15dvh 5%;
+}
+
+.cartHead {
+  @include font(24px, 600);
+  @include flex();
+  justify-content: space-between;
+  height: min-content;
+}
