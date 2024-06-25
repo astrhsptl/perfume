@@ -4,7 +4,7 @@ import { currentFilterModal, filterModalActions } from '@/entities';
 import { useAppDispatch, useAppSelector } from '@/features';
 import { FilterStyle, montserrat } from '@/shared';
 import clsx from 'clsx';
-import { FilterModalHead } from './ui';
+import { FilterModalHead, FilterModalSlider } from './ui';
 
 interface FilterModalProps {}
 
@@ -18,7 +18,7 @@ export const FilterModal = ({}: FilterModalProps) => {
       className={clsx(
         FilterStyle.asideFilterContainer,
         montserrat.className,
-        !state && FilterStyle.active
+        state && FilterStyle.active
       )}
       onClick={(e) => {
         if (e.target === e.currentTarget) dispatch(close());
@@ -26,7 +26,7 @@ export const FilterModal = ({}: FilterModalProps) => {
     >
       <section className={clsx(FilterStyle.asideFilter)}>
         <FilterModalHead />
-        <div className='costPicker'></div>
+        <FilterModalSlider min={0} max={100} />
       </section>
     </aside>
   );

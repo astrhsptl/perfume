@@ -1,5 +1,7 @@
 'use client';
 
+import { theme } from '@/shared';
+import { ThemeProvider } from '@mui/material';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { FC, ReactNode } from 'react';
@@ -22,7 +24,9 @@ export const RootProvider: FC<RootProviderProps> = ({ children }) => {
     <QueryClientProvider client={queryClient}>
       <StoreProvider>
         <AppRouterCacheProvider options={{ key: 'css' }}>
-          <ToastProvider>{children}</ToastProvider>
+          <ThemeProvider theme={theme}>
+            <ToastProvider>{children}</ToastProvider>
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </StoreProvider>
     </QueryClientProvider>

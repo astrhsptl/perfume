@@ -1,6 +1,7 @@
 :root {
   --white: #ffffff;
   --black: #000000;
+  --gray: #2b2b2b;
   --gray-blur: #898989;
   --gray-dark: #6c6c6c;
   --modal-background: rgba(0, 0, 0, 0.4);

@@ -1,17 +1,8 @@
 'use client';
 
 import { signUp } from '@/features/auth';
-import {
-  AuthStyle,
-  BaseStyle,
-  DefaultButton,
-  DefaultInput,
-  ISignUp,
-  PhoneInput,
-  montserrat,
-} from '@/shared';
+import { DefaultButton, DefaultInput, ISignUp } from '@/shared';
 import { AuthLayout } from '@/widgets';
-import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -59,18 +50,16 @@ export const SignUpForm = ({}: SignUpFormProps) => {
           },
         }}
       />
-      <PhoneInput
+      <DefaultInput
         name='phone'
         placeholder='Телефон'
-        type='tel'
-        registerOptions={
-          {
-            // required: {
-            //   value: true,
-            //   message: 'Телефон обязателен',
-            // },
-          }
-        }
+        type='text'
+        registerOptions={{
+          required: {
+            value: true,
+            message: 'Телефон обязателен',
+          },
+        }}
       />
       <DefaultInput
         name='email'
@@ -105,14 +94,7 @@ export const SignUpForm = ({}: SignUpFormProps) => {
           },
         }}
       />
-      <DefaultButton
-        type='submit'
-        className={clsx(
-          BaseStyle.baseButton,
-          AuthStyle.button,
-          montserrat.className
-        )}
-      >
+      <DefaultButton type='submit' style={{ marginTop: '20px' }}>
         Вход
       </DefaultButton>
     </AuthLayout>
