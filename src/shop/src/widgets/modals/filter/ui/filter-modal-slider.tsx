@@ -13,8 +13,6 @@ interface FilterModalSliderProps {
 export const FilterModalSlider = ({ min, max }: FilterModalSliderProps) => {
   const [value, setValue] = useState<number[]>([min, max]);
 
-  console.log(value[0]);
-
   return (
     <div style={{ marginTop: 30 }}>
       <div
