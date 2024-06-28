@@ -17,6 +17,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
         <span>{cost}$</span>
       </div>
       <DefaultButton
+        style={{ maxWidth: '100%' }}
         onClick={() => {
           alert('поздравляем, вашу бабку разобрали нахуй на органы!');
         }}
