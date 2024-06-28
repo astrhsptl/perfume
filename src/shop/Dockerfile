@@ -1,16 +1,11 @@
 FROM node:18-alpine AS base
 
-FROM base AS deps
+FROM base AS builder
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-COPY yarn.lock* ./
-RUN yarn --frozen-lockfile
-
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN yarn --frozen-lockfile
 
 RUN yarn run build
 
