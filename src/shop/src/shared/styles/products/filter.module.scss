@@ -1,0 +1,79 @@
+@import '../base.module.scss';
+
+.asideFilterContainer {
+  position: absolute;
+
+  top: 0;
+  left: -100%;
+
+  height: 100dvh;
+  width: 100dvw;
+
+  transition: left 0.3s ease-in-out;
+  z-index: $modal-background-index;
+
+  &.active {
+    left: 0;
+  }
+}
+
+.asideFilter {
+  @include flexColumn();
+  flex-wrap: nowrap;
+
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+
+  background-color: var(--black);
+  border-right: 1px solid var(--white);
+
+  padding: 15dvh 5%;
+}
+
+.filterHead {
+  @include font(24px, 600);
+  @include flex();
+  justify-content: space-between;
+  height: min-content;
+}
+
+.filterTitle {
+  @include flex();
+
+  & > h2 {
+    width: fit-content;
+  }
+  & > span {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--gray-dark);
+    cursor: pointer;
+    margin-left: 6px;
+  }
+}
+
+.crossContainer {
+  cursor: pointer;
+}
+
+.asidePriceContainer {
+  @include font(12px);
+  @include flex();
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  & > span {
+    padding: 5px 20px;
+    background-color: var(--gray);
+    border-radius: 10px;
+  }
+}
+
+.filterDropdownArrow {
+  transition: transform 0.1s ease-in-out;
+
+  &.open {
+    transform: rotate(180deg);
+  }
+}
