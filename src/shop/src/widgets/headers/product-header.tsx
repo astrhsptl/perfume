@@ -1,6 +1,10 @@
 'use client';
 
-import { currentHeaderModal, headerModalActions } from '@/entities';
+import {
+  cartModalActions,
+  currentHeaderModal,
+  headerModalActions,
+} from '@/entities';
 import { useAppDispatch, useAppSelector } from '@/features';
 import { NavLink, ProductListStyle, useClientModalStatement } from '@/shared';
 import Image from 'next/image';
@@ -44,9 +48,9 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
               height={28}
             />
           </Link>
-          <Link href={'/products?cart=1'}>
+          <div onClick={() => dispatch(cartModalActions.toggle())}>
             <Image src={'/cart.svg'} alt={'Корзина'} width={28} height={28} />
-          </Link>
+          </div>
         </>
       }
       tools={{

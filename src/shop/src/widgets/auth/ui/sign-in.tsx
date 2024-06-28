@@ -1,16 +1,8 @@
 'use client';
 
 import { signIn } from '@/features/auth';
-import {
-  AuthStyle,
-  BaseStyle,
-  DefaultButton,
-  DefaultInput,
-  ISignIn,
-  montserrat,
-} from '@/shared';
+import { DefaultButton, DefaultInput, ISignIn } from '@/shared';
 import { AuthLayout } from '@/widgets';
-import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -56,14 +48,7 @@ export const SignInForm = ({}: SignInFormProps) => {
           },
         }}
       />
-      <DefaultButton
-        type='submit'
-        className={clsx(
-          BaseStyle.baseButton,
-          AuthStyle.button,
-          montserrat.className
-        )}
-      >
+      <DefaultButton type='submit' style={{ marginTop: '20px' }}>
         Вход
       </DefaultButton>
     </AuthLayout>

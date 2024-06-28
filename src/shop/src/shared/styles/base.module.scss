@@ -80,7 +80,7 @@ $mobileWidth: 800px;
   width: 100%;
   max-width: 300px;
 
-  padding: 14px 20px;
+  padding: 14px 20px !important;
   border-radius: 10px;
 
   cursor: pointer;
@@ -101,6 +101,11 @@ $mobileWidth: 800px;
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  &.light:hover {
+    border: 1.5px solid var(--white);
+    color: var(--white);
+  }
 }
 
 .defaultInput {
@@ -112,17 +117,18 @@ $mobileWidth: 800px;
 }
 
 .input {
+  @include font(16px);
   height: 40px;
   width: 100%;
 
   border: 1.5px solid var(--white);
   border-radius: 5px;
 
-  padding: 20px 20px;
+  padding: 30px 20px;
 
   background-color: var(--black);
 
-  @include font(16px);
+  user-select: none;
 
   &:focus {
     border: 1.5px solid var(--white);
@@ -139,13 +145,15 @@ $mobileWidth: 800px;
   top: calc(50% - 7px);
   left: 20px;
   transition: all 0.15s ease-in-out;
+  padding: 0 5px;
 
   @include font(14px);
 
   &.active {
     top: -7px !important;
     background-color: var(--black);
-    @include font(14px);
+    @include font(10px);
+    left: 15px;
   }
 
   &.error {

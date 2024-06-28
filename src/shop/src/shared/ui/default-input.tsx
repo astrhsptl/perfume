@@ -10,7 +10,6 @@ import { InputError } from './input-error';
 type DefaultInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
   registerOptions: RegisterOptions;
-  placeholder?: string;
   className?: ClassValue;
 };
 
@@ -26,16 +25,18 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
     formState: { errors },
     register,
   } = useFormContext();
+  const currentError = errors[name];
 
   return (
     <div className={clsx(BaseStyle.defaultInput, montserrat.className)}>
       <input
         {...props}
         {...register(name, registerOptions)}
+        name={name}
         className={clsx(
           BaseStyle.input,
           isActiveInput ? BaseStyle.active : '',
-          Object.keys(errors).length > 0 && errors[name] ? BaseStyle.error : ''
+          currentError && BaseStyle.error
         )}
         onFocus={() => {
           setIsActiveInput(true);
@@ -48,7 +49,7 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
         className={clsx(
           BaseStyle.defaultInputPlaceholder,
           isActiveInput ? BaseStyle.active : '',
-          Object.keys(errors).length > 0 && errors[name] ? BaseStyle.error : ''
+          currentError && BaseStyle.error
         )}
       >
         {placeholder ?? name}

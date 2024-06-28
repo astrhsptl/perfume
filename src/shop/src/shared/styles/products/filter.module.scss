@@ -18,14 +18,17 @@
 }
 
 .asideFilter {
-  display: grid;
+  @include flexColumn();
+  flex-wrap: nowrap;
 
   height: 100%;
   width: 100%;
-  max-width: 412px;
+  max-width: 500px;
 
   background-color: var(--black);
   border-right: 1px solid var(--white);
+
+  padding: 15dvh 5%;
 }
 
 .filterHead {
@@ -33,8 +36,6 @@
   @include flex();
   justify-content: space-between;
   height: min-content;
-
-  padding: 15dvh 10% 0 10%;
 }
 
 .filterTitle {
@@ -54,4 +55,25 @@
 
 .crossContainer {
   cursor: pointer;
+}
+
+.asidePriceContainer {
+  @include font(12px);
+  @include flex();
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  & > span {
+    padding: 5px 20px;
+    background-color: var(--gray);
+    border-radius: 10px;
+  }
+}
+
+.filterDropdownArrow {
+  transition: transform 0.1s ease-in-out;
+
+  &.open {
+    transform: rotate(180deg);
+  }
 }
