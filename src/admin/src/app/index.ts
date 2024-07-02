@@ -1,2 +1,2 @@
-export * from './providers';
+export * from './provides';
 export * from './router';

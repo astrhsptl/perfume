@@ -1,35 +1,45 @@
 import {
-  API_SERVER_URL,
+  _CredentialStorage,
   CredentialStorage,
   EntityId,
   PaginatedResult,
+  WrongResponse,
 } from '@/shared';
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { API_SERVER_URL } from '@/shared/config';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { BaseAPICore } from '../base';
 
 const DefaultTriesCount = 2;
 
-export class APICore<FetchType, RequestType> {
-  private url;
-  constructor(url: string) {
+class APICore<FetchType, RequestType> extends BaseAPICore {
+  public url;
+  public CredentialStorage: _CredentialStorage | ReadonlyRequestCookies | null =
+    null;
+  constructor(
+    url: string,
+    cs: _CredentialStorage | ReadonlyRequestCookies | null = null
+  ) {
+    super();
     this.url = `${API_SERVER_URL}/v1/${url}/`;
+    this.CredentialStorage = cs;
   }
 
   async fetchAll(
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<PaginatedResult<FetchType>>> {
-    return await axios
-      .get<PaginatedResult<FetchType>>(
-        this.url,
-        this.setAuthenticationHeader(RequestConfig)
-      )
-      .catch(() => {
-        if (tries === 0) {
-          throw new Error(`Item ${this.url} did not fetched!`);
-        }
+    const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
-        return this.fetchAll(RequestConfig, tries - 1);
-      });
+    return await axios
+      .get<PaginatedResult<FetchType>>(this.url, requestConfig)
+      .catch((error: AxiosError<WrongResponse>) =>
+        this.retry<ReturnType<typeof this.fetchAll>>(
+          (tries) => this.fetchAll(requestConfig, tries),
+          error,
+          tries
+        )
+      );
   }
 
   async fetchByID(
@@ -38,15 +48,17 @@ export class APICore<FetchType, RequestType> {
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
     const url = `${this.url}${id}/`;
-    return await axios
-      .get<FetchType>(url, this.setAuthenticationHeader(RequestConfig))
-      .catch(() => {
-        if (tries === 0) {
-          throw new Error(`Item ${this.url} did not fetched!`);
-        }
+    const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
-        return this.fetchByID(id, RequestConfig, tries - 1);
-      });
+    return await axios
+      .get<FetchType>(url, requestConfig)
+      .catch((error: AxiosError<WrongResponse>) =>
+        this.retry<ReturnType<typeof this.fetchByID>>(
+          (tries) => this.fetchByID(id, requestConfig, tries),
+          error,
+          tries
+        )
+      );
   }
 
   async create(
@@ -54,17 +66,17 @@ export class APICore<FetchType, RequestType> {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    RequestConfig = this.setAuthenticationHeader(RequestConfig);
+    const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     const result = await axios
-      .post<FetchType>(this.url, data, RequestConfig)
-      .catch(() => {
-        if (tries === 0) {
-          throw new Error(`Item ${this.url} did not created!`);
-        }
-
-        return this.create(data, RequestConfig, tries - 1);
-      });
+      .post<FetchType>(this.url, data, requestConfig)
+      .catch((error: AxiosError<WrongResponse>) =>
+        this.retry<ReturnType<typeof this.create>>(
+          (tries) => this.create(data, requestConfig, tries),
+          error,
+          tries
+        )
+      );
 
     return result;
   }
@@ -76,16 +88,17 @@ export class APICore<FetchType, RequestType> {
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
     const url = `${this.url}${id}/`;
+    const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
-      .patch<FetchType>(url, data, this.setAuthenticationHeader(RequestConfig))
-      .catch(() => {
-        if (tries === 0) {
-          throw new Error(`Item ${this.url} did not updated!`);
-        }
-
-        return this.update(id, data, RequestConfig, tries - 1);
-      });
+      .patch<FetchType>(url, data, requestConfig)
+      .catch((error: AxiosError<WrongResponse>) =>
+        this.retry<ReturnType<typeof this.update>>(
+          (tries) => this.update(id, data, requestConfig, tries),
+          error,
+          tries
+        )
+      );
   }
 
   async remove(
@@ -94,19 +107,25 @@ export class APICore<FetchType, RequestType> {
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
     const url = `${this.url}${id}/`;
-    return await axios
-      .delete<FetchType>(url, this.setAuthenticationHeader(RequestConfig))
-      .catch(() => {
-        if (tries === 0) {
-          throw new Error(`Item ${this.url} did not updated!`);
-        }
+    const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
-        return this.remove(id, RequestConfig, tries - 1);
-      });
+    return await axios
+      .delete<FetchType>(url, requestConfig)
+      .catch((error: AxiosError<WrongResponse>) =>
+        this.retry<ReturnType<typeof this.remove>>(
+          (tries) => this.remove(id, requestConfig, tries),
+          error,
+          tries
+        )
+      );
   }
 
-  private setAuthenticationHeader(RequestConfig: AxiosRequestConfig) {
-    const headerValue = `Bearer ${CredentialStorage.get('access')}`;
+  setAuthenticationHeader(RequestConfig: AxiosRequestConfig) {
+    if (!this.CredentialStorage) {
+      return RequestConfig;
+    }
+
+    const headerValue = `Bearer ${this.CredentialStorage.get('access')}`;
 
     if (!RequestConfig.headers) {
       RequestConfig['headers'] = {};
@@ -116,4 +135,33 @@ export class APICore<FetchType, RequestType> {
 
     return RequestConfig;
   }
+
+  public compile() {
+    return {
+      url: this.url,
+      credentialStorage: this.CredentialStorage,
+      fetchAll: this.fetchAll,
+      fetchByID: this.fetchByID,
+      create: this.create,
+      update: this.update,
+      remove: this.remove,
+      setAuthenticationHeader: this.setAuthenticationHeader,
+      retry: this.retry,
+    };
+  }
 }
+
+export const getAPICore = <FetchType, RequestType>(url: string) => {
+  const apiCore = new APICore<FetchType, RequestType>(url).compile();
+
+  return {
+    serverApi: (cookies: ReadonlyRequestCookies | null = null) => {
+      apiCore.credentialStorage = cookies;
+      return apiCore;
+    },
+    clientApi: () => {
+      apiCore.credentialStorage = CredentialStorage;
+      return apiCore;
+    },
+  };
+};
