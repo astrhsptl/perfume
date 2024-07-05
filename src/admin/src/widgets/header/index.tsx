@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './header.css';
+import { getMonthName } from './lib';
 interface Header {}
 
 export const Header: React.FC<Header> = () => {
@@ -14,11 +15,6 @@ export const Header: React.FC<Header> = () => {
       clearTimeout(interval);
     };
   }, []);
-
-  const getMonthName = () => {
-    const formatter = new Intl.DateTimeFormat('ru-RU', { month: 'long' });
-    return formatter.format(this);
-  };
 
   return (
     <>
