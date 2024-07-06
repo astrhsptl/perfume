@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { modalReducers } from '../lib';
 import { RootState } from '../types';
 
 interface FilterModalState {
@@ -12,17 +13,7 @@ const initialStatement: FilterModalState = {
 export const filterModalSlice = createSlice({
   name: 'filterModal',
   initialState: initialStatement,
-  reducers: {
-    open: (state) => {
-      state.state = true;
-    },
-    close: (state) => {
-      state.state = false;
-    },
-    toggle: (state) => {
-      state.state = !state.state;
-    },
-  },
+  reducers: modalReducers,
 });
 
 export const filterModalActions = filterModalSlice.actions;

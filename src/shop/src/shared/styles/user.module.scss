@@ -1,0 +1,90 @@
+@import './base.module.scss';
+
+.user {
+  display: grid;
+  grid-template-columns: 150px auto;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+}
+
+.username {
+  @include font(32px, 700);
+  margin-bottom: 16px;
+}
+
+.userEmail {
+  @include font(20px);
+  color: var(--gray-blur);
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--white);
+  object-fit: none;
+
+  & > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: none;
+  }
+}
+
+.productBlock {
+  @include font(24px, 700);
+  display: grid;
+  grid-template-rows: 24px auto;
+  gap: 30px;
+
+  margin-top: 50px;
+
+  // padding: 30px;
+  // max-width: 100%;
+  min-height: 300px;
+
+  background-color: var(--user-container);
+  border-radius: 5px;
+}
+
+.products {
+  @include flexCenter();
+  flex-wrap: nowrap;
+  gap: 20px;
+
+  & > h3 {
+    color: var(--gray-dark);
+  }
+}
+
+@media (max-width: $mobileWidth) {
+  .avatar {
+    width: 100px;
+    height: 100px;
+    padding: 20px;
+
+    & > img {
+      object-fit: contain;
+    }
+  }
+
+  .user {
+    grid-template-columns: 100px auto;
+  }
+
+  .username {
+    font-size: 20px;
+  }
+
+  .userEmail {
+    font-size: 14px;
+  }
+
+  .productBlock {
+    font-size: 18px;
+
+    // padding: 20px;
+    min-height: 200px;
+  }
+}
