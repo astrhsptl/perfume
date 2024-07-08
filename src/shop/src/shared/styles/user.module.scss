@@ -6,11 +6,13 @@
   justify-content: start;
   align-items: center;
   gap: 30px;
+  word-break: break-all;
 }
 
 .username {
   @include font(32px, 700);
   margin-bottom: 16px;
+  word-break: break-all;
 }
 
 .userEmail {
@@ -38,11 +40,12 @@
   grid-template-rows: 24px auto;
   gap: 30px;
 
+  margin: 0 auto;
   margin-top: 50px;
-
-  // padding: 30px;
-  // max-width: 100%;
+  width: 80%;
   min-height: 300px;
+
+  padding: 30px;
 
   background-color: var(--user-container);
   border-radius: 5px;
@@ -84,7 +87,6 @@
   .productBlock {
     font-size: 18px;
 
-    // padding: 20px;
     min-height: 200px;
   }
 }
