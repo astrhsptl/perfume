@@ -7,11 +7,11 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en'>
       <head>
         <meta name='theme-color' content='#000' />
       </head>
-      <body suppressHydrationWarning>
+      <body>
         <RootProvider>
           <div id='root'>{children}</div>
           <div id='modal-root'>
