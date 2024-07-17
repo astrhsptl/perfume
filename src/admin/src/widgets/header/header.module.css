@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
 
-header {
+.header {
   display: flex;
   width: 100%;
 
@@ -32,7 +32,7 @@ header {
   text-align: center;
 }
 
-p {
+data {
   font-size: 20px;
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;
@@ -49,7 +49,7 @@ p {
     font-size: 26px;
   }
 
-  p {
+  data {
     font-size: 14px;
   }
 }

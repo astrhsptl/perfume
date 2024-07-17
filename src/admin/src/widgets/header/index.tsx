@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './header.css';
+import HeaderStyles from './header.module.css';
 import { getMonthName } from './lib';
 interface Header {}
 
@@ -18,11 +18,11 @@ export const Header: React.FC<Header> = () => {
 
   return (
     <>
-      <header>
-        <div className='conteiner'>
-          <h1 className='title'>Заказы</h1>
-          <div className='time'>
-            <p>
+      <header className={HeaderStyles.header}>
+        <div className={HeaderStyles.conteiner}>
+          <h1 className={HeaderStyles.title}>Заказы</h1>
+          <div className={HeaderStyles.time}>
+            <p className={HeaderStyles.data}>
               {currentDate.getHours().toLocaleString()}:
               {currentDate.getMinutes().toLocaleString()}
             </p>

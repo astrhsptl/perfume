@@ -5,7 +5,7 @@ import { compileRouter } from './providers';
 const Router = () => {
   return (
     <>
-      <Route path='/' element={<OrdersPage />} />
+      <Route index element={<OrdersPage />} />
     </>
   );
 };
