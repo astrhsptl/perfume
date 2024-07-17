@@ -1,4 +1,5 @@
 import { NotFound } from '@/pages';
+import { Plug } from '@/pages/__plug';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,6 +16,7 @@ export const compileRouter = (router: () => JSX.Element) => {
         <Route path='admin' element={<Outlet />}>
           {appRoutes}
         </Route>
+        <Route path='/not-found' element={<Plug />} />
         <Route path='*' element={<NotFound />} />
       </>,
     ),

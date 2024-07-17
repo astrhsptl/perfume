@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import HeaderStyles from './header.module.css';
-import { getMonthName } from './lib';
+import { formatTimeString, getMonthName } from './lib';
 interface Header {}
 
 export const Header: React.FC<Header> = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const hours = formatTimeString(currentDate.getHours().toLocaleString());
+  const minutes = formatTimeString(currentDate.getMinutes().toLocaleString());
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,8 +25,7 @@ export const Header: React.FC<Header> = () => {
           <h1 className={HeaderStyles.title}>Заказы</h1>
           <div className={HeaderStyles.time}>
             <p className={HeaderStyles.data}>
-              {currentDate.getHours().toLocaleString()}:
-              {currentDate.getMinutes().toLocaleString()}
+              {hours}:{minutes}
             </p>
             <p>
               {currentDate.getDate()} {getMonthName(currentDate)}
