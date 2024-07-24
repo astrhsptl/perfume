@@ -18,14 +18,8 @@ class User(BaseModel):
     is_admin: Mapped[bool] = mapped_column(nullable=False, default=False)
     is_active: Mapped[bool] = mapped_column(nullable=False, default=True)
     
-    cart: Mapped["Cart"] = relationship(
+    cart: Mapped[list["Cart"]] = relationship(
         back_populates="user",
-        )
-    
-    
-    perfume_volume: Mapped[list["PerfumeVolume"]] = relationship(
-        back_populates="user",
-        secondary="favourite",
         )
     
     perfume: Mapped[list["Perfume"]] = relationship(

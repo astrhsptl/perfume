@@ -4,7 +4,7 @@ from ._base import BaseModel
 
 
 class PerfumeType(BaseModel):
-    __tablename__ = "pefume_type"
+    __tablename__ = "perfume_type"
     
     name: Mapped[str] = mapped_column(nullable=False)
     

@@ -22,7 +22,7 @@ class Cart(BaseModel):
         back_populates="cart",
         )
     
-    volume: Mapped["PerfumeVolume"] = relationship(
+    perfume_volume: Mapped[list["PerfumeVolume"]] = relationship(
         back_populates="cart",
         secondary="cart_perfume"
         )
@@ -30,25 +30,22 @@ class Cart(BaseModel):
     status: Mapped["Status"] = relationship(
         back_populates="cart",
     )
-# @event.listens_for(Cart.status_id, "append")
-# def receive_append(target, initiator):
-#     print("penis")
-    # return requests.post("127.0.0.0/api/v1/perfume/create", {"name": "string2", "description": "xmxmx", "hidden": False})
+
+    cart_perfume: Mapped[list["CartPerfume"]] = relationship(
+        viewonly=True,
+        back_populates="cart",
+        )
+
+
 @event.listens_for(Cart.status_id, "modified")
 def receive_modified(target, initiator):
-    print(target.status.title)
+    print(target, "penis")
     if target.status.title == "В пути":
         target.issue_date = datetime.now()
     elif target.status.title == "Готов к выдаче":
-        print(target.status.title)
         target.delivery_date = datetime.now()
-        print(target.delivery_date)
     elif target.status.title == "Завершен":
         target.buy_date = datetime.now()
     else:
         pass
-    # return requests.post("127.0.0.0/api/v1/perfume/create", {"name": "string2", "description": "xmxmx", "hidden": False})
-# @event.listens_for(Cart.status_id, "set")
-# def receive_set(target, value, old, initiator):
-#     print("penis")
-    # return requests.post("127.0.0.0/api/v1/perfume/create", {"name": "string2", "description": "xmxmx", "hidden": False})
+

@@ -41,7 +41,7 @@ def upgrade() -> None:
     op.create_foreign_key(None, 'favourite', 'perfume', ['perfume_id'], ['id'], ondelete='CASCADE')
     op.drop_column('favourite', 'perfume_volume_id')
     op.add_column('perfume', sa.Column('aroma', sa.String(), nullable=True))
-    op.add_column('perfume', sa.Column('sex', sa.Enum('man', 'wonam', name='sexpossible'), nullable=True))
+    op.add_column('perfume', sa.Column('sex', sa.String(), nullable=False))
     op.add_column('perfume', sa.Column('brand_id', sa.Uuid(), nullable=True))
     op.add_column('perfume', sa.Column('perfume_type_id', sa.Uuid(), nullable=True))
     op.create_foreign_key(None, 'perfume', 'brand', ['brand_id'], ['id'], ondelete='SET NULL')

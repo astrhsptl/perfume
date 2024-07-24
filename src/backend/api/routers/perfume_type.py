@@ -1,34 +1,33 @@
 from uuid import UUID
 from typing import Annotated
+from app.schemas.perfume_type import PerfumeTypeCreate, PerfumeTypeRead, PerfumeTypeUpdate, PerfumeDepthRead, PerfumeTypeSearch
 from app.schemas.response import ErrorResponse, SuccessResponse
-from app.schemas.status import StatusCreate, StatusRead, StatusUpdate, StatusSearch
-from app.service.status import StatusService
+from app.service.perfume_type import PerfumeTypeService
 from fastapi import APIRouter, HTTPException, Request, Depends
 
-status_router = APIRouter(prefix="/status", tags=["Status"])
+perfume_type_router = APIRouter(prefix="/perfume-type", tags=["Perfume Type"])
 
-service = StatusService()
+service = PerfumeTypeService()
 
-
-@status_router.get("/get_all")
+@perfume_type_router.get("/get_all")
 async def get_all(request: Request, 
                 page: int = 1, 
                 quantity: int = 50, 
                 order_by: str | None = None,
-                search_field: Annotated[StatusSearch, Depends()] = None):
+                search_field: Annotated[PerfumeTypeSearch, Depends()] = None):
     data = await service.get_all(request=request, 
                                 page=page, 
                                 quantity=quantity, 
                                 order_by=order_by,
                                 search_fields=search_field.model_dump(exclude_none=True))
-
+    
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
     
     return data
 
-@status_router.get("/get_by_condition", response_model=StatusRead)
-async def get_by_id(id: UUID) -> StatusRead:
+@perfume_type_router.get("/get_by_condition", response_model=PerfumeDepthRead)
+async def get_by_id(id: UUID) -> PerfumeDepthRead:
     data = await service.get_by_id(id=id)
     
     if isinstance(data, ErrorResponse):
@@ -36,8 +35,8 @@ async def get_by_id(id: UUID) -> StatusRead:
     
     return data
 
-@status_router.post("/create", response_model=StatusRead, status_code=201)
-async def create(data: StatusCreate) -> StatusRead:
+@perfume_type_router.post("/create", response_model=PerfumeTypeRead, status_code=201)
+async def create(data: PerfumeTypeCreate) -> PerfumeTypeRead:
     data = await service.create(data=data)
     
     if isinstance(data, ErrorResponse):
@@ -45,8 +44,8 @@ async def create(data: StatusCreate) -> StatusRead:
     
     return data
 
-@status_router.patch("/update", response_model=StatusRead)
-async def update(id: UUID, data: StatusUpdate) -> StatusRead:
+@perfume_type_router.patch("/update", response_model=PerfumeTypeRead)
+async def update(id: UUID, data: PerfumeTypeUpdate) -> PerfumeTypeRead:
     data = await service.update(id=id, data=data)
     
     if isinstance(data, ErrorResponse):
@@ -54,7 +53,7 @@ async def update(id: UUID, data: StatusUpdate) -> StatusRead:
     
     return data
 
-@status_router.delete("/delete", response_model=SuccessResponse)
+@perfume_type_router.delete("/delete", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

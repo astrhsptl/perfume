@@ -9,13 +9,20 @@ from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.perfume_volume import PerfumeVolumeService
 from fastapi import APIRouter, HTTPException, Request
 
-perfume_volume_router = APIRouter(prefix="/perfume_volume", tags=["Perfume Volume"])
+
+perfume_volume_router = APIRouter(prefix="/perfume-volume", tags=["Perfume Volume"])
 
 service = PerfumeVolumeService()
 
 @perfume_volume_router.get("/get_all")
-async def get_all(request: Request, page: int = 1, quantity: int = 50, order_by: str | None = None):
-    data = await service.get_all(request=request, page=page, quantity=quantity, order_by=order_by)
+async def get_all(request: Request, 
+                page: int = 1, 
+                quantity: int = 50, 
+                order_by: str | None = None):
+    data = await service.get_all(request=request, 
+                                page=page, 
+                                quantity=quantity, 
+                                order_by=order_by)
     
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
@@ -40,7 +47,7 @@ async def create(data: PerfumeVolumeCreate) -> PerfumeVolumeRead:
     
     return data
 
-@perfume_volume_router.post("/update", response_model=PerfumeVolumeRead)
+@perfume_volume_router.patch("/update", response_model=PerfumeVolumeRead)
 async def update(id: UUID, data: PerfumeVolumeUpdate) -> PerfumeVolumeRead:
     data = await service.update(id=id, data=data)
     
@@ -49,7 +56,7 @@ async def update(id: UUID, data: PerfumeVolumeUpdate) -> PerfumeVolumeRead:
     
     return data
 
-@perfume_volume_router.post("/delete", response_model=SuccessResponse)
+@perfume_volume_router.delete("/delete", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

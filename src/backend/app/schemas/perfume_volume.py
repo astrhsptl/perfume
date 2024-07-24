@@ -1,8 +1,14 @@
 from ._base import BaseSchema
 from datetime import datetime 
 from uuid import UUID 
-from core.models.perfume_volume import PossibleVolumes
+from enum import Enum
+from pydantic import BaseModel, Field
 
+
+class PossibleVolumes(Enum):
+    small: int = 10
+    middle: int = 20
+    large: int = 30
 
 class PerfumeValumeBase(BaseSchema):
     volume: PossibleVolumes
@@ -21,4 +27,7 @@ class PerfumeVolumeCreate(PerfumeValumeBase):
 
 
 class PerfumeVolumeUpdate(PerfumeValumeBase):
-    pass 
+    volume: PossibleVolumes | None = Field(default=None)
+    quantity: int | None = Field(default=None)
+    const: float | None = Field(default=None)
+    perfume_id: UUID | None = Field(default=None)  

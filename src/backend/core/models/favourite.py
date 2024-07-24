@@ -1,5 +1,5 @@
 from sqlalchemy import UUID, ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ._base import BaseModel
 
@@ -15,3 +15,7 @@ class Favourite(BaseModel):
         ForeignKey("user.id", ondelete="CASCADE"),
         primary_key=True)
     
+    perfume: Mapped["Perfume"] = relationship(
+        viewonly=True,
+        back_populates="favourite",
+    )

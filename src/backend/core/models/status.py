@@ -9,6 +9,6 @@ class Status(BaseModel):
     title: Mapped[str] = mapped_column(nullable=False, unique=True)
     description: Mapped[str] = mapped_column(nullable=False)
 
-    cart: Mapped["Cart"] = relationship(
+    cart: Mapped[list["Cart"]] = relationship(
         back_populates="status",
     )

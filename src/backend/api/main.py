@@ -13,6 +13,8 @@ from .routers import (
     perfume_volume_router,
     status_router,
     user_router,
+    perfume_type_router,
+    brand_router,
 )
 
 app = FastAPI(prefix="/api")
@@ -35,5 +37,7 @@ app.include_router(perfume_volume_router, prefix="/v1")
 app.include_router(perfume_router, prefix="/v1")
 app.include_router(user_router, prefix="/v1")
 app.include_router(status_router, prefix="/v1")
+app.include_router(brand_router, prefix="/v1")
+app.include_router(perfume_type_router, prefix="/v1")
 
 app.include_router(auth_router)

@@ -9,13 +9,19 @@ from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.cart_perfume import CartPerfumeService
 from fastapi import APIRouter, HTTPException, Request
 
-cart_perfume_router = APIRouter(prefix="/cart_perfume", tags=["Cart Perfume"])
+cart_perfume_router = APIRouter(prefix="/cart-perfume", tags=["Cart Perfume"])
 
 service = CartPerfumeService()
 
 @cart_perfume_router.get("/get_all")
-async def get_all(request: Request, page: int = 1, quantity: int = 50, order_by: str | None = None):
-    data = await service.get_all(request=request, page=page, quantity=quantity, order_by=order_by)
+async def get_all(request: Request, 
+                page: int = 1, 
+                quantity: int = 50, 
+                order_by: str | None = None):
+    data = await service.get_all(request=request, 
+                                page=page, 
+                                quantity=quantity, 
+                                order_by=order_by)
     
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
@@ -40,7 +46,7 @@ async def create(data: CartPerfumeCreate) -> CartPerfumeRead:
     
     return data
 
-@cart_perfume_router.post("/update", response_model=CartPerfumeRead)
+@cart_perfume_router.patch("/update", response_model=CartPerfumeRead)
 async def update(id: UUID, data: CartPerfumeUpdate) -> CartPerfumeRead:
     data = await service.update(id=id, data=data)
     
@@ -49,7 +55,7 @@ async def update(id: UUID, data: CartPerfumeUpdate) -> CartPerfumeRead:
     
     return data
 
-@cart_perfume_router.post("/delete", response_model=SuccessResponse)
+@cart_perfume_router.delete("/delete", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

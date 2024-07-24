@@ -1,7 +1,7 @@
 
 from repository.perfume import PerfumeRepository
 
-from app.schemas.perfume import PerfumeRead
+from app.schemas.perfume import PerfumeRead, PerfumeDepthRead, PerfumeDepthForIdRead
 
 from ._base_service import BaseService
 
@@ -9,7 +9,8 @@ from ._base_service import BaseService
 class PerfumeService(BaseService):
     _repository = PerfumeRepository()
     _serializer = PerfumeRead
-    # _depth_serializer = PerfumeDepthRead
+    _depth_serializer = PerfumeDepthRead
+    _depth_serializer_for_id = PerfumeDepthForIdRead
     # _serializer_on_id = PerfumeDepthOnID
     
     # async def get_by_id(self, id: str | UUID) -> BaseSchema | ErrorResponse:

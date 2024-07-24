@@ -10,8 +10,14 @@ file_router = APIRouter(prefix="/file", tags=["File"])
 service = FileService()
 
 @file_router.get("/get_all")
-async def get_all(request: Request, page: int = 1, quantity: int = 50, order_by: str | None = None):
-    data = await service.get_all(request=request, page=page, quantity=quantity, order_by=order_by)
+async def get_all(request: Request, 
+                page: int = 1, 
+                quantity: int = 50, 
+                order_by: str | None = None):
+    data = await service.get_all(request=request, 
+                                page=page, 
+                                quantity=quantity, 
+                                order_by=order_by)
     
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
@@ -36,7 +42,7 @@ async def create(data: FileCreate) -> FileRead:
     
     return data
 
-@file_router.post("/update", response_model=FileRead)
+@file_router.patch("/update", response_model=FileRead)
 async def update(id: UUID, data: FileUpdate) -> FileRead:
     data = await service.update(id=id, data=data)
     
@@ -45,7 +51,7 @@ async def update(id: UUID, data: FileUpdate) -> FileRead:
     
     return data
 
-@file_router.post("/delete", response_model=SuccessResponse)
+@file_router.delete("/delete", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

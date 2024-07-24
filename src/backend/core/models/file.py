@@ -9,7 +9,7 @@ from ._base import BaseModel
 class File(BaseModel):
     __tablename__ = "file"
 
-    url: Mapped[str] = mapped_column()
+    url: Mapped[str] = mapped_column(unique=True, nullable=False)
     
     perfume_id: Mapped[UUID] = mapped_column(
         ForeignKey("perfume.id", ondelete="SET NULL"),
@@ -17,5 +17,5 @@ class File(BaseModel):
         default=None,)
     
     perfume: Mapped[list["Perfume"]] = relationship(
-    back_populates="file",
-    )
+        back_populates="file",
+        )  

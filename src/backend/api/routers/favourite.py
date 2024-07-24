@@ -10,8 +10,14 @@ favourite_router = APIRouter(prefix="/favourite", tags=["Favourite"])
 service = FavouriteService()
 
 @favourite_router.get("/get_all")
-async def get_all(request: Request, page: int = 1, quantity: int = 50, order_by: str | None = None):
-    data = await service.get_all(request=request, page=page, quantity=quantity, order_by=order_by)
+async def get_all(request: Request, 
+                page: int = 1, 
+                quantity: int = 50, 
+                order_by: str | None = None):
+    data = await service.get_all(request=request, 
+                                page=page, 
+                                quantity=quantity, 
+                                order_by=order_by)
     
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
@@ -36,7 +42,7 @@ async def create(data: FavouriteCreate) -> FavouriteRead:
     
     return data
 
-@favourite_router.post("/update", response_model=FavouriteRead)
+@favourite_router.patch("/update", response_model=FavouriteRead)
 async def update(id: UUID, data: FavouriteUpdate) -> FavouriteRead:
     data = await service.update(id=id, data=data)
     
@@ -45,7 +51,7 @@ async def update(id: UUID, data: FavouriteUpdate) -> FavouriteRead:
     
     return data
 
-@favourite_router.post("/delete", response_model=SuccessResponse)
+@favourite_router.delete("/delete", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

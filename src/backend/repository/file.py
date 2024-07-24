@@ -1,5 +1,4 @@
 from core.models.file import File
-
 from ._base_sqlalchemy_repository import BaseSQLAlchemyRepository
 
 

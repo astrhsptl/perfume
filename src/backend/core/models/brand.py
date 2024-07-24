@@ -9,6 +9,6 @@ class Brand(BaseModel):
     
     title: Mapped[str] = mapped_column(nullable=False, unique=True)
     
-    perfume: Mapped["Perfume"] = relationship(
+    perfume: Mapped[list["Perfume"]] = relationship(
         back_populates="brand",
         )
