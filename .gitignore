@@ -3,7 +3,7 @@
 **/.vs
 **/.vscode
 **/.idea
-**/venv
+**/.venv
 **/media
 **/static
 **/env
