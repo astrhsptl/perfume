@@ -1,5 +1,6 @@
-from uuid import UUID
 import datetime
+from uuid import UUID
+
 from core.database import SESSION
 from core.models._base import BaseModel
 from dto.exception_dto import ErrorDTO
@@ -7,8 +8,8 @@ from dto.success_dto import SuccessDTO
 from sqlalchemy import Select, delete, select, update
 from sqlalchemy.exc import DBAPIError, IntegrityError
 from sqlalchemy.orm import selectinload
-from sqlalchemy.sql.expression import func
 from sqlalchemy.orm.attributes import flag_modified
+from sqlalchemy.sql.expression import func
 
 from ._base_repository import IBaseRepository
 
@@ -18,82 +19,112 @@ class BaseSQLAlchemyRepository(IBaseRepository):
     additional_tables: list[str] | None = None
     soft_deletion: bool = False
 
-    async def get_all(self,
-                    page: int = 0, 
-                    limit: int = 30, 
-                    order_by: str | None = None, 
-                    **kwargs) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
-        
-        statement = (
-            select(self.model)
-        )
+    async def get_all(
+        self, page: int = 0, limit: int = 30, order_by: str | None = None, **kwargs
+    ) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
+        statement = select(self.model)
 
         if self.additional_tables:
-            statement = statement.options(*[selectinload(add_table) for add_table in [getattr(self.model, additional_table) for additional_table in self.additional_tables]])
+            statement = statement.options(
+                *[
+                    selectinload(add_table)
+                    for add_table in [
+                        getattr(self.model, additional_table)
+                        for additional_table in self.additional_tables
+                    ]
+                ]
+            )
 
-        statement = statement.select_from(self.model).offset((page-1) * limit).limit(limit)
+        statement = (
+            statement.select_from(self.model).offset((page - 1) * limit).limit(limit)
+        )
 
         if kwargs.get("search_fields", False):
             for key, value in kwargs["search_fields"].items():
                 if hasattr(self.model, key):
                     if isinstance(value, str):
-                        statement = statement.filter(func.levenshtein(getattr(self.model, key),value.lower()) < 3)
+                        statement = statement.filter(
+                            func.levenshtein(getattr(self.model, key), value.lower())
+                            < 3
+                        )
                     elif isinstance(value, datetime.date):
-                        statement = statement.filter(func.date(getattr(self.model, key))==value)
+                        statement = statement.filter(
+                            func.date(getattr(self.model, key)) == value
+                        )
                     else:
-                        statement = statement.filter(*[getattr(self.model, key) == value])
+                        statement = statement.filter(
+                            *[getattr(self.model, key) == value]
+                        )
 
         if kwargs.get("search_date_to_from", False):
             search_field = kwargs["search_date_to_from"].get("date_search_field", False)
-            
+
             if hasattr(self.model, search_field):
                 del kwargs["search_date_to_from"]["date_search_field"]
-                statement = statement.filter(*[func.date(getattr(self.model, search_field)) >= value if key == "date_to" else func.date(getattr(self.model, search_field)) <= value for key, value in kwargs["search_date_to_from"].items()])
+                statement = statement.filter(
+                    *[
+                        func.date(getattr(self.model, search_field)) >= value
+                        if key == "date_to"
+                        else func.date(getattr(self.model, search_field)) <= value
+                        for key, value in kwargs["search_date_to_from"].items()
+                    ]
+                )
 
         statement = self._ordering_statement(statement, order_by)
-        
+
         try:
             async with SESSION() as session:
                 statement = await session.execute(statement)
                 data = statement.scalars().unique().all()
-                
+
                 if data is None:
                     return ErrorDTO("Data not found", 404)
-                
+
                 return SuccessDTO[self.model](data)
-            
+
         except DBAPIError:
             return ErrorDTO("Database error", 500)
 
-    async def get_by_condition(self, **kwargs) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
-        statement = (
-            select(self.model)
-        )
+    async def get_by_condition(
+        self, **kwargs
+    ) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
+        statement = select(self.model)
 
         if self.additional_tables:
-            statement = statement.options(*[selectinload(add_table) for add_table in [getattr(self.model, additional_table) for additional_table in self.additional_tables]])
+            statement = statement.options(
+                *[
+                    selectinload(add_table)
+                    for add_table in [
+                        getattr(self.model, additional_table)
+                        for additional_table in self.additional_tables
+                    ]
+                ]
+            )
 
-        statement = statement.select_from(self.model).filter(*[getattr(self.model, key) == value for key, value in kwargs.items()])
+        statement = statement.select_from(self.model).filter(
+            *[getattr(self.model, key) == value for key, value in kwargs.items()]
+        )
 
         try:
             async with SESSION() as session:
                 statement = await session.execute(statement)
                 data = statement.scalar()
-                
+
                 if not data:
                     return ErrorDTO("Data not found", 404)
-                    
+
                 return SuccessDTO[self.model](data)
-            
+
         except DBAPIError:
             return ErrorDTO("Database error", 500)
 
-    async def create(self, data: dict, **kwargs) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
+    async def create(
+        self, data: dict, **kwargs
+    ) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
         insert_data = self.model(**data.model_dump(exclude_unset=True))
 
         if kwargs.get("file", False):
             insert_data.url = kwargs.get("file")
-
 
         try:
             async with SESSION() as session:
@@ -101,20 +132,32 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 await session.commit()
                 await session.refresh(insert_data)
                 return SuccessDTO[self.model](insert_data)
-                
+
         except IntegrityError:
             return ErrorDTO("Data already exists", 400)
-    
-    async def update(self, id: UUID, data: dict) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
-        statement = (
-                    update(self.model)
-                )
-        
+
+    async def update(
+        self, id: UUID, data: dict
+    ) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
+        statement = update(self.model)
+
         if self.additional_tables:
-            statement = statement.options(*[selectinload(add_table) for add_table in [getattr(self.model, additional_table) for additional_table in self.additional_tables]])
-        
-        statement = statement.values(**data.model_dump(exclude_unset=True)).where(self.model.id == str(id)).returning(self.model)
-        
+            statement = statement.options(
+                *[
+                    selectinload(add_table)
+                    for add_table in [
+                        getattr(self.model, additional_table)
+                        for additional_table in self.additional_tables
+                    ]
+                ]
+            )
+
+        statement = (
+            statement.values(**data.model_dump(exclude_unset=True))
+            .where(self.model.id == str(id))
+            .returning(self.model)
+        )
+
         try:
             async with SESSION() as session:
                 data = (await session.execute(statement)).unique().scalar()
@@ -124,17 +167,17 @@ class BaseSQLAlchemyRepository(IBaseRepository):
 
                 if hasattr(self.model, "status_id"):
                     flag_modified(data, "status_id")
-                
+
                 await session.commit()
                 await session.refresh(data)
                 return SuccessDTO[self.model](data)
-                    
+
         except IntegrityError:
             return ErrorDTO("Data already exists", 400)
-        
+
         except DBAPIError:
             return ErrorDTO("Database error", 500)
-    
+
     async def delete(self, id: UUID) -> SuccessDTO[str] | ErrorDTO[str | int]:
         if self.soft_deletion:
             statement = (
@@ -145,9 +188,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
             )
         else:
             statement = (
-                delete(self.model)
-                .where(self.model.id == id)
-                .returning(self.model)
+                delete(self.model).where(self.model.id == id).returning(self.model)
             )
 
         try:
@@ -156,35 +197,34 @@ class BaseSQLAlchemyRepository(IBaseRepository):
 
                 if data is None:
                     return ErrorDTO("Data not found", 404)
+
                 await session.commit()
-                
+
                 result = SuccessDTO("Entity success deleted")
 
                 if data.__dict__.get("url", False):
                     result.set_url(data.__dict__.get("url"))
-                
+
                 return result
-        
+
         except IntegrityError:
             return ErrorDTO("data is not exists", 400)
-        
+
         except DBAPIError:
             return ErrorDTO("Database error", 500)
-    
-    
+
     def _ordering_statement(self, statement, order_colomn: str | None = None) -> Select:
-        
         if order_colomn is None:
-                return statement
-        
+            return statement
+
         reverse = False
-        
-        if order_colomn.startswith('-'):
+
+        if order_colomn.startswith("-"):
             reverse = True
             order_colomn = order_colomn[1:]
-        
+
         if not hasattr(self.model, order_colomn):
             return statement
-        
+
         attribute = getattr(self.model, order_colomn)
         return statement.order_by(attribute.desc() if reverse else attribute.asc())

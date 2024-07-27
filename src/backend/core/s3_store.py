@@ -1,16 +1,13 @@
 from minio import Minio
-from minio.error import S3Error
 
-bucket_name = "test-bucket"
-minio_host = "s3.labofdev.ru"
+from .config import MINIO_ACCESS_KEY, MINIO_SECRET_KEY, S3_BUCKET_NAME, S3_URL
 
-# Initialize MinIO client
 minio_client = Minio(
-    minio_host,  # replace with your MinIO server address
-    access_key="NCitCJJY49q8ZY4YiLP4",
-    secret_key="GdUd3KB6KJOEAP7YStpJmAO9QFX9C25EId2XXn5C",
-    secure=True,  # set to False if using HTTP
+    S3_URL,
+    access_key=MINIO_ACCESS_KEY,
+    secret_key=MINIO_SECRET_KEY,
+    secure=True,
 )
 
-if not minio_client.bucket_exists(bucket_name):
-    minio_client.make_bucket(bucket_name)
+if not minio_client.bucket_exists(S3_BUCKET_NAME):
+    minio_client.make_bucket(S3_BUCKET_NAME)

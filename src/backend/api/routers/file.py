@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from app.schemas.file import FileCreate, FileRead, FileUpdate
+from app.schemas.file import FileCreate, FileRead
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.file import FileService
 from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Depends
