@@ -1,15 +1,47 @@
 from math import ceil
 from uuid import UUID
-
 from fastapi import Request
 from pydantic import create_model
 from repository._base_repository import IBaseRepository
-
+from core.s3_store import bucket_name, minio_host, minio_client
 from app.schemas._base import BaseSchema
 from app.schemas.response import ErrorResponse, PaginateBase, SuccessResponse
+from os import fstat
+from minio.error import S3Error
+from urllib.parse import unquote
 
+class BaseFileService():
+    _bucket_name = bucket_name
+    _minio_host = minio_host
+    _minio_client = minio_client
 
-class BaseService():
+    async def remove_file_from_s3(self, url):
+        part_of_path = url.split("/")
+        try:
+            self._minio_client.remove_object(part_of_path[3], unquote(part_of_path[4]))
+        except S3Error as e:
+            return ErrorResponse(detail={"error": str(e)})
+
+    async def upload_file_to_s3(self, file, request: Request):
+        try:
+            result = self._minio_client.put_object(self._bucket_name, file.filename, file.file, fstat(file.file.fileno()).st_size)
+            
+            result = await self._create_path_file(result, request)
+        except Exception as e:
+            return ErrorResponse(detail={"error": str(e)}, status_code=400)
+        
+        return result
+    
+    async def _create_path_file(self, file, request: Request):
+        try:
+            response_file = self._minio_client.get_object(file._bucket_name, file.__dict__.get("_object_name"))
+            files_path = f"{request.url.scheme}s://{self._minio_host}{response_file.__dict__.get('_request_url')}"
+        except S3Error as e:
+            return ErrorResponse(detail={"error": str(e)}, status_code=404)
+        
+        return files_path
+
+class BaseService(BaseFileService):
     _repository: IBaseRepository
     _serializer: BaseSchema
     _depth_serializer: BaseSchema | None = None
@@ -51,8 +83,17 @@ class BaseService():
         else:
             return self._serializer.model_validate(result.data)
     
-    async def create(self, data: BaseSchema) -> BaseSchema | ErrorResponse:
-        result = await self._repository.create(data=data)
+    async def create(self, data: BaseSchema, **kwargs) -> BaseSchema | ErrorResponse:
+        if kwargs.get("file", False):
+            file_url = await self.upload_file_to_s3(kwargs["file"], kwargs["request"])
+
+            if hasattr(file_url, "detail"):
+                return ErrorResponse(detail=file_url.detail, status_code=file_url.status_code)
+            
+            result = await self._repository.create(data=data, file=file_url)
+        
+        else:
+            result = await self._repository.create(data=data)
 
         if hasattr(result, "detail"):
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
@@ -69,9 +110,12 @@ class BaseService():
     
     async def delete(self, id: str | UUID) -> SuccessResponse | ErrorResponse:
         result = await self._repository.delete(id=id)
-        
+
         if hasattr(result, "detail"):
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
+
+        if result.url:
+            await self.remove_file_from_s3(result.url)
 
         return SuccessResponse(detail=result.data)
     

@@ -36,14 +36,13 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         if kwargs.get("search_fields", False):
             for key, value in kwargs["search_fields"].items():
                 if hasattr(self.model, key):
-                    print(key)
                     if isinstance(value, str):
                         statement = statement.filter(func.levenshtein(getattr(self.model, key),value.lower()) < 3)
                     elif isinstance(value, datetime.date):
                         statement = statement.filter(func.date(getattr(self.model, key))==value)
                     else:
                         statement = statement.filter(*[getattr(self.model, key) == value])
-        print(kwargs)
+
         if kwargs.get("search_date_to_from", False):
             search_field = kwargs["search_date_to_from"].get("date_search_field", False)
             
@@ -63,8 +62,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 
                 return SuccessDTO[self.model](data)
             
-        except DBAPIError as e:
-            print(e)
+        except DBAPIError:
             return ErrorDTO("Database error", 500)
 
     async def get_by_condition(self, **kwargs) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
@@ -90,8 +88,12 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         except DBAPIError:
             return ErrorDTO("Database error", 500)
 
-    async def create(self, data: dict) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
+    async def create(self, data: dict, **kwargs) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
         insert_data = self.model(**data.model_dump(exclude_unset=True))
+
+        if kwargs.get("file", False):
+            insert_data.url = kwargs.get("file")
+
 
         try:
             async with SESSION() as session:
@@ -154,9 +156,14 @@ class BaseSQLAlchemyRepository(IBaseRepository):
 
                 if data is None:
                     return ErrorDTO("Data not found", 404)
-                
                 await session.commit()
-                return SuccessDTO("Entity success deleted")
+                
+                result = SuccessDTO("Entity success deleted")
+
+                if data.__dict__.get("url", False):
+                    result.set_url(data.__dict__.get("url"))
+                
+                return result
         
         except IntegrityError:
             return ErrorDTO("data is not exists", 400)

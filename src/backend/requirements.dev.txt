@@ -8,4 +8,6 @@ asyncpg
 psycopg2-binary
 passlib
 python-jose
+minio
+python-multipart
 ruff

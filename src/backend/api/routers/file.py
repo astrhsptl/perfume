@@ -3,11 +3,18 @@ from uuid import UUID
 from app.schemas.file import FileCreate, FileRead, FileUpdate
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.file import FileService
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, UploadFile, File, Depends
 
 file_router = APIRouter(prefix="/file", tags=["File"])
 
 service = FileService()
+
+from os import fstat
+from fastapi import FastAPI, Request, UploadFile, File
+from fastapi.responses import JSONResponse
+from core.s3_store import minio_client, bucket_name, minio_host
+from minio.error import S3Error
+
 
 @file_router.get("/get_all")
 async def get_all(request: Request, 
@@ -24,7 +31,7 @@ async def get_all(request: Request,
     
     return data
 
-@file_router.get("/get_by_condition", response_model=FileRead)
+@file_router.get("/get_by_condition/{id}", response_model=FileRead)
 async def get_by_id(id: UUID) -> FileRead:
     data = await service.get_by_id(id=id)
     
@@ -34,8 +41,8 @@ async def get_by_id(id: UUID) -> FileRead:
     return data
 
 @file_router.post("/create", response_model=FileRead, status_code=201)
-async def create(data: FileCreate) -> FileRead:
-    data = await service.create(data=data)
+async def create(request: Request, data: FileCreate = Depends(), file: UploadFile = File(...)) -> FileRead:
+    data = await service.create(data=data, request=request, file=file)
     
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
