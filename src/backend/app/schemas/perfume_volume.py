@@ -2,7 +2,7 @@ from ._base import BaseSchema
 from datetime import datetime 
 from uuid import UUID 
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 
 class PossibleVolumes(Enum):
