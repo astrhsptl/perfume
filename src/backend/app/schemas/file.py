@@ -1,15 +1,15 @@
 from datetime import datetime
 from uuid import UUID
-
+from pydantic import Field
 from ._base import BaseSchema
 
 
 class FileBase(BaseSchema):
-    url: str
-    perfume_id: UUID | None
+    perfume_id: UUID | None = Field(default=None)
 
 
 class FileRead(FileBase):
+    url: str
     id: UUID 
     create_time: datetime 
 

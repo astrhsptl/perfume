@@ -1,8 +1,10 @@
 from datetime import datetime
 from uuid import UUID
-from .cart import CartRead
-from pydantic import EmailStr, BaseModel, Field
+
+from pydantic import BaseModel, EmailStr, Field
+
 from ._base import BaseSchema
+from .cart import CartRead
 
 
 class UserBase(BaseSchema):
@@ -13,7 +15,7 @@ class UserBase(BaseSchema):
 
 
 class UserRead(UserBase):
-    id: UUID 
+    id: UUID
     is_active: bool
     create_time: datetime
     update_time: datetime
@@ -37,5 +39,5 @@ class UserUpdate(BaseModel):
 class UserSearch(BaseModel):
     username: str | None = Field(default=None)
     email: EmailStr | None = Field(default=None)
-    phone: str | None  = Field(default=None)
+    phone: str | None = Field(default=None)
     address: str | None = Field(default=None)
