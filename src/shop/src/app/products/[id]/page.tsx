@@ -1,3 +1,6 @@
+import { BaseStyle, ProductStyle, montserrat } from '@/shared';
+import { BackLink, PayloadContainer, ProductSlider } from '@/widgets';
+import clsx from 'clsx';
 import { Metadata } from 'next';
 
 interface ProductRetrieveParams {
@@ -38,5 +41,18 @@ export default async function ProductRetrievePage({
 }: ProductRetrieveProps) {
   console.log(id);
 
-  return <section></section>;
+  return (
+    <div
+      className={clsx(
+        BaseStyle.container,
+        ProductStyle.baseContainer,
+        montserrat.className
+      )}
+      style={{ paddingTop: 70 }}
+    >
+      <BackLink />
+      <PayloadContainer />
+      <ProductSlider />
+    </div>
+  );
 }

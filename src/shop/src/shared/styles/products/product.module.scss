@@ -1,0 +1,49 @@
+@import '../base.module.scss';
+
+.baseContainer {
+  @include font(16px);
+}
+
+.sectionBack {
+  @include flex();
+  gap: 10px;
+
+  font-weight: 200px;
+  & > img {
+    transform: rotate(90deg);
+  }
+}
+
+.productPayloadContainer {
+  display: grid;
+  gap: 10%;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.productTextContainer {
+  @include font(18px, 600);
+  @include flexColumn();
+  gap: 16px;
+  color: var(--white);
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.volumeContainer {
+  @include flex();
+  gap: 30px;
+}
+
+.volumePoint {
+  color: var(--gray-dark);
+
+  &.active {
+    color: var(--white);
+    border: 1px solid var(--white);
+    border-radius: 50%;
+    padding: 15px;
+  }
+}
