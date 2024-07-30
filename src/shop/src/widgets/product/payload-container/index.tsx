@@ -17,7 +17,7 @@ export const PayloadContainer = async ({}: PayloadContainerProps) => {
           Category
         </p>
         <p className={clsx(ProductStyle.title, lora.className)}>Name</p>
-        <p>777 $</p>
+        <p style={{ marginBottom: 20 }}>777 $</p>
         <p>Объем, ml</p>
         <VolumePoints />
         <DefaultButton>В корзину</DefaultButton>

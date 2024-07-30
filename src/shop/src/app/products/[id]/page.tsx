@@ -40,13 +40,12 @@ export default async function ProductRetrievePage({
   params: { id },
 }: ProductRetrieveProps) {
   console.log(id);
-
   return (
     <div
       className={clsx(
         BaseStyle.container,
         ProductStyle.baseContainer,
-        montserrat.className
+        montserrat.className,
       )}
       style={{ paddingTop: 70 }}
     >

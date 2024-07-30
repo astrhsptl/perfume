@@ -8,6 +8,9 @@
   @include flex();
   gap: 10px;
 
+  color: var(--white);
+  text-decoration: none;
+
   font-weight: 200px;
   & > img {
     transform: rotate(90deg);
