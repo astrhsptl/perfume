@@ -1,4 +1,4 @@
-import { WrongResponse } from '@/shared/model';
+import { WrongResponse } from '@/shared';
 import { AxiosError } from 'axios';
 
 export class BaseAPICore {

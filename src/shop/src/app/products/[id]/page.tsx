@@ -1,7 +1,6 @@
-import { BaseStyle, ProductStyle, montserrat } from '@/shared';
-import { BackLink, PayloadContainer, ProductSlider } from '@/widgets';
-import clsx from 'clsx';
 import { Metadata } from 'next';
+import { ProductsDesktop } from './desktop';
+import { ProductMobile } from './mobile';
 
 interface ProductRetrieveParams {
   id: string;
@@ -39,19 +38,10 @@ export const metadata: Metadata = {
 export default async function ProductRetrievePage({
   params: { id },
 }: ProductRetrieveProps) {
-  console.log(id);
   return (
-    <div
-      className={clsx(
-        BaseStyle.container,
-        ProductStyle.baseContainer,
-        montserrat.className,
-      )}
-      style={{ paddingTop: 70 }}
-    >
-      <BackLink />
-      <PayloadContainer />
-      <ProductSlider />
-    </div>
+    <>
+      <ProductsDesktop id={id} />
+      <ProductMobile />
+    </>
   );
 }

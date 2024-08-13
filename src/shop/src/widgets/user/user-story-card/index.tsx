@@ -1,6 +1,6 @@
 import { Perfume } from '@/entities';
 import { BaseStyle, UserStyles, montserrat } from '@/shared';
-import { WithEmpty } from '@/widgets/empty-data';
+import { WithEmpty } from '@/widgets';
 import clsx from 'clsx';
 
 interface UserStoryCardProps {

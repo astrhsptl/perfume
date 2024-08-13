@@ -1,18 +1,34 @@
+'use client';
+
 import { ProductStyle } from '@/shared';
 import clsx from 'clsx';
+import { useState } from 'react';
 
-interface VolumePointsProps {}
+interface VolumePointsProps {
+  volumes?: number[];
+}
 
-export const VolumePoints = async ({}: VolumePointsProps) => {
+export const VolumePoints = ({
+  volumes = [10, 20, 30, 40, 50],
+}: VolumePointsProps) => {
+  const [currentVolume, setCurrentVolume] = useState(0);
+
   return (
     <div className={ProductStyle.volumeContainer}>
-      <span className={clsx(ProductStyle.volumePoint)}>10</span>
-      <span className={clsx(ProductStyle.volumePoint)}>20</span>
-      <span className={clsx(ProductStyle.volumePoint)}>30</span>
-      <span className={clsx(ProductStyle.volumePoint, ProductStyle.active)}>
-        50
-      </span>
-      <span className={clsx(ProductStyle.volumePoint)}>100</span>
+      {volumes.map((volume, index) => {
+        return (
+          <span
+            key={index}
+            className={clsx(
+              ProductStyle.volumePoint,
+              index === currentVolume && ProductStyle.active
+            )}
+            onClick={() => setCurrentVolume(() => index)}
+          >
+            {volume}
+          </span>
+        );
+      })}
     </div>
   );
 };

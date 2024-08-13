@@ -25,3 +25,5 @@ export const PayloadContainer = async ({}: PayloadContainerProps) => {
     </article>
   );
 };
+
+export { ImageContainerMobile, PayloadMobile } from './ui';

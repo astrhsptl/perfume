@@ -5,7 +5,7 @@ import {
   PaginatedResult,
   WrongResponse,
 } from '@/shared';
-import { API_SERVER_URL } from '@/shared/config';
+import { API_SERVER_URL } from '@/shared';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { BaseAPICore } from '../base';

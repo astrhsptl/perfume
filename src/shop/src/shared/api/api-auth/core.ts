@@ -1,13 +1,6 @@
 import { User } from '@/entities';
-import {
-  IAccessToken,
-  IRefreshToken,
-  ISignIn,
-  ISignUp,
-  TokenPair,
-  WrongResponse,
-} from '@/shared';
-import { API_SERVER_URL } from '@/shared/config';
+import { ISignIn, ISignUp, TokenPair, WrongResponse } from '@/shared';
+import { API_SERVER_URL } from '@/shared';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BaseAPICore } from '../base';
 
@@ -25,6 +18,7 @@ class _Auth extends BaseAPICore {
     data: ISignIn,
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<TokenPair>> {
+    console.log(`${this.url}/sign-in`);
     return await axios
       .post<TokenPair>(`${this.url}/sign-in`, data)
       .catch((error: AxiosError<WrongResponse>) => {
@@ -52,11 +46,19 @@ class _Auth extends BaseAPICore {
   }
 
   async refresh(
-    data: IRefreshToken,
+    data: string,
     tries = DefaultTriesCount
-  ): Promise<AxiosResponse<IAccessToken>> {
+  ): Promise<
+    AxiosResponse<{
+      access_token: string;
+    }>
+  > {
+    console.log(`${this.url}/refresh-token`);
+
     return await axios
-      .post<IAccessToken>(`${this.url}/refresh`, data)
+      .post<{
+        access_token: string;
+      }>(`${this.url}/refresh-token`, { refresh_token: data })
       .catch((error: AxiosError<WrongResponse>) => {
         return this.retry<ReturnType<typeof this.refresh>>(
           (tries) => this.refresh(data, tries),
