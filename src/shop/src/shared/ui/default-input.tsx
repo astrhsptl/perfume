@@ -9,7 +9,7 @@ import { InputError } from './input-error';
 
 type DefaultInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
-  registerOptions: RegisterOptions;
+  registerOptions?: RegisterOptions;
   className?: ClassValue;
 };
 

@@ -5,7 +5,7 @@ import {
   PaginatedResult,
   WrongResponse,
 } from '@/shared';
-import { API_SERVER_URL } from '@/shared';
+import { API_SERVER_URL } from '@/shared/config';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
 import { BaseAPICore } from '../base';
@@ -32,7 +32,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
-      .get<PaginatedResult<FetchType>>(this.url, requestConfig)
+      .get<PaginatedResult<FetchType>>(`${this.url}get_all`, requestConfig)
       .catch((error: AxiosError<WrongResponse>) =>
         this.retry<ReturnType<typeof this.fetchAll>>(
           (tries) => this.fetchAll(requestConfig, tries),

@@ -9,6 +9,7 @@ export const useUser = async (
   refresh?: string
 ): Promise<ReturnType | undefined> => {
   if (!access) return undefined;
+  console.log(1);
 
   let user = await AuthApiCore.userByToken(access).catch(() => undefined);
 

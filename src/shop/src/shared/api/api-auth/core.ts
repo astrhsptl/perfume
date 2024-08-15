@@ -1,6 +1,6 @@
 import { User } from '@/entities';
 import { ISignIn, ISignUp, TokenPair, WrongResponse } from '@/shared';
-import { API_SERVER_URL } from '@/shared';
+import { API_SERVER_URL } from '@/shared/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BaseAPICore } from '../base';
 
