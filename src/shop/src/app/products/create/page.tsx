@@ -1,11 +1,14 @@
 'use client';
 
+import { ProductCreateData } from '@/entities';
 import { brandAPIBuild, FormBaseLayout, perfumeTypeAPIBuild } from '@/features';
+import { BaseStyle, DefaultInput, montserrat, ProductStyle } from '@/shared';
 import { brandListKey, perfumeTypeListKey } from '@/shared/config';
-import { BackLink } from '@/widgets';
+import { BackLink, ImageInput } from '@/widgets';
 import { useQuery } from '@tanstack/react-query';
+import clsx from 'clsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import Select from 'react-select';
+import Select, { StylesConfig } from 'react-select';
 
 // export const metadata: Metadata = {
 //   title: 'Создание духов',
@@ -16,24 +19,54 @@ import Select from 'react-select';
 
 interface PerfumeCreateProps {}
 
-type VolumeInputType = {
-  volume: number;
-  cost: number;
-  quantity: number;
+const darkStyles: StylesConfig = {
+  control: (provided) => ({
+    ...provided,
+    backgroundColor: '#000',
+    borderColor: '#fff',
+    color: '#fff',
+    boxShadow: 'none',
+    fontSize: 14,
+    '&:hover': {
+      borderColor: '#777',
+    },
+  }),
+  singleValue: (provided) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  option: (provided, state) => ({
+    ...provided,
+    fontSize: 14,
+    backgroundColor: state.isSelected
+      ? '#000'
+      : state.isFocused
+      ? '#000'
+      : '#000',
+    color: '#fff',
+  }),
+  menu: (provided) => ({
+    ...provided,
+    backgroundColor: '#000',
+    color: '#fff',
+  }),
+  multiValue: (provided) => ({
+    ...provided,
+    backgroundColor: '#000',
+  }),
+  multiValueLabel: (provided) => ({
+    ...provided,
+    color: '#fff',
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    color: '#fff',
+    ':hover': {
+      backgroundColor: '#444',
+      color: '#fff',
+    },
+  }),
 };
-
-interface FormData {
-  name: string;
-  description: string;
-  sex: string;
-  aroma: string;
-  perfume_type_id: string;
-  brand_id: string;
-
-  // external
-  images: File[];
-  volumes: VolumeInputType[];
-}
 
 export default function PerfumeCreatePage({}: PerfumeCreateProps) {
   const brandAPI = brandAPIBuild.clientApi();
@@ -47,61 +80,44 @@ export default function PerfumeCreatePage({}: PerfumeCreateProps) {
     queryFn: async () => await perfumeTypeAPI.fetchAll(),
   });
 
-  const methods = useForm<FormData>();
-  const submit: SubmitHandler<FormData> = (data) => {
+  const methods = useForm<ProductCreateData>();
+  const submit: SubmitHandler<ProductCreateData> = (data) => {
     console.log(data);
   };
-  const { getValues, register } = methods;
+  const { register } = methods;
 
   return (
-    <FormBaseLayout methods={methods} onSub={submit}>
+    <div
+      className={clsx(
+        BaseStyle.container,
+        ProductStyle.baseContainer,
+        montserrat.className
+      )}
+    >
       <BackLink />
-      <section
-        className='imageInput'
-        style={{
-          color: '#fff',
-        }}
+      <FormBaseLayout
+        methods={methods}
+        onSub={submit}
+        className={clsx(ProductStyle.productPayloadContainer)}
+        style={{ paddingTop: 70 }}
       >
-        {getValues('images')?.length > 0 ? (
-          <div>images</div>
-        ) : (
-          <input type='file' accept='image/*' {...register('images')} />
-        )}
-        <input
-          type='text'
-          placeholder='Description'
-          {...register('description')}
-        />
-      </section>
-      <section className='dataInput'>
-        <input type='text' placeholder='Name' {...register('name')} />
-        <div>
+        <section
+          className='imageInput'
+          style={{
+            color: '#fff',
+          }}
+        >
+          <ImageInput />
           <input
-            type='radio'
-            name='sex'
-            placeholder='Man'
-            {...register('sex')}
+            type='text'
+            placeholder='Description'
+            {...register('description')}
           />
-          <input
-            type='radio'
-            name='sex'
-            placeholder='Woman'
-            {...register('sex')}
-          />
-          <input type='text' placeholder='Aroma' {...register('aroma')} />
-          <Select
-            placeholder='Бренд'
-            options={
-              brands.isSuccess
-                ? brands.data.data.data.map(({ id, title }) => ({
-                    value: id,
-                    label: title,
-                  }))
-                : []
-            }
-          />
+        </section>
+        <section className='dataInput'>
           <Select
             placeholder='Тип'
+            styles={darkStyles}
             options={
               perfumeTypes.isSuccess
                 ? perfumeTypes.data.data.data.map(({ id, name }) => ({
@@ -111,8 +127,49 @@ export default function PerfumeCreatePage({}: PerfumeCreateProps) {
                 : []
             }
           />
-        </div>
-      </section>
-    </FormBaseLayout>
+          <DefaultInput placeholder='Наименование' name='name' />
+          <Select
+            placeholder='Бренд'
+            styles={darkStyles}
+            options={
+              brands.isSuccess
+                ? brands.data.data.data.map(({ id, title }) => ({
+                    value: id,
+                    label: title,
+                  }))
+                : []
+            }
+          />
+          <div>
+            <p>Пол</p>
+            <span>
+              <input
+                id='man'
+                type='radio'
+                name='sex'
+                placeholder='Man'
+                {...register('sex')}
+              />
+              <label htmlFor='man'>Мужской</label>
+            </span>
+
+            <span>
+              <input
+                id='woman'
+                type='radio'
+                name='sex'
+                placeholder='Woman'
+                style={{
+                  background: 'black',
+                }}
+                {...register('sex')}
+              />
+              <label htmlFor='woman'>Женский</label>
+            </span>
+          </div>
+          <DefaultInput placeholder='Аромат' name='aroma' />
+        </section>
+      </FormBaseLayout>
+    </div>
   );
 }

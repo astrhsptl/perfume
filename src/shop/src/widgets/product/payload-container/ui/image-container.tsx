@@ -4,26 +4,35 @@ import { ProductStyle } from '@/shared';
 import Image from 'next/image';
 import { useState } from 'react';
 
-interface ImageContainerProps {}
+interface ImageContainerProps {
+  data?: { link: string }[];
+  mode?: 'editing' | 'viewing';
+  remove?(index: number): void;
+}
 
-export const ImageContainer = ({}: ImageContainerProps) => {
-  const [images, _] = useState([
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-  ]);
+export const ImageContainer = ({
+  data,
+  mode = 'editing',
+}: ImageContainerProps) => {
+  const [images, _] = useState(
+    data ?? [
+      {
+        link: '/photo.png',
+      },
+      {
+        link: '/photo.png',
+      },
+      {
+        link: '/perfume-skeleton.png',
+      },
+      {
+        link: '/photo.png',
+      },
+      {
+        link: '/perfume-skeleton.png',
+      },
+    ]
+  );
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const currentImage = images[currentImageIndex];
 

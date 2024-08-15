@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
-import { ProductsDesktop } from './desktop';
-import { ProductMobile } from './mobile';
+import { ProductsDesktop } from './(desktop)';
+import { ProductMobile } from './(mobile)';
 
 interface ProductRetrieveParams {
   id: string;

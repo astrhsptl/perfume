@@ -1,4 +1,5 @@
 export { BackLink } from './back-link';
+export * from './modify';
 export {
   ImageContainerMobile,
   PayloadContainer,
