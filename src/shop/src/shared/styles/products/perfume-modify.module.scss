@@ -1,9 +1,5 @@
 @import '../base.module.scss';
 
-.imageInputContainer {
-  color: var(--white);
-}
-
 .dataInputContainer {
   display: flex;
   flex-direction: column;
@@ -27,5 +23,31 @@
   &.radioContainer {
     display: flex;
     gap: 10px;
+  }
+}
+
+.imageInputContainer {
+  color: var(--white);
+}
+
+.imageInputLabel {
+  @include font(16px);
+
+  cursor: pointer;
+
+  width: 100%;
+  height: 100%;
+
+  border: 2px dashed var(--white);
+  border-radius: 5px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+
+  & > input[type='file'] {
+    display: none;
   }
 }

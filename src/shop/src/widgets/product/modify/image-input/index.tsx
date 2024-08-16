@@ -1,7 +1,9 @@
 'use client';
 
 import { ProductCreateData } from '@/entities';
-import { PerfumeModify } from '@/shared';
+import { montserrat, PerfumeModify } from '@/shared';
+import clsx from 'clsx';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ImageContainer } from '../../payload-container/ui';
@@ -28,7 +30,17 @@ export const ImageInput = ({}: ImageInputProps) => {
           }
         />
       ) : (
-        <label>
+        <label
+          className={clsx(PerfumeModify.imageInputLabel, montserrat.className)}
+        >
+          <Image
+            src={'/image-input.svg'}
+            alt='Добавить изображения'
+            height={75}
+            width={75}
+          />
+          <h2>Добавить изображения</h2>
+
           <input
             type='file'
             accept='image/*'
