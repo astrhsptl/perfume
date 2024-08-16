@@ -80,6 +80,12 @@
   }
 }
 
+.imageItem {
+  aspect-ratio: 1;
+  width: 100%;
+  object-fit: cover;
+}
+
 .ImageContainerMobile {
   position: relative;
   z-index: 1;
