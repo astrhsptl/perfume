@@ -22,7 +22,6 @@ export const UserHead = async ({ email, username }: UserHeadProps) => {
           alt='Аватар пользователя'
           width={130}
           height={130}
-          layout='responsive'
         />
       </div>
       <div className={UserStyles.userInfo}>

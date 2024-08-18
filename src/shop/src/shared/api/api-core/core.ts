@@ -69,7 +69,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     const result = await axios
-      .post<FetchType>(this.url, data, requestConfig)
+      .post<FetchType>(`${this.url}/create`, data, requestConfig)
       .catch((error: AxiosError<WrongResponse>) =>
         this.retry<ReturnType<typeof this.create>>(
           (tries) => this.create(data, requestConfig, tries),

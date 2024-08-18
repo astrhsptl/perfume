@@ -43,16 +43,15 @@ export const ImageContainerMobile = ({
         slidesPerView={1}
         loop={true}
         pagination={{ clickable: true }}
+        style={{
+          width: '100%',
+          aspectRatio: 1,
+          marginBottom: 20,
+        }}
       >
         {images.map((image, index) => (
           <SwiperSlide key={index}>
-            <Image
-              alt='Текущее изображение'
-              src={image.link}
-              width={100}
-              height={100}
-              layout='responsive'
-            />
+            <Image alt='Текущее изображение' src={image.link} fill={true} />
           </SwiperSlide>
         ))}
       </Swiper>

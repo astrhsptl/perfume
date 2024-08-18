@@ -5,3 +5,4 @@ export const brandAPIBuild = getAPICore<Brand, BrandCreate>('brand');
 export const perfumeTypeAPIBuild = getAPICore<PerfumeType, PerfumeTypeCreate>(
   'perfume-type'
 );
+export const fileAPIBuild = getAPICore<PerfumeType, PerfumeTypeCreate>('file');

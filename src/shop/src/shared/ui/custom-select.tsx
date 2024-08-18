@@ -1,7 +1,9 @@
 'use client';
 
-import Select from 'react-select';
+import dynamic from 'next/dynamic';
 import { SelectDarkStyle } from '../styles';
+
+const Select = dynamic(() => import('react-select').then((mod) => mod.default));
 
 type BaseOption = {
   value: string;
@@ -24,6 +26,7 @@ export const CustomSelect = ({
       styles={SelectDarkStyle}
       options={options}
       onChange={(newValue) => onChange && onChange(newValue as BaseOption)}
+      required={true}
     />
   );
 };

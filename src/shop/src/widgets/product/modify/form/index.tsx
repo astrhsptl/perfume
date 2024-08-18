@@ -1,7 +1,7 @@
 'use client';
 
 import { Brand, PerfumeType, ProductCreateData } from '@/entities';
-import { FormBaseLayout } from '@/features';
+import { FormBaseLayout, productCreate } from '@/features';
 import {
   CustomSelect,
   DefaultButton,
@@ -11,7 +11,7 @@ import {
 } from '@/shared';
 import { ImageInput } from '@/widgets';
 import clsx from 'clsx';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { SexChoose } from './ui';
 
 interface PerfumeCreateProps {
@@ -24,33 +24,52 @@ export default function PerfumeCreateForm({
   perfumeTypes,
 }: PerfumeCreateProps) {
   const methods = useForm<ProductCreateData>();
-  const submit: SubmitHandler<ProductCreateData> = (data) => {
-    console.log(data);
-  };
 
   return (
     <>
       <FormBaseLayout
         methods={methods}
-        onSub={submit}
+        onSub={productCreate}
         className={clsx(ProductStyle.productPayloadContainer)}
       >
-        <section className={PerfumeModify.imageInputContainer}>
+        <div className={PerfumeModify.imageInputContainer}>
           <ImageInput />
-        </section>
-        <section className={PerfumeModify.dataInputContainer}>
-          <DefaultInput placeholder='Наименование' name='name' />
+        </div>
+        <div className={PerfumeModify.dataInputContainer}>
+          <DefaultInput
+            placeholder='Наименование'
+            name='name'
+            registerOptions={{
+              required: {
+                message: 'Укажите имя',
+                value: true,
+              },
+            }}
+          />
 
-          <DefaultInput placeholder='Аромат' name='aroma' />
+          <DefaultInput
+            placeholder='Аромат'
+            name='aroma'
+            registerOptions={{
+              required: {
+                message: 'Укажите аромат',
+                value: true,
+              },
+            }}
+          />
 
           <SexChoose />
 
           <CustomSelect
             placeholder='Тип'
-            options={perfumeTypes.map(({ id, name }) => ({
-              value: id as string,
-              label: name,
-            }))}
+            options={
+              !perfumeTypes
+                ? []
+                : perfumeTypes.map(({ id, name }) => ({
+                    value: id as string,
+                    label: name,
+                  }))
+            }
             onChange={({ value }) => {
               methods.setValue('perfume_type_id', value);
             }}
@@ -58,17 +77,21 @@ export default function PerfumeCreateForm({
 
           <CustomSelect
             placeholder='Бренд'
-            options={brands.map(({ id, title }) => ({
-              value: id as string,
-              label: title,
-            }))}
+            options={
+              !brands
+                ? []
+                : brands.map(({ id, title }) => ({
+                    value: id as string,
+                    label: title,
+                  }))
+            }
             onChange={({ value }) => {
               methods.setValue('brand_id', value);
             }}
           />
 
           <DefaultButton type='submit'>Создать</DefaultButton>
-        </section>
+        </div>
       </FormBaseLayout>
     </>
   );
