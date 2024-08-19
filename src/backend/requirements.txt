@@ -1,5 +1,6 @@
 fastapi
 sqlalchemy
+pydantic[email]
 pydantic
 python-dotenv
 alembic
@@ -10,4 +11,3 @@ passlib
 python-jose
 minio
 python-multipart
-'pydantic[email]'
