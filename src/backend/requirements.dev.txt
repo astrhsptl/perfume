@@ -11,3 +11,5 @@ python-jose
 minio
 python-multipart
 ruff
+pydantic[email]
+email-validator
