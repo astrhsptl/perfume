@@ -29,7 +29,7 @@ async def get_all(request: Request,
     
     return data
 
-@perfume_volume_router.get("/get_by_condition", response_model=PerfumeVolumeRead)
+@perfume_volume_router.get("/{id}", response_model=PerfumeVolumeRead)
 async def get_by_id(id: UUID) -> PerfumeVolumeRead:
     data = await service.get_by_id(id=id)
     
