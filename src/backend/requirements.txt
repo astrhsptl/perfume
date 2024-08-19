@@ -11,3 +11,5 @@ passlib
 python-jose
 minio
 python-multipart
+pydantic[email]
+email-validator
