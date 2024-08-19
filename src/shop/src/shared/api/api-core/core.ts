@@ -47,7 +47,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}/`;
+    const url = `${this.url}${id}`;
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
@@ -67,9 +67,10 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
+    console.log('REQUEST CONFIG', requestConfig);
 
     const result = await axios
-      .post<FetchType>(`${this.url}/create`, data, requestConfig)
+      .post<FetchType>(`${this.url}create`, data, requestConfig)
       .catch((error: AxiosError<WrongResponse>) =>
         this.retry<ReturnType<typeof this.create>>(
           (tries) => this.create(data, requestConfig, tries),

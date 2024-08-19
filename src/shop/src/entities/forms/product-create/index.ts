@@ -13,6 +13,6 @@ export interface ProductCreateData {
   brand_id: string;
 
   // external
-  images: FileList;
+  images?: FileList;
   volumes: VolumeInputType[];
 }
