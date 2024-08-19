@@ -1,4 +1,4 @@
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from app.schemas.file import FileCreate, FileRead
 from app.schemas.response import ErrorResponse, SuccessResponse
@@ -20,6 +20,13 @@ async def get_by_id(id: UUID) -> FileRead:
 
 @file_router.post("/create", response_model=FileRead, status_code=201)
 async def create(request: Request, data: FileCreate = Depends(), file: UploadFile = File(...)) -> FileRead:
+    try:
+        extension = file.filename.split(".")[-1]
+    except:
+        extension = ""
+
+    file.filename = f"{str(uuid4())}.{extension}"
+
     data = await service.create(data=data, request=request, file=file)
     
     if isinstance(data, ErrorResponse):
