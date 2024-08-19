@@ -30,7 +30,7 @@ async def get_all(request: Request,
     
     return data
 
-@cart_router.get("/get_by_condition", response_model=CartRead)
+@cart_router.get("/{id}", response_model=CartRead)
 async def get_by_id(id: UUID) -> CartRead:
     data = await service.get_by_id(id=id)
     

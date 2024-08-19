@@ -28,7 +28,7 @@ async def get_all(request: Request,
     
     return data
 
-@cart_perfume_router.get("/get_by_condition", response_model=CartPerfumeRead)
+@cart_perfume_router.get("/{id}", response_model=CartPerfumeRead)
 async def get_by_id(id: UUID) -> CartPerfumeRead:
     data = await service.get_by_id(id=id)
     

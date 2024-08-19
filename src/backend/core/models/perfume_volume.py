@@ -11,7 +11,7 @@ class PerfumeVolume(BaseModel):
     
     volume: Mapped[int] = mapped_column(nullable=False)
     quantity: Mapped[int] = mapped_column(nullable=False, default=0)
-    const: Mapped[float] = mapped_column(nullable=False, default=0)
+    cost: Mapped[float] = mapped_column(nullable=False, default=0)
     perfume_id: Mapped[UUID] = mapped_column(ForeignKey("perfume.id", ondelete="SET NULL"), nullable=False)
 
     perfume: Mapped["Perfume"] = relationship(

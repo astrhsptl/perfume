@@ -24,7 +24,7 @@ async def get_all(request: Request,
     
     return data
 
-@favourite_router.get("/get_by_condition", response_model=FavouriteRead)
+@favourite_router.get("/{id}", response_model=FavouriteRead)
 async def get_by_id(id: UUID) -> FavouriteRead:
     data = await service.get_by_id(id=id)
     

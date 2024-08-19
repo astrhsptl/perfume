@@ -10,23 +10,23 @@ class PossibleVolumes(Enum):
     middle: int = 20
     large: int = 30
 
-class PerfumeValumeBase(BaseSchema):
+class PerfumeVolumeBase(BaseSchema):
     volume: PossibleVolumes
     quantity: int 
-    const: float
+    cost: float
     perfume_id: UUID 
 
 
-class PerfumeVolumeRead(PerfumeValumeBase):
+class PerfumeVolumeRead(PerfumeVolumeBase):
     id: UUID 
     create_time: datetime 
 
 
-class PerfumeVolumeCreate(PerfumeValumeBase):
+class PerfumeVolumeCreate(PerfumeVolumeBase):
     pass 
 
 
-class PerfumeVolumeUpdate(PerfumeValumeBase):
+class PerfumeVolumeUpdate(PerfumeVolumeBase):
     volume: PossibleVolumes | None = Field(default=None)
     quantity: int | None = Field(default=None)
     const: float | None = Field(default=None)
