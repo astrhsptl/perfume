@@ -26,7 +26,7 @@ async def get_all(request: Request,
     
     return data
 
-@user_router.get("/get_by_condition", response_model=UserRead)
+@user_router.get("/{id}", response_model=UserRead)
 async def get_by_id(id: UUID) -> UserRead:
     data = await service.get_by_id(id=id)
     

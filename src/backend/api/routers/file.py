@@ -27,7 +27,7 @@ async def create(request: Request, data: FileCreate = Depends(), file: UploadFil
     
     return data
 
-@file_router.delete("/delete", response_model=SuccessResponse)
+@file_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

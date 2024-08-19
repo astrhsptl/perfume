@@ -1,7 +1,3 @@
-# import sys
-
-# sys.path.append("/backend/app/")
-
 from app.schemas.auth import (
     AccessToken,
     AuthenticationScheme,
