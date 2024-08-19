@@ -1,5 +1,6 @@
 fastapi
 sqlalchemy
+pydantic[email]
 pydantic
 python-dotenv
 alembic
