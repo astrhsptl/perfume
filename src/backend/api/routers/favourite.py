@@ -42,7 +42,7 @@ async def create(data: FavouriteCreate) -> FavouriteRead:
     
     return data
 
-@favourite_router.patch("/update", response_model=FavouriteRead)
+@favourite_router.patch("/update/{id}", response_model=FavouriteRead)
 async def update(id: UUID, data: FavouriteUpdate) -> FavouriteRead:
     data = await service.update(id=id, data=data)
     
@@ -51,7 +51,7 @@ async def update(id: UUID, data: FavouriteUpdate) -> FavouriteRead:
     
     return data
 
-@favourite_router.delete("/delete", response_model=SuccessResponse)
+@favourite_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

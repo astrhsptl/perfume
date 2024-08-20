@@ -30,3 +30,4 @@ class CartSearch(BaseModel):
     delivery_date: date | None = Field(default=None)
     buy_date: date | None = Field(default=None)
     issue_date: date | None = Field(default=None)
+    hidden: bool | None = Field(default=None)

@@ -45,7 +45,7 @@ async def create(data: StatusCreate) -> StatusRead:
     
     return data
 
-@status_router.patch("/update", response_model=StatusRead)
+@status_router.patch("/update/{id}", response_model=StatusRead)
 async def update(id: UUID, data: StatusUpdate) -> StatusRead:
     data = await service.update(id=id, data=data)
     
@@ -54,7 +54,7 @@ async def update(id: UUID, data: StatusUpdate) -> StatusRead:
     
     return data
 
-@status_router.delete("/delete", response_model=SuccessResponse)
+@status_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

@@ -33,3 +33,4 @@ class StatusSearch(BaseModel):
     title: str | None = Field(default=None)
     description: str | None = Field(default=None)
     hidden: bool | None = Field(default=None) 
+    

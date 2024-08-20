@@ -28,3 +28,4 @@ class BrandUpdate(BrandBase):
 
 class BrandSearch(BaseModel):
     title: str | None = Field(default=None)
+    hidden: bool | None = Field(default=None)
