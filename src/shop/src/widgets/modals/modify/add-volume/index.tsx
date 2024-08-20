@@ -3,7 +3,13 @@
 import { VolumeInputType } from '@/entities';
 import { FormBaseLayout } from '@/features';
 import { useModalContext } from '@/features/use-modal';
-import { DefaultButton, DefaultInput } from '@/shared';
+import {
+  DefaultButton,
+  DefaultInput,
+  montserrat,
+  PerfumeModify,
+} from '@/shared';
+import clsx from 'clsx';
 import Image from 'next/image';
 import { MouseEvent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -32,38 +38,30 @@ export const AddVolume = ({}: AddVolumeProps) => {
         if (e.currentTarget === e.target) reject();
       }}
     >
-      <div
-        style={{
-          position: 'relative',
-          background: 'var(--black)',
-          border: '2px solid var(--white)',
-          padding: 20,
-          borderRadius: 5,
-        }}
-      >
+      <div className={clsx(PerfumeModify.VMI, PerfumeModify.container)}>
         <div className='cross-close' onClick={() => reject()}>
           <Image
             src={'/cross-close.svg'}
             alt='Закрыть'
             height={14}
             width={14}
-            style={{
-              position: 'absolute',
-              top: 10,
-              right: 10,
-            }}
+            className={clsx(PerfumeModify.VMI, PerfumeModify.cross)}
           />
         </div>
-        <h2 style={{ marginBottom: 20 }}>Добавить объем</h2>
+        <h2
+          className={clsx(
+            PerfumeModify.VMI,
+            PerfumeModify.title,
+            montserrat.className
+          )}
+        >
+          Добавить объем
+        </h2>
         <FormBaseLayout
+          key={2}
           methods={methods}
           onSub={handler}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 20,
-          }}
+          className={clsx(PerfumeModify.VMI, PerfumeModify.form)}
         >
           <DefaultInput
             name='cost'

@@ -4,7 +4,7 @@ import { createContext, useContext } from 'react';
 
 interface PromiseCallback<T> {
   resolve(value: T | PromiseLike<T>): void;
-  reject<R>(reason?: R): void;
+  reject(): void;
 }
 
 export const ModalContext = createContext<PromiseCallback<unknown> | null>(

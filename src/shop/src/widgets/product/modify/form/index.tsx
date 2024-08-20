@@ -17,9 +17,10 @@ import {
 } from '@/shared';
 import { AddVolume, ImageInput } from '@/widgets';
 import clsx from 'clsx';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
+import { useEffect } from 'react';
+import { Controller, useController, useForm } from 'react-hook-form';
 import { SexChoose } from './ui';
+import { VolumePicker } from './ui/volume-picker';
 
 interface PerfumeCreateProps {
   brands: Brand[];
@@ -30,12 +31,34 @@ export default function PerfumeCreateForm({
   brands,
   perfumeTypes,
 }: PerfumeCreateProps) {
-  const { child, toggle } = useModal<VolumeInputType>(<AddVolume />);
-  const methods = useForm<ProductCreateData>();
+  const methods = useForm<ProductCreateData>({
+    defaultValues: {
+      volumes: [],
+    },
+  });
+  const volumeControl = useController<ProductCreateData>({
+    name: 'volumes',
+    control: methods.control,
+  });
+
+  const { child, toggle, modalPromise } = useModal<VolumeInputType>(
+    <AddVolume />
+  );
+
+  useEffect(() => {
+    modalPromise
+      ?.catch(() => null)
+      .then((data) => {
+        if (!data) return;
+
+        volumeControl.field.onChange([...methods.getValues('volumes'), data]);
+      });
+  }, [modalPromise]);
 
   return (
     <>
       <FormBaseLayout
+        key={1}
         methods={methods}
         onSub={productCreate}
         className={clsx(ProductStyle.productPayloadContainer)}
@@ -68,75 +91,48 @@ export default function PerfumeCreateForm({
 
           <SexChoose />
 
-          <CustomSelect
-            placeholder='Тип'
-            options={
-              !perfumeTypes
-                ? []
-                : perfumeTypes.map(({ id, name }) => ({
-                    value: id as string,
-                    label: name,
-                  }))
-            }
-            onChange={({ value }) => {
-              methods.setValue('perfume_type_id', value);
-            }}
+          <Controller
+            name='perfume_type_id'
+            render={({ field: { onChange } }) => (
+              <CustomSelect
+                placeholder='Тип'
+                options={
+                  !perfumeTypes
+                    ? []
+                    : perfumeTypes.map(({ id, name }) => ({
+                        value: id as string,
+                        label: name,
+                      }))
+                }
+                onChange={({ value }) => onChange(value)}
+              />
+            )}
           />
 
-          <div>
-            <p style={{ marginBottom: 10 }}>Объем</p>
-            {methods.getValues('volumes')?.map((volume, index) => {
-              return (
-                <span key={index} className={clsx(ProductStyle.volumePoint)}>
-                  {volume.volume}
-                </span>
-              );
-            })}
-            <span
-              style={{
-                display: 'block',
-                height: 40,
-                width: 40,
-                position: 'relative',
-              }}
-              onClick={() =>
-                toggle()
-                  ?.catch()
-                  .then((data) => {
-                    console.log(data);
+          <VolumePicker toggle={toggle} />
 
-                    const volumes = methods.getValues('volumes') ?? [];
-                    methods.setValue('volumes', [...volumes, data]);
-                  })
-              }
-            >
-              <Image
-                src={'/volume-input.svg'}
-                alt='Добавить объем'
-                fill={true}
+          <Controller
+            name='brand_id'
+            render={({ field: { onChange } }) => (
+              <CustomSelect
+                placeholder='Бренд'
+                options={
+                  !brands
+                    ? []
+                    : brands.map(({ id, title }) => ({
+                        value: id as string,
+                        label: title,
+                      }))
+                }
+                onChange={({ value }) => onChange(value)}
               />
-              {child}
-            </span>
-          </div>
-
-          <CustomSelect
-            placeholder='Бренд'
-            options={
-              !brands
-                ? []
-                : brands.map(({ id, title }) => ({
-                    value: id as string,
-                    label: title,
-                  }))
-            }
-            onChange={({ value }) => {
-              methods.setValue('brand_id', value);
-            }}
+            )}
           />
 
           <DefaultButton type='submit'>Создать</DefaultButton>
         </div>
       </FormBaseLayout>
+      {child}
     </>
   );
 }

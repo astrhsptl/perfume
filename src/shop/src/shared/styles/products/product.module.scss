@@ -50,7 +50,14 @@
 }
 
 .volumePoint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   color: var(--gray-dark);
+
+  height: 40px;
+  width: 40px;
 
   &.active {
     color: var(--white);
