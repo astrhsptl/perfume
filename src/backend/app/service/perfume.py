@@ -9,7 +9,7 @@ from ._base_service import BaseService
 class PerfumeService(BaseService):
     _repository = PerfumeRepository()
     _serializer = PerfumeRead
-    _depth_serializer = PerfumeDepthRead
+    _depth_serializer = PerfumeDepthForIdRead
     _depth_serializer_for_id = PerfumeDepthForIdRead
     # _serializer_on_id = PerfumeDepthOnID
     
