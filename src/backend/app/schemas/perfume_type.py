@@ -26,3 +26,4 @@ class PerfumeTypeUpdate(PerfumeTypeBase):
 
 class PerfumeTypeSearch(BaseModel):
     name: str | None = Field(default=None)
+    hidden: bool | None = Field(default=None)

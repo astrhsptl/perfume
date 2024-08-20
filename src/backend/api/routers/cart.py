@@ -48,7 +48,7 @@ async def create(data: CartCreate) -> CartRead:
     
     return data
 
-@cart_router.patch("/update", response_model=CartRead)
+@cart_router.patch("/update/{id}", response_model=CartRead)
 async def update(id: UUID, data: CartUpdate) -> CartRead:
     data = await service.update(id=id, data=data)
     
@@ -57,7 +57,7 @@ async def update(id: UUID, data: CartUpdate) -> CartRead:
     
     return data
 
-@cart_router.delete("/delete", response_model=SuccessResponse)
+@cart_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     
