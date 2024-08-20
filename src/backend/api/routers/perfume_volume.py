@@ -47,7 +47,7 @@ async def create(data: PerfumeVolumeCreate) -> PerfumeVolumeRead:
     
     return data
 
-@perfume_volume_router.patch("/update", response_model=PerfumeVolumeRead)
+@perfume_volume_router.patch("/update/{id}", response_model=PerfumeVolumeRead)
 async def update(id: UUID, data: PerfumeVolumeUpdate) -> PerfumeVolumeRead:
     data = await service.update(id=id, data=data)
     
@@ -56,7 +56,7 @@ async def update(id: UUID, data: PerfumeVolumeUpdate) -> PerfumeVolumeRead:
     
     return data
 
-@perfume_volume_router.delete("/delete", response_model=SuccessResponse)
+@perfume_volume_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

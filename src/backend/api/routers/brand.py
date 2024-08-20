@@ -45,7 +45,7 @@ async def create(data: BrandCreate) -> BrandRead:
     
     return data
 
-@brand_router.patch("/update", response_model=BrandRead)
+@brand_router.patch("/update/{id}", response_model=BrandRead)
 async def update(id: UUID, data: BrandUpdate) -> BrandRead:
     data = await service.update(id=id, data=data)
     
@@ -54,7 +54,7 @@ async def update(id: UUID, data: BrandUpdate) -> BrandRead:
     
     return data
 
-@brand_router.post("/delete", response_model=SuccessResponse)
+@brand_router.post("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

@@ -35,7 +35,7 @@ async def get_by_id(id: UUID) -> UserRead:
     
     return data
 
-@user_router.patch("/update", response_model=UserRead)
+@user_router.patch("/update/{id}", response_model=UserRead)
 async def update(id: UUID, data: UserUpdate) -> UserRead:
     data = await service.update(id=id, data=data)
     
@@ -44,7 +44,7 @@ async def update(id: UUID, data: UserUpdate) -> UserRead:
     
     return data
 
-@user_router.delete("/delete", response_model=SuccessResponse)
+@user_router.delete("/delete/{id}", response_model=SuccessResponse)
 async def delete(id: UUID) -> SuccessResponse:
     data = await service.delete(id=id)
     

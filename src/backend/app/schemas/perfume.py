@@ -63,3 +63,4 @@ class PerfumeSearch(BaseSchema):
     hidden: bool | None = Field(default=None)
     perfume_type_id: UUID | None = Field(default=None)
     brand_id: UUID | None  = Field(default=None)
+    hidden: bool | None = Field(default=None)
