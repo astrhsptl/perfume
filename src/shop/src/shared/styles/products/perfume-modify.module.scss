@@ -82,3 +82,29 @@
     gap: 20px;
   }
 }
+
+.choiser {
+  position: relative;
+  padding: 20px 40px;
+  background: var(--black);
+  border: 2px solid var(--white);
+  border-radius: 5px;
+}
+
+.volumeContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.volume {
+  @include font(14px);
+  @include flex();
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--white);
+  border-radius: 5px;
+}

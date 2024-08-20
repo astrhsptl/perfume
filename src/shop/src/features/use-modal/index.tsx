@@ -4,7 +4,10 @@ import { ReactNode, ReactPortal, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ModalContext } from './lib';
 
-export function useModal<PromiseType>(node: ReactNode) {
+export function useModal<PromiseType, T = unknown>(
+  node: ReactNode,
+  payload?: T
+) {
   const [child, setChild] = useState<ReactPortal | null>(null);
   const [modalPromise, setModalPromise] = useState<Promise<PromiseType> | null>(
     null
@@ -21,7 +24,9 @@ export function useModal<PromiseType>(node: ReactNode) {
               reject();
             };
             const portal = createPortal(
-              <ModalContext.Provider value={{ resolve, reject: rejector }}>
+              <ModalContext.Provider
+                value={{ resolve, reject: rejector, payload: payload }}
+              >
                 {node}
               </ModalContext.Provider>,
               modalRoot

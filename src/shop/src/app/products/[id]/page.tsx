@@ -1,4 +1,6 @@
+import { perfumeAPIBuild } from '@/features';
 import { Metadata } from 'next';
+import { redirect } from 'next/navigation';
 import { ProductsDesktop } from './(desktop)';
 import { ProductMobile } from './(mobile)';
 
@@ -38,10 +40,15 @@ export const metadata: Metadata = {
 export default async function ProductRetrievePage({
   params: { id },
 }: ProductRetrieveProps) {
+  const perfumeAPI = perfumeAPIBuild.serverApi();
+  const perfume = await perfumeAPI
+    .fetchByID(id)
+    .catch(() => redirect('/not-found'));
+
   return (
     <>
       <ProductsDesktop id={id} />
-      <ProductMobile />
+      <ProductMobile perfume={perfume.data} />
     </>
   );
 }

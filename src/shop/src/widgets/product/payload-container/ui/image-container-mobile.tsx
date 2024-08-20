@@ -19,18 +19,6 @@ export const ImageContainerMobile = ({
     {
       link: '/perfume-skeleton.png',
     },
-    {
-      link: '/perfume-skeleton.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
   ],
 }: ImageContainerMobileProps) => {
   return (
