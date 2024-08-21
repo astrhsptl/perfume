@@ -1,6 +1,11 @@
 'use client';
 
-import { cartModalActions, currentCartModal } from '@/entities';
+import {
+  CartItem,
+  cartModalActions,
+  currentCart,
+  currentCartModal,
+} from '@/entities';
 import { useAppDispatch, useAppSelector } from '@/features';
 import { CartStyle, montserrat } from '@/shared';
 import clsx from 'clsx';
@@ -10,6 +15,7 @@ interface CartModalProps {}
 
 export const CartModal = ({}: CartModalProps) => {
   const dispatch = useAppDispatch();
+  const carts = useAppSelector(currentCart);
   const { state } = useAppSelector(currentCartModal);
   const { close } = cartModalActions;
 
@@ -26,7 +32,16 @@ export const CartModal = ({}: CartModalProps) => {
     >
       <section className={CartStyle.asideCart}>
         <CartModalHead />
-        <PaymentSection cost={777} quantity={3} />
+        {carts.map((cartItem) => (
+          <CartItem key={cartItem.perfume.id} cartItem={cartItem} />
+        ))}
+        <PaymentSection
+          cost={carts.reduce(
+            (prev, current) => prev + current.quantity * current.volume.cost,
+            0
+          )}
+          quantity={carts.reduce((prev, current) => prev + current.quantity, 0)}
+        />
       </section>
     </aside>
   );

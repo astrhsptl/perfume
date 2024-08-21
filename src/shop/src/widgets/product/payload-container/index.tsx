@@ -1,9 +1,17 @@
 'use client';
 
-import { Perfume, PerfumeType, PerfumeVolume } from '@/entities';
-import { DefaultButton, ProductStyle, lora } from '@/shared';
+import {
+  cartActions,
+  Perfume,
+  PerfumeType,
+  PerfumeVolume,
+  StoredPerfume,
+} from '@/entities';
+import { useAppDispatch } from '@/features';
+import { DefaultButton, lora, ProductStyle } from '@/shared';
 import clsx from 'clsx';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { ImageContainer, VolumePoints } from './ui';
 
 interface PayloadContainerProps {
@@ -18,6 +26,7 @@ export const PayloadContainer = ({
   const [currentVolume, setCurrentVolume] = useState<PerfumeVolume>(
     perfume.perfume_volume[0]
   );
+  const dispatch = useAppDispatch();
 
   return (
     <article className={ProductStyle.productPayloadContainer}>
@@ -43,7 +52,19 @@ export const PayloadContainer = ({
           currentVolume={currentVolume}
           setCurrentVolume={setCurrentVolume}
         />
-        <DefaultButton>В корзину</DefaultButton>
+        <DefaultButton
+          onClick={() => {
+            const storedPerfume: StoredPerfume = {
+              perfume: perfume,
+              quantity: 1,
+              volume: currentVolume,
+            };
+            toast.success('Товар добавлен в корзину');
+            dispatch(cartActions.append(storedPerfume));
+          }}
+        >
+          В корзину
+        </DefaultButton>
       </section>
     </article>
   );
