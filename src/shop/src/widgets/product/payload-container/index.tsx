@@ -1,25 +1,48 @@
+'use client';
+
+import { Perfume, PerfumeType, PerfumeVolume } from '@/entities';
 import { DefaultButton, ProductStyle, lora } from '@/shared';
 import clsx from 'clsx';
+import { useState } from 'react';
 import { ImageContainer, VolumePoints } from './ui';
 
-interface PayloadContainerProps {}
+interface PayloadContainerProps {
+  perfume: Perfume;
+  perfumeType: PerfumeType;
+}
 
-export const PayloadContainer = async ({}: PayloadContainerProps) => {
+export const PayloadContainer = ({
+  perfume,
+  perfumeType,
+}: PayloadContainerProps) => {
+  const [currentVolume, setCurrentVolume] = useState<PerfumeVolume>(
+    perfume.perfume_volume[0]
+  );
+
   return (
     <article className={ProductStyle.productPayloadContainer}>
-      <ImageContainer />
+      <ImageContainer
+        images={perfume.file.map(({ url }) => ({ link: url }))}
+        description={perfume.description}
+      />
       <section className={ProductStyle.productTextContainer}>
         <p
           style={{
             color: 'var(--gray-blur)',
           }}
         >
-          Category
+          {perfumeType.name}
         </p>
-        <p className={clsx(ProductStyle.title, lora.className)}>Name</p>
-        <p style={{ marginBottom: 20 }}>777 $</p>
+        <p className={clsx(ProductStyle.title, lora.className)}>
+          {perfume.name}
+        </p>
+        <p style={{ marginBottom: 20 }}>{currentVolume.cost} $</p>
         <p>Объем, ml</p>
-        <VolumePoints />
+        <VolumePoints
+          volumes={perfume.perfume_volume}
+          currentVolume={currentVolume}
+          setCurrentVolume={setCurrentVolume}
+        />
         <DefaultButton>В корзину</DefaultButton>
       </section>
     </article>

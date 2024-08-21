@@ -1,26 +1,29 @@
 'use client';
 
+import { PerfumeVolume } from '@/entities';
 import { ProductStyle } from '@/shared';
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { VolumePoint } from '../../common/ui';
 
 interface VolumePointsProps {
-  volumes?: number[];
+  volumes: PerfumeVolume[];
+  currentVolume: PerfumeVolume;
+  setCurrentVolume: Dispatch<SetStateAction<PerfumeVolume>>;
 }
 
 export const VolumePoints = ({
-  volumes = [10, 20, 30, 40, 50],
+  volumes = [],
+  currentVolume,
+  setCurrentVolume,
 }: VolumePointsProps) => {
-  const [currentVolume, setCurrentVolume] = useState(0);
-
   return (
     <div className={ProductStyle.volumeContainer}>
-      {volumes.map((volume, index) => (
+      {volumes.map((volume) => (
         <VolumePoint
-          key={index}
-          isActive={currentVolume === index}
-          value={volume}
-          onClick={() => setCurrentVolume(() => index)}
+          key={volume.id}
+          isActive={currentVolume.id === volume.id}
+          value={volume.volume}
+          onClick={() => setCurrentVolume(() => volume)}
         />
       ))}
     </div>

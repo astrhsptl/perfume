@@ -12,23 +12,7 @@ interface ImageContainerProps {
 }
 
 export const ImageContainer = ({
-  images = [
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-    {
-      link: '/photo.png',
-    },
-    {
-      link: '/perfume-skeleton.png',
-    },
-  ],
+  images = [],
   description,
   mode = 'editing',
 }: ImageContainerProps) => {

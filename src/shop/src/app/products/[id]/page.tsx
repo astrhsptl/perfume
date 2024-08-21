@@ -41,14 +41,14 @@ export default async function ProductRetrievePage({
   params: { id },
 }: ProductRetrieveProps) {
   const perfumeAPI = perfumeAPIBuild.serverApi();
-  const perfume = await perfumeAPI
+  const { data } = await perfumeAPI
     .fetchByID(id)
     .catch(() => redirect('/not-found'));
 
   return (
     <>
-      <ProductsDesktop id={id} />
-      <ProductMobile perfume={perfume.data} />
+      <ProductsDesktop perfume={data} />
+      <ProductMobile perfume={data} />
     </>
   );
 }

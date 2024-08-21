@@ -1,12 +1,15 @@
+import { Perfume } from '@/entities';
+import { perfumeTypeAPIBuild } from '@/features';
 import { BaseStyle, montserrat, ProductStyle } from '@/shared';
 import { BackLink, PayloadContainer, ProductSlider } from '@/widgets';
 import clsx from 'clsx';
 
 interface ProductsDesktopProps {
-  id?: string;
+  perfume: Perfume;
 }
-export const ProductsDesktop = async ({ id }: ProductsDesktopProps) => {
-  console.log(id);
+export const ProductsDesktop = async ({ perfume }: ProductsDesktopProps) => {
+  const perfumeTypeAPI = perfumeTypeAPIBuild.serverApi();
+  const perfumeType = await perfumeTypeAPI.fetchByID(perfume.perfume_type_id);
 
   return (
     <div
@@ -19,7 +22,7 @@ export const ProductsDesktop = async ({ id }: ProductsDesktopProps) => {
       style={{ paddingTop: 70 }}
     >
       <BackLink />
-      <PayloadContainer />
+      <PayloadContainer perfume={perfume} perfumeType={perfumeType.data} />
       <ProductSlider />
     </div>
   );
