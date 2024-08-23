@@ -69,7 +69,7 @@ class _Auth extends BaseAPICore {
   }
 
   async userByToken(
-    token: string,
+    token: string = '',
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<User>> {
     return await axios

@@ -1,6 +1,10 @@
 import {
   Brand,
   BrandCreate,
+  Cart,
+  CartCreate,
+  CartPerfume,
+  CartPerfumeCreate,
   File as FileEntity,
   Perfume,
   PerfumeCreate,
@@ -11,6 +15,7 @@ import {
 } from '@/entities';
 import { getAPICore } from '@/shared';
 
+export const cartAPIBuild = getAPICore<Cart, CartCreate>('cart');
 export const brandAPIBuild = getAPICore<Brand, BrandCreate>('brand');
 export const perfumeAPIBuild = getAPICore<Perfume, PerfumeCreate>('perfume');
 export const volumeAPIBuild = getAPICore<PerfumeVolume, PerfumeVolumeCreate>(
@@ -18,5 +23,8 @@ export const volumeAPIBuild = getAPICore<PerfumeVolume, PerfumeVolumeCreate>(
 );
 export const perfumeTypeAPIBuild = getAPICore<PerfumeType, PerfumeTypeCreate>(
   'perfume-type'
+);
+export const cartPerfumeAPIBuild = getAPICore<CartPerfume, CartPerfumeCreate>(
+  'cart-perfume'
 );
 export const fileAPIBuild = getAPICore<FileEntity, FormData>('file');

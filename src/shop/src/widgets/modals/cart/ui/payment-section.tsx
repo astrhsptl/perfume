@@ -1,3 +1,6 @@
+'use client';
+
+import { confirmCart } from '@/features';
 import { CartStyle, DefaultButton } from '@/shared';
 import React from 'react';
 
@@ -16,12 +19,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
         <span>Итого: ({quantity} шт.)</span>
         <span>{cost}$</span>
       </div>
-      <DefaultButton
-        style={{ maxWidth: '100%' }}
-        onClick={() => {
-          alert('поздравляем, вашу бабку разобрали нахуй на органы!');
-        }}
-      >
+      <DefaultButton style={{ maxWidth: '100%' }} onClick={() => confirmCart()}>
         Оплатить
       </DefaultButton>
     </section>
