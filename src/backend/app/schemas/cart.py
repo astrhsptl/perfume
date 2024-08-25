@@ -23,6 +23,14 @@ class CartPerfumeRead(BaseSchema):
 class CartBase(BaseSchema):
     status_id: UUID | None
 
+class CartReadBase(CartBase):
+    id: UUID
+    user_id: UUID
+    create_time: datetime 
+    delivery_date: datetime | None
+    buy_date: datetime | None
+    issue_date: datetime | None
+
 class CartRead(CartBase):
     id: UUID
     user_id: UUID

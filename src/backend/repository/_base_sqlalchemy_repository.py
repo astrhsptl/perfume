@@ -137,7 +137,6 @@ class BaseSQLAlchemyRepository(IBaseRepository):
             async with SESSION() as session:
                 session.add(insert_data)
                 await session.commit()
-                await session.refresh(insert_data)
                 return SuccessDTO[self.model](insert_data)
 
         except IntegrityError:
