@@ -1,8 +1,9 @@
+from datetime import datetime
+from uuid import UUID
+
+from pydantic import BaseModel, Field
+
 from ._base import BaseSchema
-from datetime import datetime 
-from uuid import UUID 
-from enum import Enum
-from pydantic import Field
 
 
 class PerfumeVolumeBase(BaseSchema):
@@ -21,8 +22,8 @@ class PerfumeVolumeCreate(PerfumeVolumeBase):
     pass 
 
 
-class PerfumeVolumeUpdate(PerfumeVolumeBase):
+class PerfumeVolumeUpdate(BaseModel):
     volume: int | None = Field(default=None)
     quantity: int | None = Field(default=None)
-    const: float | None = Field(default=None)
+    cost: float | None = Field(default=None)
     perfume_id: UUID | None = Field(default=None)  

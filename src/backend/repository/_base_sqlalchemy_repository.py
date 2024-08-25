@@ -152,8 +152,9 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 ]
             )
 
+        payload = data.model_dump(exclude_unset=True)
         statement = (
-            statement.values(**data.model_dump(exclude_unset=True))
+            statement.values(**payload)
             .where(self.model.id == str(id))
             .returning(self.model)
         )
@@ -175,7 +176,8 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         except IntegrityError:
             return ErrorDTO("Data already exists", 400)
 
-        except DBAPIError:
+        except DBAPIError as e:
+            print(e)
             return ErrorDTO("Database error", 500)
 
     async def delete(self, id: UUID) -> SuccessDTO[str] | ErrorDTO[str | int]:

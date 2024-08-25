@@ -9,7 +9,6 @@ from app.schemas.response import ErrorResponse, SuccessResponse
 from app.service.perfume_volume import PerfumeVolumeService
 from fastapi import APIRouter, HTTPException, Request
 
-
 perfume_volume_router = APIRouter(prefix="/perfume-volume", tags=["Perfume Volume"])
 
 service = PerfumeVolumeService()
