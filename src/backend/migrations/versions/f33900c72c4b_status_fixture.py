@@ -34,18 +34,21 @@ def upgrade() -> None:
     bind = op.get_bind()
     session = Session(bind=bind)
 
-    session.execute(
-        sa.text(
-            'INSERT INTO "status" (id, title, description, hidden, create_time) VALUES (:id, :title, :description, :hidden, :create_time)',
-        ),
-        [
-            {"id": "91423570-0e50-4685-848b-62d4fe8e1110", "title": "Открыта", 
-                "description": "Открыта", "hidden": False, "create_time": datetime.now()},
-            {"id": "a63a63ed-aa4f-43ac-b209-bcd388b47372", "title": "Закрыта", 
-                "description": "Закрыта", "hidden": False, "create_time": datetime.now()},
-        ],
-    )
+    try:
+        session.execute(
+            sa.text(
+                'INSERT INTO "status" (id, title, description, hidden, create_time) VALUES (:id, :title, :description, :hidden, :create_time)',
+            ),
+            [
+                {"id": "91423570-0e50-4685-848b-62d4fe8e1110", "title": "Открыта", 
+                    "description": "Открыта", "hidden": False, "create_time": datetime.now()},
+                {"id": "a63a63ed-aa4f-43ac-b209-bcd388b47372", "title": "Закрыта", 
+                    "description": "Закрыта", "hidden": False, "create_time": datetime.now()},
+            ],
+        )
 
+    except Exception:
+        print("Statuses already exist")
 
     # ### end Alembic commands ###
 
