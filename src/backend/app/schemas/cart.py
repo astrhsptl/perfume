@@ -4,11 +4,7 @@ from uuid import UUID
 from pydantic import BaseModel, Field
 
 from ._base import BaseSchema
-from .perfume_volume import PerfumeVolumeRead
 
-
-class CartBase(BaseSchema):
-    status_id: UUID | None
 
 class StatusRead(BaseSchema):
     id: UUID
@@ -17,6 +13,16 @@ class StatusRead(BaseSchema):
     description: str
     hidden: bool | None = Field(default=False)
 
+class CartPerfumeRead(BaseSchema):
+    quantity: int
+    perfume_volume_id: UUID
+    cart_id: UUID
+    id: UUID
+    create_time: datetime
+
+class CartBase(BaseSchema):
+    status_id: UUID | None
+
 class CartRead(CartBase):
     id: UUID
     user_id: UUID
@@ -24,7 +30,7 @@ class CartRead(CartBase):
     delivery_date: datetime | None
     buy_date: datetime | None
     issue_date: datetime | None
-    perfume_volume: list[PerfumeVolumeRead] | None
+    cart_perfume: list[CartPerfumeRead] | None
     status: StatusRead | None
 
 

@@ -158,8 +158,12 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                     ]
                 ]
             )
+        
+        payload = data
 
-        payload = data.model_dump(exclude_unset=True)
+        if not isinstance(data, dict):
+            payload = data.model_dump(exclude_unset=True)
+        
         statement = (
             statement.values(**payload)
             .where(self.model.id == str(id))

@@ -11,7 +11,7 @@ cart_router = APIRouter(prefix="/cart", tags=["Cart"])
 
 service = CartService()
 
-@cart_router.get("/get_all")
+@cart_router.get("/get_all",)
 async def get_all(request: Request, 
                 page: int = 1, 
                 quantity: int = 50, 
@@ -42,6 +42,15 @@ async def get_by_id(id: UUID) -> CartRead:
 @cart_router.post("/create", response_model=CartRead, status_code=201)
 async def create(data: CartCreate) -> CartRead:
     data = await service.create(data=data)
+
+    if isinstance(data, ErrorResponse):
+        raise HTTPException(status_code=data.status_code, detail=data.detail)
+    
+    return data
+
+@cart_router.post("/close/{cart_id}", response_model=SuccessResponse, status_code=201)
+async def close(cart_id: UUID) -> SuccessResponse:
+    data = await service.close(cart_id=str(cart_id))
 
     if isinstance(data, ErrorResponse):
         raise HTTPException(status_code=data.status_code, detail=data.detail)
