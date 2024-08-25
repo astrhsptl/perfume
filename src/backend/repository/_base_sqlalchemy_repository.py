@@ -25,15 +25,18 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         statement = select(self.model)
 
         if self.additional_tables:
-            statement = statement.options(
-                *[
-                    selectinload(add_table)
-                    for add_table in [
-                        getattr(self.model, additional_table)
-                        for additional_table in self.additional_tables
-                    ]
-                ]
-            )
+            _nested = []
+
+            for additional_table in self.additional_tables:
+                current_model = additional_table
+
+                if isinstance(additional_table, str):
+                    print(1, current_model)
+                    current_model = getattr(self.model, additional_table)
+                
+                _nested.append(selectinload(current_model))
+
+            statement = statement.options(*_nested)
 
         statement = (
             statement.select_from(self.model).offset((page - 1) * limit).limit(limit)
@@ -91,15 +94,19 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         statement = select(self.model)
 
         if self.additional_tables:
-            statement = statement.options(
-                *[
-                    selectinload(add_table)
-                    for add_table in [
-                        getattr(self.model, additional_table)
-                        for additional_table in self.additional_tables
-                    ]
-                ]
-            )
+            _nested = []
+
+            for additional_table in self.additional_tables:
+                current_model = additional_table
+
+                if isinstance(additional_table, str):
+                    print(1, current_model)
+                    current_model = getattr(self.model, additional_table)
+                    _nested.append(selectinload(current_model))
+                else:
+                    _nested.append(current_model)
+
+            statement = statement.options(*_nested)
 
         statement = statement.select_from(self.model).filter(
             *[getattr(self.model, key) == value for key, value in kwargs.items()]
@@ -112,7 +119,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
 
                 if not data:
                     return ErrorDTO("Data not found", 404)
-
+                
                 return SuccessDTO[self.model](data)
 
         except DBAPIError:
