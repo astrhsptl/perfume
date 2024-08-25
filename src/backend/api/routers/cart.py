@@ -1,7 +1,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from app.schemas.cart import CartCreate, CartRead, CartSearch, CartUpdate
+from app.schemas.cart import CartCreate, CartRead, CartReadBase, CartSearch, CartUpdate
 from app.schemas.response import ErrorResponse, SuccessResponse
 from app.schemas.search import DateToFromSearch
 from app.service.cart import CartService
@@ -39,8 +39,8 @@ async def get_by_id(id: UUID) -> CartRead:
     
     return data
 
-@cart_router.post("/create", response_model=CartRead, status_code=201)
-async def create(data: CartCreate) -> CartRead:
+@cart_router.post("/create", response_model=CartReadBase, status_code=201)
+async def create(data: CartCreate) -> CartReadBase:
     data = await service.create(data=data)
 
     if isinstance(data, ErrorResponse):
