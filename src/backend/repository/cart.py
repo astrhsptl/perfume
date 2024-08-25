@@ -1,6 +1,5 @@
 from uuid import UUID
 
-from core.config import CART_STATUS_CLOSE
 from core.database import SESSION
 from core.models.cart import Cart
 from dto.exception_dto import ErrorDTO
@@ -36,10 +35,8 @@ class CartRepository(BaseSQLAlchemyRepository):
                         }
                     )
 
-                await self.update(str(cart_id), {"status_id": CART_STATUS_CLOSE})
-
                 await session.commit()
-                return SuccessDTO("Cart  successfully closed")
+                return SuccessDTO("Cart successfully closed")
 
         except IntegrityError:
             return ErrorDTO("Data already exists", 400)
