@@ -1,7 +1,7 @@
 'use client';
 
 import { PerfumeCreate, ProductCreateData } from '@/entities';
-import { SubmitHandler } from 'react-hook-form';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import toast from 'react-hot-toast';
 import {
   fileAPIBuild,
@@ -9,16 +9,19 @@ import {
   volumeAPIBuild,
 } from '../entity-requests';
 
-export const productCreate: SubmitHandler<ProductCreateData> = async ({
-  aroma,
-  brand_id,
-  description,
-  images = [],
-  name,
-  perfume_type_id,
-  sex,
-  volumes = [],
-}) => {
+export const productCreate = async (
+  {
+    aroma,
+    brand_id,
+    description,
+    images = new FileList(),
+    name,
+    perfume_type_id,
+    sex,
+    volumes = [],
+  }: ProductCreateData,
+  router: AppRouterInstance
+) => {
   toast('Сохранение...');
 
   const imageArray = Array.from(images);
@@ -52,9 +55,12 @@ export const productCreate: SubmitHandler<ProductCreateData> = async ({
     });
   });
 
-  volumes.map((volume) => {
-    volumeApi.create({ ...volume, perfume_id: perfume.data.id });
+  return Promise.allSettled(
+    volumes.map((volume) => {
+      volumeApi.create({ ...volume, perfume_id: perfume.data.id });
+    })
+  ).then(() => {
+    toast.success('Сохранено');
+    return router.push(`/products/${perfume.data.id}`);
   });
-
-  toast.success('Сохранено');
 };

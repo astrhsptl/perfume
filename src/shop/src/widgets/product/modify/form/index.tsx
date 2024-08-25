@@ -17,6 +17,7 @@ import {
 } from '@/shared';
 import { AddVolume, ImageInput } from '@/widgets';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { Controller, useController, useForm } from 'react-hook-form';
 import { SexChoose } from './ui';
@@ -45,6 +46,8 @@ export default function PerfumeCreateForm({
     <AddVolume />
   );
 
+  const router = useRouter();
+
   useEffect(() => {
     modalPromise
       ?.catch(() => null)
@@ -60,7 +63,7 @@ export default function PerfumeCreateForm({
       <FormBaseLayout
         key={1}
         methods={methods}
-        onSub={productCreate}
+        onSub={(data: ProductCreateData) => productCreate(data, router)}
         className={clsx(ProductStyle.productPayloadContainer)}
       >
         <div className={PerfumeModify.imageInputContainer}>

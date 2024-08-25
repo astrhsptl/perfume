@@ -56,6 +56,8 @@ export const cartSlice = createSlice({
 
       perfume.quantity--;
     },
+
+    clearCart: () => initialStatement,
   },
 });
 

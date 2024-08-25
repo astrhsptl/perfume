@@ -4,7 +4,13 @@ import { AuthApiCore, CredentialStorage } from '@/shared';
 
 export const checkAuth = async () => {
   const checkUserByToken = async (token: string) => {
-    const user = await AuthApiCore.userByToken(token).catch(() => null);
+    const user = await AuthApiCore.userByToken(token)
+      .then((user) => {
+        if (!user) null;
+
+        return user.data;
+      })
+      .catch(() => null);
     return user;
   };
 

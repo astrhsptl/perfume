@@ -12,12 +12,15 @@ import { ImageContainer } from '../../payload-container/ui';
 interface ImageInputProps {}
 
 export const ImageInput = ({}: ImageInputProps) => {
+  const emptyFileList: never[] = [];
   const {
     register,
     getValues,
     formState: { errors },
   } = useFormContext<ProductCreateData>();
-  const [images, setImages] = useState<FileList>(getValues('images') ?? []);
+  const [images, setImages] = useState<FileList | never[]>(
+    getValues('images') ?? emptyFileList
+  );
 
   return (
     <>
@@ -65,7 +68,8 @@ export const ImageInput = ({}: ImageInputProps) => {
               accept='image/*'
               multiple={true}
               {...register('images', {
-                onChange: () => setImages(() => getValues('images')),
+                onChange: () =>
+                  setImages(() => getValues('images') ?? emptyFileList),
                 required: {
                   message: 'Выберете изображения',
                   value: true,
