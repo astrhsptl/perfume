@@ -13,12 +13,14 @@ interface CustomSelectProps {
   options: BaseOption[];
   placeholder?: string;
   onChange?: (newValue: BaseOption) => void | undefined;
+  value?: BaseOption;
 }
 
 export const CustomSelect = ({
   options,
   placeholder,
   onChange,
+  value,
 }: CustomSelectProps) => {
   return (
     <Select
@@ -27,6 +29,7 @@ export const CustomSelect = ({
       options={options}
       onChange={(newValue) => onChange && onChange(newValue as BaseOption)}
       required={true}
+      defaultValue={value}
     />
   );
 };

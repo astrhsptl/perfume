@@ -10,6 +10,8 @@ import {
 import { useAppDispatch } from '@/features';
 import { DefaultButton, lora, ProductStyle } from '@/shared';
 import clsx from 'clsx';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImageContainer, VolumePoints } from './ui';
@@ -41,10 +43,16 @@ export const PayloadContainer = ({
           }}
         >
           {perfumeType.name}
+          <span style={{ marginLeft: 20 }}>
+            <Link href={`/products/${perfume.id}/edit`}>
+              <Image src='/edit.svg' alt='edit' width={16} height={16} />
+            </Link>
+          </span>
         </p>
-        <p className={clsx(ProductStyle.title, lora.className)}>
+        <div className={clsx(ProductStyle.title, lora.className)}>
           {perfume.name}
-        </p>
+        </div>
+        <div style={{ fontSize: 14, marginBottom: 10 }}>{perfume.aroma}</div>
         <p style={{ marginBottom: 20 }}>{currentVolume.cost} $</p>
         <p>Объем, ml</p>
         <VolumePoints

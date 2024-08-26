@@ -106,7 +106,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}/`;
+    const url = `${this.url}delete/${id}`;
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
