@@ -143,7 +143,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
             return ErrorDTO("Data already exists", 400)
 
     async def update(
-        self, id: UUID, data: dict
+        self, id: UUID, data: dict | BaseModel
     ) -> SuccessDTO[BaseModel] | ErrorDTO[str | int]:
         statement = update(self.model)
 
@@ -161,7 +161,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
         payload = data
 
         if not isinstance(data, dict):
-            payload = data.model_dump(exclude_unset=True)
+            payload = data.model_dump(mode='json', exclude_unset=True)
         
         statement = (
             statement.values(**payload)

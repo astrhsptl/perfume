@@ -118,7 +118,6 @@ class BaseService(BaseFileService):
         self, id: str | UUID, data: BaseSchema
     ) -> BaseSchema | ErrorResponse:
         result = await self._repository.update(id=id, data=data)
-
         if hasattr(result, "detail"):
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
 

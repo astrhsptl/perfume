@@ -9,7 +9,7 @@ from .perfume_volume import PerfumeVolumeRead
 
 class SexPossible(Enum):
     man = "Мужской"
-    wonam = "Женский"
+    woman = "Женский"
     universal = "Унисекс"
 
 
