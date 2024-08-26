@@ -70,7 +70,7 @@ export const FilterModalDropdown = ({
             },
           }}
         >
-          {items.map((index) => (
+          {items.map((title, index) => (
             <ListItemButton key={index} sx={{ pl: 2 }}>
               <ListItemIcon
                 sx={{
@@ -81,7 +81,7 @@ export const FilterModalDropdown = ({
               >
                 <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 18 } }} />
               </ListItemIcon>
-              <ListItemText primary='Starred' />
+              <ListItemText primary={title} />
             </ListItemButton>
           ))}
         </List>

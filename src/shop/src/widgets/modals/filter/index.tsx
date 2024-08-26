@@ -28,7 +28,7 @@ export const FilterModal = ({}: FilterModalProps) => {
       <section className={clsx(FilterStyle.asideFilter, montserrat.className)}>
         <FilterModalHead />
         <FilterModalSlider min={0} max={100} />
-        <FilterModalDropdown title='Пол' items={[1, 2]} />
+        <FilterModalDropdown title='Пол' items={['Мужской', 'Женский']} />
         <FilterModalDropdown title='Категория' items={[1, 2]} />
         <FilterModalDropdown title='Бренд' items={[1, 2]} />
         <FilterModalDropdown title='Аромат' items={[1, 2]} />
