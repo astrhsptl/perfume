@@ -1,4 +1,5 @@
 import { EntityId } from '@/shared';
+import { CartPerfume } from '../cart-perfume';
 
 export interface CartCreate {
   status_id: EntityId;
@@ -15,4 +16,5 @@ export interface Cart extends CartCreate {
   delivery_date: string;
   buy_date: string;
   issue_date: string;
+  cart_perfume: CartPerfume[];
 }
