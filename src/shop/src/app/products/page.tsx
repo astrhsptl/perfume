@@ -1,8 +1,5 @@
-import { PerfumeListItem } from '@/entities';
 import { perfumeAPIBuild } from '@/features';
-import { BaseStyle, montserrat, ProductListStyle } from '@/shared';
-import { ProductsHeader } from '@/widgets';
-import clsx from 'clsx';
+import { ProductList, ProductsHeader } from '@/widgets';
 import { Metadata } from 'next';
 
 interface ProductProps {}
@@ -41,17 +38,7 @@ export default async function ProductPage({}: ProductProps) {
   return (
     <>
       <ProductsHeader />
-      <div
-        className={clsx(
-          ProductListStyle.productContainer,
-          BaseStyle.container,
-          montserrat.className
-        )}
-      >
-        {payload?.data.data.map((perfume) => (
-          <PerfumeListItem key={perfume.id} perfume={perfume} />
-        ))}
-      </div>
+      <ProductList products={payload?.data.data} />
     </>
   );
 }

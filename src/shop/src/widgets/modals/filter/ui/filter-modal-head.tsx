@@ -1,26 +1,19 @@
 'use client';
 
-import { filterModalActions } from '@/entities';
-import { useAppDispatch } from '@/features';
 import { FilterStyle } from '@/shared';
 import Image from 'next/image';
 
-interface FilterModalHeadProps {}
+interface FilterModalHeadProps {
+  reject: () => void;
+}
 
-export const FilterModalHead = ({}: FilterModalHeadProps) => {
-  const dispatch = useAppDispatch();
-  const { close } = filterModalActions;
-
+export const FilterModalHead = ({ reject }: FilterModalHeadProps) => {
   return (
     <div className={FilterStyle.filterHead}>
       <div className={FilterStyle.filterTitle}>
         <h2>Фильтр</h2>
-        <span>сброс</span>
       </div>
-      <div
-        className={FilterStyle.crossContainer}
-        onClick={() => dispatch(close())}
-      >
+      <div className={FilterStyle.crossContainer} onClick={() => reject()}>
         <Image
           src={'/cross-close.svg'}
           alt='Закрыть фильтр'

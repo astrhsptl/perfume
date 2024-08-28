@@ -1,6 +1,7 @@
 'use client';
 
-import { EntityId, FilterStyle } from '@/shared';
+import { Value } from '@/entities';
+import { FilterStyle } from '@/shared';
 import {
   Checkbox,
   Collapse,
@@ -11,18 +12,18 @@ import {
 } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { ReactNode, useState } from 'react';
-
-type Value = { key: EntityId; value: ReactNode };
+import { ChangeEvent, useState } from 'react';
 
 interface FilterModalDropdownProps {
   title: string;
   items: Value[];
+  submitter: (data: Value, state: boolean) => void;
 }
 
 export function FilterModalDropdown({
   title,
   items,
+  submitter,
 }: FilterModalDropdownProps) {
   const [open, setOpen] = useState<boolean>(false);
   const handleClick = () => {
@@ -72,8 +73,14 @@ export function FilterModalDropdown({
             },
           }}
         >
-          {items.map(({ key, value }, index) => (
-            <ListItemButton key={key} sx={{ pl: 2 }}>
+          {items.map(({ key, value }) => (
+            <ListItemButton
+              key={key}
+              sx={{ pl: 2 }}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                submitter({ key, value }, e.target.checked)
+              }
+            >
               <ListItemIcon
                 sx={{
                   '&': {
