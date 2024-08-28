@@ -1,7 +1,7 @@
 'use client';
 
 export class ParamManager {
-  static readParams(window?: Window & typeof globalThis) {
+  static readParams(window?: Window) {
     if (!window) return {};
 
     return Object.fromEntries(
@@ -9,15 +9,17 @@ export class ParamManager {
     );
   }
 
-  static setParam(
-    window: Window & typeof globalThis,
-    key: string,
-    value: string
-  ) {
+  static setParam(window: Window, key: string, value: string) {
     const url = new URL(window.location.href);
 
     url.searchParams.set(key, value);
 
+    window.history.replaceState({}, '', url);
+  }
+
+  static removeParam(window: Window, key: string) {
+    let url = new URL(window.location.href);
+    url.searchParams.delete(key);
     window.history.replaceState({}, '', url);
   }
 }
