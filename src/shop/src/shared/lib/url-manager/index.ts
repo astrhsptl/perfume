@@ -1,5 +1,3 @@
-'use client';
-
 export class ParamManager {
   static readParams(window?: Window) {
     if (!window) return {};

@@ -18,7 +18,7 @@ export const perfumeListSlice = createSlice({
       state.data = action.payload;
     },
 
-    invalidate: (state) => {
+    invalidate: (state, action: PayloadAction<Perfume[]>) => {
       state.data = [];
     },
   },
@@ -26,4 +26,4 @@ export const perfumeListSlice = createSlice({
 
 export const perfumeListActions = perfumeListSlice.actions;
 export const perfumeListReducer = perfumeListSlice.reducer;
-export const currentHeaderModal = (state: RootState) => state.perfumeList;
+export const currentPerfumeList = (state: RootState) => state.perfumeList;
