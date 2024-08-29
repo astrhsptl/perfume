@@ -8,25 +8,37 @@ import { useState } from 'react';
 interface FilterModalSliderProps {
   max: number;
   min: number;
+  submitter: (value: { from: number; to: number }) => void;
 }
 
-export const FilterModalSlider = ({ min, max }: FilterModalSliderProps) => {
-  const [value, setValue] = useState<number[]>([min, max]);
+export const FilterModalSlider = ({
+  min,
+  max,
+  submitter,
+}: FilterModalSliderProps) => {
+  const [value, setValue] = useState<{ from: number; to: number }>({
+    from: min,
+    to: max,
+  });
+  const sliderValue = [value.from, value.to];
 
   return (
     <div style={{ marginTop: 30 }}>
       <div
         className={clsx(FilterStyle.asidePriceContainer, montserrat.className)}
       >
-        <span>от {value[0]}$</span>
-        <span>до {value.slice(-1)}$</span>
+        <span>от {value.from}$</span>
+        <span>до {value.to}$</span>
       </div>
       <Slider
         getAriaLabel={() => 'Minimum distance'}
-        value={value}
-        onChange={(_, value) =>
-          setValue(() => (typeof value === 'number' ? [value, value] : value))
-        }
+        value={sliderValue}
+        onChange={(_, value) => {
+          if (typeof value === 'number') return;
+
+          setValue(() => ({ from: value[0], to: value[value.length - 1] }));
+          submitter({ from: value[0], to: value[value.length - 1] });
+        }}
         valueLabelDisplay='auto'
         min={min}
         max={max}
