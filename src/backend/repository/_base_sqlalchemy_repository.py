@@ -47,8 +47,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 if hasattr(self.model, key):
                     if isinstance(value, str):
                         statement = statement.filter(
-                            func.levenshtein(getattr(self.model, key), value.lower())
-                            < 3
+                            getattr(self.model, key).ilike(f"%{value}%")
                         )
                     elif isinstance(value, datetime.date):
                         statement = statement.filter(
@@ -84,8 +83,8 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                     return ErrorDTO("Data not found", 404)
 
                 return SuccessDTO[self.model](data)
-
-        except DBAPIError:
+        except DBAPIError as e:
+            print(e)
             return ErrorDTO("Database error", 500)
 
     async def get_by_condition(
