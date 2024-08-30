@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from '../widgets/header';
-import { Table } from '../widgets/table';
+import { Header } from '../widgets/Orders/header';
+import { Table } from '../widgets/Orders/table';
 
 interface OrdersProps {}
 
