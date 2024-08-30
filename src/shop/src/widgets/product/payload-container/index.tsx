@@ -60,19 +60,36 @@ export const PayloadContainer = ({
           currentVolume={currentVolume}
           setCurrentVolume={setCurrentVolume}
         />
-        <DefaultButton
-          onClick={() => {
-            const storedPerfume: StoredPerfume = {
-              perfume: perfume,
-              quantity: 1,
-              volume: currentVolume,
-            };
-            toast.success('Товар добавлен в корзину');
-            dispatch(cartActions.append(storedPerfume));
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          В корзину
-        </DefaultButton>
+          <DefaultButton
+            onClick={() => {
+              const storedPerfume: StoredPerfume = {
+                perfume: perfume,
+                quantity: 1,
+                volume: currentVolume,
+              };
+              toast.success('Товар добавлен в корзину');
+              dispatch(cartActions.append(storedPerfume));
+            }}
+          >
+            В корзину
+          </DefaultButton>
+          <Image
+            src={'/favorite.svg'}
+            alt='Любимое'
+            height={24}
+            width={24}
+            onClick={() => {
+              toast.success('Товар добавлен в избранное');
+            }}
+          />
+        </div>
       </section>
     </article>
   );
