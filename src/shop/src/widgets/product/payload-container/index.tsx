@@ -7,11 +7,12 @@ import {
   PerfumeVolume,
   StoredPerfume,
 } from '@/entities';
-import { useAppDispatch } from '@/features';
+import { createFavorite, useAppDispatch } from '@/features';
 import { DefaultButton, lora, ProductStyle } from '@/shared';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { ImageContainer, VolumePoints } from './ui';
@@ -28,6 +29,7 @@ export const PayloadContainer = ({
   const [currentVolume, setCurrentVolume] = useState<PerfumeVolume>(
     perfume.perfume_volume[0]
   );
+  const router = useRouter();
   const dispatch = useAppDispatch();
 
   return (
@@ -85,9 +87,7 @@ export const PayloadContainer = ({
             alt='Любимое'
             height={24}
             width={24}
-            onClick={() => {
-              toast.success('Товар добавлен в избранное');
-            }}
+            onClick={() => createFavorite(perfume.id, router)}
           />
         </div>
       </section>
