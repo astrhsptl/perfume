@@ -1,17 +1,18 @@
 from datetime import datetime
 from uuid import UUID
-from .perfume import PerfumeRead
+
 from ._base import BaseSchema
+from .perfume import PerfumeRead
 
 
 class FavouriteBase(BaseSchema):
-    perfume_id: UUID 
-    user_id: UUID 
+    perfume_id: UUID
+    user_id: UUID
 
 
 class FavouriteRead(FavouriteBase):
-    id: UUID 
-    create_time: datetime 
+    id: UUID
+    create_time: datetime
 
 
 class FavouriteDepthRead(FavouriteRead):
@@ -19,8 +20,12 @@ class FavouriteDepthRead(FavouriteRead):
 
 
 class FavouriteCreate(FavouriteBase):
-    pass 
+    pass
 
 
 class FavouriteUpdate(FavouriteBase):
     pass
+
+
+class FavouriteToggle(BaseSchema):
+    perfume_id: UUID
