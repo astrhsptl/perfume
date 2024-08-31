@@ -34,8 +34,27 @@ async def get_all(
     return data
 
 
-@favourite_router.get("/{id}", response_model=FavouriteRead)
-async def get_by_id(id: UUID) -> FavouriteRead:
+@favourite_router.get("/user", status_code=200)
+async def user_favorites(
+    request: Request,
+    token: AccessToken = auth_dependency,
+    page: int = 1,
+    quantity: int = 50,
+):
+    _jwt_auth = JWTAuth()
+    result = _jwt_auth.decode_token(token.access_token)
+    user_id = UUID(result.data.get("sub"))
+
+    data = await service.user_favorites(request, user_id, page, quantity)
+
+    if isinstance(data, ErrorResponse):
+        raise HTTPException(status_code=data.status_code, detail=data.detail)
+
+    return data
+
+
+@favourite_router.get("/{id}")
+async def get_by_id(id: UUID):
     data = await service.get_by_id(id=id)
 
     if isinstance(data, ErrorResponse):
