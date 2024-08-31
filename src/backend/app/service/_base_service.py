@@ -137,21 +137,7 @@ class BaseService(BaseFileService):
     def _paginate(
         self, request: Request, count: int, data, page: int, quantity: int
     ) -> PaginateBase:
-        page = max(page, 1)
-        url = request.url
-        base_url = f"{url.scheme}://{url.netloc}{url.path}"
-        next_page = (
-            f"{base_url}?page={page + 1}&quantity={quantity}"
-            if count > page * quantity
-            else None
-        )
-
-        prev_page = (
-            f"{base_url}?page={page - 1}&quantity={quantity}" if page > 1 else None
-        )
-
-        page = ceil(count / quantity)
-
+        page, next_page, prev_page = self._paginate_data(request, count, page, quantity)
         if self._depth_serializer:
             PaginateResponse = create_model(
                 "PaginateResponse",
@@ -170,3 +156,21 @@ class BaseService(BaseFileService):
         return PaginateResponse(
             data=data, next_page=next_page, previous_page=prev_page, page=page
         )
+
+    def _paginate_data(self, request: Request, count: int, page: int, quantity: int):
+        page = max(page, 1)
+        url = request.url
+        base_url = f"{url.scheme}://{url.netloc}{url.path}"
+        next_page = (
+            f"{base_url}?page={page + 1}&quantity={quantity}"
+            if count > page * quantity
+            else None
+        )
+
+        prev_page = (
+            f"{base_url}?page={page - 1}&quantity={quantity}" if page > 1 else None
+        )
+
+        page = ceil(count / quantity)
+
+        return page, next_page, prev_page

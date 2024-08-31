@@ -33,7 +33,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 if isinstance(additional_table, str):
                     print(1, current_model)
                     current_model = getattr(self.model, additional_table)
-                
+
                 _nested.append(selectinload(current_model))
 
             statement = statement.options(*_nested)
@@ -99,7 +99,6 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                 current_model = additional_table
 
                 if isinstance(additional_table, str):
-                    print(1, current_model)
                     current_model = getattr(self.model, additional_table)
                     _nested.append(selectinload(current_model))
                 else:
@@ -118,7 +117,7 @@ class BaseSQLAlchemyRepository(IBaseRepository):
 
                 if not data:
                     return ErrorDTO("Data not found", 404)
-                
+
                 return SuccessDTO[self.model](data)
 
         except DBAPIError:
@@ -156,12 +155,12 @@ class BaseSQLAlchemyRepository(IBaseRepository):
                     ]
                 ]
             )
-        
+
         payload = data
 
         if not isinstance(data, dict):
-            payload = data.model_dump(mode='json', exclude_unset=True)
-        
+            payload = data.model_dump(mode="json", exclude_unset=True)
+
         statement = (
             statement.values(**payload)
             .where(self.model.id == str(id))
