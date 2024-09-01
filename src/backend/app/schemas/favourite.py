@@ -4,7 +4,7 @@ from uuid import UUID
 from app.schemas.response import PaginateBase
 
 from ._base import BaseSchema
-from .perfume import PerfumeDepthRead, PerfumeRead
+from .perfume import PerfumeDepthForIdRead, PerfumeRead
 
 
 class FavouriteBase(BaseSchema):
@@ -22,7 +22,7 @@ class FavouriteDepthRead(FavouriteRead):
 
 
 class UserFavouriteDepthRead(FavouriteRead):
-    perfume: PerfumeDepthRead
+    perfume: PerfumeDepthForIdRead
 
 
 class FavouriteCreate(FavouriteBase):
