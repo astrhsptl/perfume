@@ -42,8 +42,6 @@ export default async function ProductPage({ searchParams }: ProductProps) {
     .fetchAll({ params: { ...searchParams } })
     .catch(() => null);
 
-  console.log(payload);
-
   return (
     <>
       <ProductsHeader />

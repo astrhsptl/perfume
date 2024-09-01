@@ -11,8 +11,6 @@ export const UserStoryCard = async ({
   title,
   payload = [],
 }: UserStoryCardProps) => {
-  console.log(payload);
-
   return (
     <section
       className={clsx(

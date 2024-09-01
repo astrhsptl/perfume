@@ -18,7 +18,6 @@ class _Auth extends BaseAPICore {
     data: ISignIn,
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<TokenPair>> {
-    console.log(`${this.url}/sign-in`);
     return await axios
       .post<TokenPair>(`${this.url}/sign-in`, data)
       .catch((error: AxiosError<WrongResponse>) => {
@@ -53,8 +52,6 @@ class _Auth extends BaseAPICore {
       access_token: string;
     }>
   > {
-    console.log(`${this.url}/refresh-token`);
-
     return await axios
       .post<{
         access_token: string;

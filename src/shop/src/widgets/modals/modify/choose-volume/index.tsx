@@ -15,8 +15,6 @@ export const ChooseVolume = ({}: ChooseVolumeProps) => {
     PerfumeVolume[]
   >();
 
-  console.log(payload);
-
   return (
     <div
       style={{
