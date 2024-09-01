@@ -55,6 +55,7 @@ class FavouriteRepository(BaseSQLAlchemyRepository):
                     .options(
                         joinedload(self.model.perfume),
                         joinedload(self.model.perfume, Perfume.file),
+                        joinedload(self.model.perfume, Perfume.perfume_volume),
                     )
                     .where(self.model.hidden == False, self.model.user_id == user_id)
                     .offset((page - 1) * limit)
