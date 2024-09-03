@@ -6,6 +6,7 @@ import {
 } from '@/shared';
 import clsx from 'clsx';
 import React, { Dispatch } from 'react';
+
 interface StatePicker {
   isHidden: boolean;
   currentStatus: EntityId | undefined;
