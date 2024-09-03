@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import create_model
 from repository.cart import CartRepository
 
@@ -56,3 +58,11 @@ class CartService(BaseService):
         return PaginateResponse(
             data=result.data, next_page=next_page, previous_page=prev_page, page=page
         )
+
+    async def admin_once(self, cart_id: UUID):
+        result = await self._repository.admin_once(cart_id)
+
+        if hasattr(result, "detail"):
+            return ErrorResponse(detail=result.detail, status_code=result.status_code)
+
+        return CartAdminRead.model_validate(result.data)
