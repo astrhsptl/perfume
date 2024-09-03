@@ -62,6 +62,16 @@ async def admin_list(
     return data
 
 
+@cart_router.get("/admin/{cart_id}")
+async def admin_once(cart_id: UUID):
+    data = await service.admin_once(cart_id)
+
+    if isinstance(data, ErrorResponse):
+        raise HTTPException(status_code=data.status_code, detail=data.detail)
+
+    return data
+
+
 @cart_router.get("/{id}", response_model=CartRead)
 async def get_by_id(id: UUID) -> CartRead:
     data = await service.get_by_id(id=id)
