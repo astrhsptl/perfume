@@ -7,7 +7,7 @@ from core.models.cart import Cart
 from dto.exception_dto import ErrorDTO
 from dto.success_dto import SuccessDTO
 from sqlalchemy import String, cast, func, select
-from sqlalchemy.exc import DBAPIError, IntegrityError
+from sqlalchemy.exc import DBAPIError, IntegrityError, NoResultFound
 from sqlalchemy.orm import joinedload
 
 from ._base_sqlalchemy_repository import BaseSQLAlchemyRepository
@@ -90,4 +90,29 @@ class CartRepository(BaseSQLAlchemyRepository):
                 return SuccessDTO[self.model](data)
         except DBAPIError as e:
             print(e)
+            return ErrorDTO("Database error", 500)
+
+    async def admin_once(self, cart_id: UUID):
+        statement = (
+            select(self.model)
+            .options(
+                joinedload(self.model.user),
+                joinedload(self.model.cart_perfume),
+                joinedload(self.model.cart_perfume, CartPerfume.perfume_volume),
+            )
+            .where(self.model.id == cart_id)
+        )
+
+        try:
+            async with SESSION() as session:
+                statement = await session.execute(statement)
+                data = statement.scalars().unique().one()
+
+                if data is None:
+                    return ErrorDTO("Data not found", 404)
+
+                return SuccessDTO[self.model](data)
+        except NoResultFound:
+            return ErrorDTO("Not found", 404)
+        except DBAPIError:
             return ErrorDTO("Database error", 500)
