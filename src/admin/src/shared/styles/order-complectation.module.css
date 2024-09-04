@@ -2,7 +2,7 @@
 
 .tableHead {
   display: grid;
-  grid-template-columns: 80px 200px 200px 1fr 1fr 1fr;
+  grid-template-columns: 80px auto 80px 80px 80px 80px;
   align-items: center;
   justify-items: start;
   gap: 10px;
@@ -24,7 +24,7 @@
 
 .rowContainer {
   display: grid;
-  grid-template-columns: 80px 200px 200px 1fr 1fr 1fr;
+  grid-template-columns: 80px auto 80px 80px 80px 80px;
   align-items: center;
   justify-items: start;
   gap: 10px;
@@ -50,6 +50,30 @@
 
   border-radius: 5px;
   border-right: 1px solid rgba(218, 227, 235, 1);
+
+  overflow-x: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.tableFooter {
+  display: grid;
+  grid-template-columns: auto 80px;
+  align-items: center;
+
+  padding: 0 10px;
+  height: 40px;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+
+  background-color: rgba(237, 242, 247, 1);
+  border: 1px solid rgba(218, 227, 235, 1);
+  border-radius: 0 0 5px 5px;
+}
+
+.tableFooterLabel {
+  text-align: right;
+  margin-right: 10px;
 }

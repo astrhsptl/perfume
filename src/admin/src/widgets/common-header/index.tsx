@@ -24,7 +24,7 @@ export const HeaderCommon: React.FC<HeaderCommon> = () => {
         <div className={CommonHeaderStyles.conteiner}>
           <h1 className={CommonHeaderStyles.title}>Заказы</h1>
           <div className={CommonHeaderStyles.time}>
-            <p className={CommonHeaderStyles.data}>
+            <p>
               {hours}:{minutes}
             </p>
             <p>

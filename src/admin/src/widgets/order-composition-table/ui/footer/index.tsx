@@ -1,4 +1,4 @@
-import { OrderCommonStyles } from '@/shared';
+import { OrderComplectation } from '@/shared';
 import React from 'react';
 
 interface FooterProps {
@@ -8,8 +8,9 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ totalCost }) => {
   return (
     <>
-      <section className={OrderCommonStyles.table_footer}>
-        Итого: {totalCost}$
+      <section className={OrderComplectation.tableFooter}>
+        <div className={OrderComplectation.tableFooterLabels}>Итого: </div>
+        <div>{totalCost}$</div>
       </section>
     </>
   );

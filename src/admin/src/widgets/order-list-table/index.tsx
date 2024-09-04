@@ -1,47 +1,39 @@
 import { CartOrders } from '@/entities';
-import {
-  API_SERVER_URL,
-  EntityId,
-  OrderCommonStyles,
-  PaginatedResult,
-  QueryKeys,
-} from '@/shared';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import { EntityId, OrderCommonStyles, PaginatedResult } from '@/shared';
+import { UseQueryResult } from '@tanstack/react-query';
+import { AxiosResponse } from 'axios';
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
 import { Footer, OrderListHeader, StatePicker, TableRow } from './ui';
 
-interface OrderListTable {}
+type Pagination = {
+  page: number;
+  quantity: number;
+};
 
-export const OrderListTable: React.FC<OrderListTable> = () => {
-  const [isHidden, setIsHidden] = useState(false);
-  const [currentState, setCurrentState] = useState<EntityId | undefined>(
-    undefined,
-  );
-  const [pagination, setPagination] = useState({
-    page: 1,
-    quantity: 20,
-  });
+interface OrderListTable {
+  coordinator: {
+    isHidden: boolean;
+    pagination: Pagination;
+    currentState: EntityId | undefined;
+    setIsHidden: React.Dispatch<React.SetStateAction<boolean>>;
+    setPagination: React.Dispatch<React.SetStateAction<Pagination>>;
+    setCurrentState: React.Dispatch<React.SetStateAction<EntityId | undefined>>;
+  };
+  payload: UseQueryResult<AxiosResponse<PaginatedResult<CartOrders>>, Error>;
+}
 
-  const payload = useQuery({
-    queryKey: [QueryKeys.cartList, pagination, currentState],
-    queryFn: async () =>
-      await axios.get<PaginatedResult<CartOrders>>(
-        `${API_SERVER_URL}/v1/cart/admin/list`,
-        {
-          params: {
-            order_by: '-create_time',
-            status_id: currentState,
-            ...pagination,
-          },
-        },
-      ),
-    placeholderData: keepPreviousData,
-  });
-
-  console.log(payload.data?.data);
-
+export const OrderListTable: React.FC<OrderListTable> = ({
+  coordinator: {
+    isHidden,
+    pagination,
+    currentState,
+    setIsHidden,
+    setPagination,
+    setCurrentState,
+  },
+  payload,
+}) => {
   return (
     <>
       <div className={OrderCommonStyles.table_container}>

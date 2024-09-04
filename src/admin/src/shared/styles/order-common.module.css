@@ -6,7 +6,9 @@ a {
 
 .table_container__main {
   display: grid;
-  grid-template-columns: 36px 100px 200px 1fr 150px 1fr 166px;
+  grid-template-columns:
+    36px 100px minmax(100px, auto) minmax(150px, auto) 150px minmax(100px, auto)
+    166px;
   align-items: center;
   justify-items: start;
   gap: 10px;
@@ -17,7 +19,9 @@ a {
 
 .header_teb {
   display: grid;
-  grid-template-columns: 36px 100px 200px 1fr 150px 1fr 166px;
+  grid-template-columns:
+    36px 100px minmax(100px, auto) minmax(150px, auto) 150px minmax(100px, auto)
+    166px;
   align-items: center;
   justify-items: start;
   gap: 10px;
@@ -37,6 +41,7 @@ a {
   border-right: 1px solid rgba(218, 227, 235, 1);
   -ms-overflow-style: none;
   scrollbar-width: none;
+  overflow-x: scroll;
 }
 
 .payload_container {
@@ -266,4 +271,45 @@ a {
   font-size: 10px;
   font-weight: 300;
   text-decoration: none;
+}
+
+.mobileCard {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 5px;
+
+  padding: 10px;
+
+  border-radius: 5px;
+  background: #edf2f7;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 400;
+  color: #4a5568;
+}
+
+.mobileTitleText {
+  font-size: 14px;
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.mobileFlex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 1050px) {
+  .table_container {
+    display: none;
+  }
+
+  .status {
+    width: 100px;
+    height: 22px;
+  }
 }

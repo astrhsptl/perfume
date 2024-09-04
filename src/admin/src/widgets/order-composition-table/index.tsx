@@ -1,6 +1,6 @@
 import { CartOrders } from '@/entities';
 import { OrderCommonStyles, OrderComplectation } from '@/shared';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Footer, Header, TableRow } from './ui';
 
 interface OrderCompositionTableProps {
@@ -12,6 +12,12 @@ export const OrderCompositionTable: React.FC<OrderCompositionTableProps> = ({
   cart,
   isLoading,
 }) => {
+  const totalCost = useMemo(() => {
+    return cart?.cart_perfume.reduce((num, element) => {
+      return num + element.quantity * element.perfume_volume.cost;
+    }, 0);
+  }, [cart]);
+
   return (
     <>
       <div className={OrderComplectation.table}>
@@ -21,7 +27,7 @@ export const OrderCompositionTable: React.FC<OrderCompositionTableProps> = ({
             <TableRow key={element.id} cartPerfume={element} />
           ))}
         </div>
-        <Footer totalCost={123} />
+        <Footer totalCost={totalCost ?? 0} />
       </div>
     </>
   );

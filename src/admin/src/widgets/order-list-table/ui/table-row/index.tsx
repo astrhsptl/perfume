@@ -1,7 +1,7 @@
 import { CartOrders } from '@/entities';
 import { OrderCommonStyles } from '@/shared';
 import { Checkbox } from '@mui/material';
-import React, { TouchEvent } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Status } from './status';
 
@@ -21,9 +21,6 @@ export const TableRow: React.FC<TableRow> = ({ cart }) => {
       className={OrderCommonStyles.table_container__main}
       onDoubleClick={() => {
         navigate(`/admin/${cart.id}`);
-      }}
-      onTouchStart={(e: TouchEvent<HTMLDivElement>) => {
-        if (e.target === e.currentTarget) navigate(`/admin/${cart.id}`);
       }}
     >
       <div className={OrderCommonStyles.id_check}>
