@@ -40,6 +40,8 @@ export const OrderListTable: React.FC<OrderListTable> = () => {
     placeholderData: keepPreviousData,
   });
 
+  console.log(payload.data?.data);
+
   return (
     <>
       <div className={OrderCommonStyles.table_container}>
@@ -66,7 +68,12 @@ export const OrderListTable: React.FC<OrderListTable> = () => {
             </div>
           </section>
         </section>
-        <Footer pagination={pagination} setPagination={setPagination} />
+        <Footer
+          pagination={pagination}
+          setPagination={setPagination}
+          nextPage={payload.data?.data.next_page}
+          previousPage={payload.data?.data.previous_page}
+        />
       </div>
     </>
   );
