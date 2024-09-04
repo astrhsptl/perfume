@@ -47,7 +47,7 @@ class CartService(BaseService):
             return ErrorResponse(detail=result.detail, status_code=result.status_code)
 
         page, next_page, prev_page = self._paginate_data(
-            request, len(result.data), page_num, quantity
+            request, result.data.get('count'), page_num, quantity
         )
 
         PaginateResponse = create_model(
@@ -56,7 +56,7 @@ class CartService(BaseService):
             __base__=PaginateBase,
         )
         return PaginateResponse(
-            data=result.data, next_page=next_page, previous_page=prev_page, page=page
+            data=result.data.get('data'), next_page=next_page, previous_page=prev_page, page=page
         )
 
     async def admin_once(self, cart_id: UUID):

@@ -58,10 +58,10 @@ class CartRepository(BaseSQLAlchemyRepository):
                 joinedload(self.model.cart_perfume),
                 joinedload(self.model.cart_perfume, CartPerfume.perfume_volume),
             )
-            .where()
             .offset((page - 1) * limit)
             .limit(limit)
         )
+        count_statement = select(func.count(self.model.id))
 
         for key, value in kwargs.items():
             if not hasattr(self.model, key):
@@ -71,9 +71,15 @@ class CartRepository(BaseSQLAlchemyRepository):
                 statement = statement.filter(
                     func.date(getattr(self.model, key)) == value
                 )
+                count_statement = count_statement.filter(
+                    func.date(getattr(self.model, key)) == value
+                )
                 continue
 
             statement = statement.filter(
+                cast(getattr(self.model, key), String).ilike(f"%{value}%")
+            )
+            count_statement = count_statement.filter(
                 cast(getattr(self.model, key), String).ilike(f"%{value}%")
             )
 
@@ -82,12 +88,17 @@ class CartRepository(BaseSQLAlchemyRepository):
         try:
             async with SESSION() as session:
                 statement = await session.execute(statement)
+                count_statement = await session.execute(count_statement)
                 data = statement.scalars().unique().all()
+                count = count_statement.scalar()
 
                 if data is None:
                     return ErrorDTO("Data not found", 404)
 
-                return SuccessDTO[self.model](data)
+                return SuccessDTO[self.model]({
+                    "count": count,
+                    "data": data
+                })
         except DBAPIError as e:
             print(e)
             return ErrorDTO("Database error", 500)
