@@ -51,7 +51,7 @@ export const OrdersPage: React.FC<OrdersProps> = () => {
         }}
         payload={payload}
       />
-      <OrderListMobile payload={payload} />
+      <OrderListMobile payload={payload} setCurrentState={setCurrentState} />
     </div>
   );
 };
