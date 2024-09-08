@@ -4,6 +4,7 @@ import {
   CART_STATUS_OPEN,
   EntityId,
   OrderCommonStyles,
+  OrderMobileStyles,
   PaginatedResult,
 } from '@/shared';
 import { UseQueryResult } from '@tanstack/react-query';
@@ -31,7 +32,7 @@ export const OrderListMobile: React.FC<OrderListMobileProps> = ({
   }, []);
 
   return (
-    <>
+    <div className={OrderCommonStyles.orderListContainerMobile}>
       <Swiper
         style={{
           marginTop: 20,
@@ -80,20 +81,11 @@ export const OrderListMobile: React.FC<OrderListMobileProps> = ({
         </SwiperSlide>
       </Swiper>
 
-      <section
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          justifyContent: 'center',
-          gap: 10,
-          margin: '30px auto',
-          width: '95%',
-        }}
-      >
+      <section className={OrderMobileStyles.orderCard}>
         {(payload.isLoading ? [] : payload.data!.data.data).map((element) => (
           <OrderCard key={element.id} order={element} />
         ))}
       </section>
-    </>
+    </div>
   );
 };

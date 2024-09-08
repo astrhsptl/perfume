@@ -1,9 +1,11 @@
 import { CommonHeaderStyles } from '@/shared';
 import React, { useEffect, useState } from 'react';
 import { formatTimeString, getMonthName } from './lib';
-interface HeaderCommon {}
+interface HeaderCommon {
+  title: string;
+}
 
-export const HeaderCommon: React.FC<HeaderCommon> = () => {
+export const HeaderCommon: React.FC<HeaderCommon> = ({ title }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const hours = formatTimeString(currentDate.getHours().toLocaleString());
   const minutes = formatTimeString(currentDate.getMinutes().toLocaleString());
@@ -22,7 +24,7 @@ export const HeaderCommon: React.FC<HeaderCommon> = () => {
     <>
       <header className={CommonHeaderStyles.header}>
         <div className={CommonHeaderStyles.conteiner}>
-          <h1 className={CommonHeaderStyles.title}>Заказы</h1>
+          <h1 className={CommonHeaderStyles.title}>{title}</h1>
           <div className={CommonHeaderStyles.time}>
             <p>
               {hours}:{minutes}

@@ -39,7 +39,7 @@ export const OrdersPage: React.FC<OrdersProps> = () => {
       <Helmet>
         <title>Заказы | Perfume shop</title>
       </Helmet>
-      <HeaderCommon />
+      <HeaderCommon title='Заказы' />
       <OrderListTable
         coordinator={{
           isHidden,

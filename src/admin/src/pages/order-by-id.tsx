@@ -1,6 +1,10 @@
 import { CartOrders } from '@/entities';
 import { API_SERVER_URL, QueryKeys } from '@/shared';
-import { HeaderCommon, OrderCompositionTable } from '@/widgets';
+import {
+  HeaderCommon,
+  OrderCompositionMobile,
+  OrderCompositionTable,
+} from '@/widgets';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import React from 'react';
@@ -29,16 +33,19 @@ export const OrderByIdPage: React.FC<OrderByIdProps> = () => {
         }),
   });
 
+  const orderTitle = currentCart.data?.id.toString().split('-')[0] ?? '';
+
   return (
     <div>
       <Helmet>
-        <title>
-          Заказ {currentCart.data?.id.toString().split('-')[0] ?? ''} | Perfume
-          shop
-        </title>
+        <title>Заказ {orderTitle} | Perfume shop</title>
       </Helmet>
-      <HeaderCommon />
+      <HeaderCommon title={`Заказ ${orderTitle}`} />
       <OrderCompositionTable
+        cart={currentCart.data}
+        isLoading={currentCart.isLoading}
+      />
+      <OrderCompositionMobile
         cart={currentCart.data}
         isLoading={currentCart.isLoading}
       />

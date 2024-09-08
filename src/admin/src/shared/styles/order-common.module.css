@@ -4,6 +4,10 @@ a {
   text-decoration: none;
 }
 
+.orderListContainerMobile {
+  display: none;
+}
+
 .table_container__main {
   display: grid;
   grid-template-columns:
@@ -306,6 +310,10 @@ a {
 @media (max-width: 1050px) {
   .table_container {
     display: none;
+  }
+
+  .orderListContainerMobile {
+    display: block;
   }
 
   .status {

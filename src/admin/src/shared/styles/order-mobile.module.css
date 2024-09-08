@@ -1,0 +1,14 @@
+.orderCard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center;
+  gap: 10px;
+  margin: 30px auto;
+  width: 95%;
+}
+
+.orderCardDetail {
+  & b {
+    font-weight: 700;
+  }
+}
