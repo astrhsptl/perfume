@@ -6,6 +6,7 @@ import {
   PerfumeType,
   PerfumeVolume,
   StoredPerfume,
+  User,
 } from '@/entities';
 import { createFavorite, useAppDispatch } from '@/features';
 import { DefaultButton, lora, ProductStyle } from '@/shared';
@@ -20,9 +21,11 @@ import { ImageContainer, VolumePoints } from './ui';
 interface PayloadContainerProps {
   perfume: Perfume;
   perfumeType: PerfumeType;
+  user?: User | null;
 }
 
 export const PayloadContainer = ({
+  user,
   perfume,
   perfumeType,
 }: PayloadContainerProps) => {
@@ -45,7 +48,12 @@ export const PayloadContainer = ({
           }}
         >
           {perfumeType.name}
-          <span style={{ marginLeft: 20 }}>
+          <span
+            style={{
+              marginLeft: 20,
+              display: user?.is_admin ? 'inline' : 'none',
+            }}
+          >
             <Link href={`/products/${perfume.id}/edit`}>
               <Image src='/edit.svg' alt='edit' width={16} height={16} />
             </Link>

@@ -1,11 +1,15 @@
-import { brandAPIBuild, perfumeTypeAPIBuild } from '@/features';
-import { BaseStyle, ProductStyle, montserrat } from '@/shared';
+import {
+  brandAPIBuild,
+  checkAuthServer,
+  perfumeTypeAPIBuild,
+} from '@/features';
+import { BaseStyle, montserrat, ProductStyle } from '@/shared';
 import { BackLink } from '@/widgets';
 import PerfumeCreateForm from '@/widgets/product/modify/form';
 import clsx from 'clsx';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
-
+import { redirect } from 'next/navigation';
 export const metadata: Metadata = {
   title: 'Создание парфюма',
   icons: {
@@ -28,6 +32,15 @@ export default async function Page() {
   const perfumeTypeAPI = perfumeTypeAPIBuild.serverApi(cook);
   const { data: brands } = await brandAPI.fetchAll();
   const { data: perfumeTypes } = await perfumeTypeAPI.fetchAll();
+
+  const user = await checkAuthServer(
+    cook.get('access')?.value,
+    cook.get('refresh')?.value
+  );
+
+  if (!user) {
+    return redirect('/sign-in');
+  }
 
   return (
     <div

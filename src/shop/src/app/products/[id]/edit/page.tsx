@@ -1,5 +1,6 @@
 import {
   brandAPIBuild,
+  checkAuthServer,
   perfumeAPIBuild,
   perfumeTypeAPIBuild,
 } from '@/features';
@@ -9,7 +10,6 @@ import clsx from 'clsx';
 import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-
 export const metadata: Metadata = {
   title: 'Редактирование продукта',
 };
@@ -32,6 +32,15 @@ export default async function Page({ params: { id } }: ProductRetrieveProps) {
     .fetchByID(id)
     .catch(() => redirect('/not-found'));
   const { data: perfumeTypes } = await perfumeTypeAPI.fetchAll();
+
+  const user = await checkAuthServer(
+    cook.get('access')?.value,
+    cook.get('refresh')?.value
+  );
+
+  if (!user) {
+    return redirect('/sign-in');
+  }
 
   return (
     <div

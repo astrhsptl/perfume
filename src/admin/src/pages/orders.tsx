@@ -1,11 +1,11 @@
 import { CartOrders } from '@/entities';
+import { checkAuth } from '@/features';
 import { API_SERVER_URL, EntityId, PaginatedResult, QueryKeys } from '@/shared';
 import { HeaderCommon, OrderListMobile, OrderListTable } from '@/widgets';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-
 interface OrdersProps {}
 
 export const OrdersPage: React.FC<OrdersProps> = () => {
@@ -33,6 +33,12 @@ export const OrdersPage: React.FC<OrdersProps> = () => {
       ),
     placeholderData: keepPreviousData,
   });
+
+  useEffect(() => {
+    checkAuth().catch(() => {
+      window.location.replace('/sign-in');
+    });
+  }, []);
 
   return (
     <div>

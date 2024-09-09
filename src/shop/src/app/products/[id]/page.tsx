@@ -1,5 +1,7 @@
-import { perfumeAPIBuild } from '@/features';
+import { User } from '@/entities';
+import { checkAuthServer, perfumeAPIBuild } from '@/features';
 import { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { ProductsDesktop } from './(desktop)';
 import { ProductMobile } from './(mobile)';
@@ -40,14 +42,30 @@ export const metadata: Metadata = {
 export default async function ProductRetrievePage({
   params: { id },
 }: ProductRetrieveProps) {
+  const cook = cookies();
+  let user: User | null = null;
   const perfumeAPI = perfumeAPIBuild.serverApi();
+
   const { data } = await perfumeAPI
     .fetchByID(id)
     .catch(() => redirect('/not-found'));
 
+  const authPayload = await checkAuthServer(
+    cook.get('access')?.value,
+    cook.get('refresh')?.value
+  );
+
+  if (typeof authPayload === 'string') {
+    user = (await checkAuthServer(authPayload)) as User;
+  }
+
+  if (typeof authPayload === 'object') {
+    user = authPayload;
+  }
+
   return (
     <>
-      <ProductsDesktop perfume={data} />
+      <ProductsDesktop user={user} perfume={data} />
       <ProductMobile perfume={data} />
     </>
   );

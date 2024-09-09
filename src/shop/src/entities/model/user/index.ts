@@ -11,4 +11,5 @@ export type UserUpdate = Partial<UserCreate>;
 
 export interface User extends UserCreate {
   id: EntityId;
+  is_admin: boolean;
 }

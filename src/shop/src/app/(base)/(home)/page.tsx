@@ -37,7 +37,7 @@ export default async function Page() {
         <h2 className={clsx(montserrat.className)}>
           Новая коллекция уже в продаже
         </h2>
-        <Link href={'/product'}>
+        <Link href={'/products'}>
           <DefaultButton>Попробовать</DefaultButton>
         </Link>
       </section>
