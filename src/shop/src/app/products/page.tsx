@@ -1,7 +1,15 @@
-import { ProductsHeader } from '@/widgets';
+import { perfumeAPIBuild } from '@/features';
+import { ProductList, ProductsHeader } from '@/widgets';
 import { Metadata } from 'next';
 
-interface ProductProps {}
+interface Params {
+  [key: string]: string;
+  suck: string;
+}
+
+interface ProductProps {
+  searchParams: Params;
+}
 
 export const metadata: Metadata = {
   title: 'Духи в Ростове-на-Дону | Famous perfume',
@@ -28,10 +36,16 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function ProductPage({}: ProductProps) {
+export default async function ProductPage({ searchParams }: ProductProps) {
+  const perfumeApi = perfumeAPIBuild.serverApi();
+  const payload = await perfumeApi
+    .fetchAll({ params: { ...searchParams } })
+    .catch(() => null);
+
   return (
     <>
       <ProductsHeader />
+      <ProductList products={payload?.data.data} />
     </>
   );
 }

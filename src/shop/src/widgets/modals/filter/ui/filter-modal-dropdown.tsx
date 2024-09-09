@@ -1,5 +1,6 @@
 'use client';
 
+import { Value } from '@/entities';
 import { FilterStyle } from '@/shared';
 import {
   Checkbox,
@@ -11,17 +12,19 @@ import {
 } from '@mui/material';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 interface FilterModalDropdownProps {
   title: string;
-  items: number[];
+  items: Value[];
+  submitter: (data: Value, state: boolean) => void;
 }
 
-export const FilterModalDropdown = ({
+export function FilterModalDropdown({
   title,
   items,
-}: FilterModalDropdownProps) => {
+  submitter,
+}: FilterModalDropdownProps) {
   const [open, setOpen] = useState<boolean>(false);
   const handleClick = () => {
     setOpen(() => !open);
@@ -70,8 +73,14 @@ export const FilterModalDropdown = ({
             },
           }}
         >
-          {items.map((index) => (
-            <ListItemButton key={index} sx={{ pl: 2 }}>
+          {items.map(({ key, value }) => (
+            <ListItemButton
+              key={key}
+              sx={{ pl: 2 }}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                submitter({ key, value }, e.target.checked)
+              }
+            >
               <ListItemIcon
                 sx={{
                   '&': {
@@ -81,11 +90,11 @@ export const FilterModalDropdown = ({
               >
                 <Checkbox sx={{ '& .MuiSvgIcon-root': { fontSize: 18 } }} />
               </ListItemIcon>
-              <ListItemText primary='Starred' />
+              <ListItemText primary={value} />
             </ListItemButton>
           ))}
         </List>
       </Collapse>
     </List>
   );
-};
+}

@@ -51,6 +51,53 @@
   width: 100%;
 }
 
+.productContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  padding-top: 40px;
+}
+
+.productItem {
+  @include font(14px, 400);
+
+  display: grid;
+  grid-template-rows: 200px 16px 16px 16px;
+  gap: 5px;
+
+  position: relative;
+
+  height: fit-content;
+  width: 100%;
+
+  text-decoration: none;
+  color: var(--white);
+
+  & > img {
+    position: inherit !important;
+    width: 100%;
+    object-fit: cover;
+  }
+}
+
+.productText {
+  &.title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  &.description,
+  &.cost {
+    color: var(--text-second);
+  }
+
+  &.description {
+    text-overflow: ellipsis;
+    word-break: break-all;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: $mobileWidth) {
   .headContainer > h1,
   .__filterPlug {

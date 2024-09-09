@@ -13,8 +13,6 @@ export const SignUpForm = ({}: SignUpFormProps) => {
   const router = useRouter();
 
   const authSubmit: SubmitHandler<ISignUp> = async (data) => {
-    console.log(data);
-
     const { result, isError } = await signUp(data);
 
     if (isError) {

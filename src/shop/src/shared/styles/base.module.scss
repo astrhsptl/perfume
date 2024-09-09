@@ -81,14 +81,14 @@ $mobileWidth: 800px;
   max-width: 300px;
 
   padding: 14px 20px !important;
-  border-radius: 10px;
+  border-radius: 5px;
 
   cursor: pointer;
 
   &.light {
     background-color: var(--white);
     color: var(--black);
-    border: none;
+    border: 1px solid var(--white);
   }
 
   &.dark {
@@ -103,7 +103,8 @@ $mobileWidth: 800px;
   }
 
   &.light:hover {
-    border: 1.5px solid var(--white);
+    border: 1px solid var(--white);
+    background-color: var(--black);
     color: var(--white);
   }
 }
@@ -112,8 +113,6 @@ $mobileWidth: 800px;
   position: relative;
   width: 100%;
   max-width: 300px;
-
-  margin-top: 20px;
 }
 
 .input {
@@ -124,7 +123,7 @@ $mobileWidth: 800px;
   border: 1.5px solid var(--white);
   border-radius: 5px;
 
-  padding: 30px 20px;
+  padding: 18px 10px;
 
   background-color: var(--black);
 
@@ -143,7 +142,7 @@ $mobileWidth: 800px;
 .defaultInputPlaceholder {
   position: absolute;
   top: calc(50% - 7px);
-  left: 20px;
+  left: 5px;
   transition: all 0.15s ease-in-out;
   padding: 0 5px;
 
@@ -153,7 +152,7 @@ $mobileWidth: 800px;
     top: -7px !important;
     background-color: var(--black);
     @include font(10px);
-    left: 15px;
+    left: 5px;
   }
 
   &.error {
@@ -178,6 +177,86 @@ $mobileWidth: 800px;
 
   width: 100%;
   max-width: 300px;
+}
+
+.radioLabel {
+  @include font(14px);
+  display: flex;
+  gap: 5px;
+
+  width: fit-content;
+}
+
+.defaultRadio {
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  padding: 0;
+
+  border: 2px solid var(--white);
+  border-radius: 50%;
+
+  appearance: none;
+  background-color: var(--black);
+  outline: none;
+
+  transition: outline 0.1s;
+
+  &:not(:disabled):checked {
+    border-color: var(--white);
+    background-color: var(--white);
+    background-clip: content-box;
+    padding: 2px;
+    background-image: radial-gradient(
+      circle,
+      var(--white) 0%,
+      var(--white) 50%,
+      transparent 60%,
+      transparent 100%
+    );
+  }
+
+  &:disabled {
+    background-color: var(--black);
+  }
+
+  &:disabled:checked {
+    background-image: radial-gradient(
+      circle,
+      var(--white) 0%,
+      var(--white) 50%,
+      transparent 50%,
+      transparent 100%
+    );
+  }
+
+  &:focus-visible {
+    background-color: var(--white);
+    outline: 6px solid var(--white);
+    transform: scale(1.05);
+  }
+
+  @media (hover: hover) {
+    &:not(:disabled):hover {
+      background-color: var(--white);
+      outline: 6px solid var(--white);
+      transform: scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:focus-visible {
+      transform: scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) and (hover: hover) {
+    &:not(:disabled):hover {
+      transform: scale(1);
+    }
+  }
 }
 
 @media (max-width: var(--mobile-width)) {

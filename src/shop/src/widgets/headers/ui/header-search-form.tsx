@@ -9,9 +9,7 @@ type SearchFormProps = {} & JSX.IntrinsicElements['form'];
 
 export const SearchForm = ({ ...props }: SearchFormProps) => {
   const methods = useForm<ISearchString>();
-  const search: SubmitHandler<ISearchString> = (data) => {
-    console.log(data);
-  };
+  const search: SubmitHandler<ISearchString> = (data) => {};
   return (
     <FormBaseLayout
       methods={methods}

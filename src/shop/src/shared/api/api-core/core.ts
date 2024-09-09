@@ -32,7 +32,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
-      .get<PaginatedResult<FetchType>>(this.url, requestConfig)
+      .get<PaginatedResult<FetchType>>(`${this.url}get_all`, requestConfig)
       .catch((error: AxiosError<WrongResponse>) =>
         this.retry<ReturnType<typeof this.fetchAll>>(
           (tries) => this.fetchAll(requestConfig, tries),
@@ -47,7 +47,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}/`;
+    const url = `${this.url}${id}`;
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
@@ -69,7 +69,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     const result = await axios
-      .post<FetchType>(this.url, data, requestConfig)
+      .post<FetchType>(`${this.url}create`, data, requestConfig)
       .catch((error: AxiosError<WrongResponse>) =>
         this.retry<ReturnType<typeof this.create>>(
           (tries) => this.create(data, requestConfig, tries),
@@ -87,7 +87,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}/`;
+    const url = `${this.url}update/${id}`;
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios
@@ -106,7 +106,7 @@ class APICore<FetchType, RequestType> extends BaseAPICore {
     RequestConfig: AxiosRequestConfig = {},
     tries: number = DefaultTriesCount
   ): Promise<AxiosResponse<FetchType>> {
-    const url = `${this.url}${id}/`;
+    const url = `${this.url}delete/${id}`;
     const requestConfig = this.setAuthenticationHeader(RequestConfig);
 
     return await axios

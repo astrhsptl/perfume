@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { ReactNode } from "react";
-import { FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form";
+import { ReactNode } from 'react';
+import { FormProvider, SubmitHandler, UseFormReturn } from 'react-hook-form';
 
 type FormBaseLayoutProps = {
   children?: ReactNode;
   methods: UseFormReturn<any, unknown, undefined>;
   onSub: SubmitHandler<any>;
-} & JSX.IntrinsicElements["form"];
+} & JSX.IntrinsicElements['form'];
 
 export const FormBaseLayout = ({
   onSub,

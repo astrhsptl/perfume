@@ -29,6 +29,10 @@
   border-right: 1px solid var(--white);
 
   padding: 15dvh 5%;
+
+  overflow-y: scroll;
+
+  scrollbar-width: thin;
 }
 
 .filterHead {
