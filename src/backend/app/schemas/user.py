@@ -12,7 +12,7 @@ class UserBase(BaseSchema):
     email: EmailStr
     phone: str
     address: str
-
+    is_admin: bool = Field(default=False)
 
 class UserRead(UserBase):
     id: UUID
@@ -34,6 +34,7 @@ class UserUpdate(BaseModel):
     email: EmailStr | None = Field(default=None)
     phone: str | None = Field(default=None)
     address: str | None = Field(default=None)
+    is_admin: bool | None = Field(default=None)
 
 
 class UserSearch(BaseModel):

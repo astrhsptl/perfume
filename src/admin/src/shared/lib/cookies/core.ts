@@ -1,13 +1,15 @@
+'use client';
+
 import { CredentialOptions } from './types';
 
-class _Storage {
+export class _CredentialStorage {
   get(key: string): string | null {
     const matches = document.cookie.match(
       new RegExp(
         '(?:^|; )' +
           key.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') +
-          '=([^;]*)',
-      ),
+          '=([^;]*)'
+      )
     );
     return matches ? decodeURIComponent(matches[1]) : null;
   }
@@ -34,7 +36,7 @@ class _Storage {
       options.expires = options.expires.toUTCString();
     }
     let updatedCookie = `${encodeURIComponent(key)}=${encodeURIComponent(
-      value,
+      value
     )}; path=/;`;
 
     for (let [optionKey, optionValue] of Object.entries(options)) {
@@ -64,4 +66,4 @@ class _Storage {
   }
 }
 
-export const CredentialStorage = new _Storage();
+export const CredentialStorage = new _CredentialStorage();

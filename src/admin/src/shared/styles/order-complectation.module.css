@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+.tableHead {
+  display: grid;
+  grid-template-columns: 80px auto 80px 80px 80px 80px;
+  align-items: center;
+  justify-items: start;
+  gap: 10px;
+  padding: 0 10px;
+  height: 40px;
+
+  background-color: rgba(237, 242, 247, 1);
+  border: 1px solid rgba(218, 227, 235, 1);
+}
+
+.cell {
+  display: flex;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  color: rgba(74, 85, 104, 1);
+}
+
+.rowContainer {
+  display: grid;
+  grid-template-columns: 80px auto 80px 80px 80px 80px;
+  align-items: center;
+  justify-items: start;
+  gap: 10px;
+  padding: 0 10px;
+  height: 40px;
+
+  border: 1px solid rgba(218, 227, 235, 1);
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.table {
+  display: grid;
+
+  grid-template-rows: 40px auto 40px;
+
+  width: 90%;
+  max-height: 380px;
+
+  margin: 44px auto 0px auto;
+
+  border-radius: 5px;
+  border-right: 1px solid rgba(218, 227, 235, 1);
+
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.tableFooter {
+  display: grid;
+  grid-template-columns: auto 80px;
+  align-items: center;
+
+  padding: 0 10px;
+  height: 40px;
+
+  font-family: Inter;
+  font-size: 12px;
+  font-weight: 600;
+
+  background-color: rgba(237, 242, 247, 1);
+  border: 1px solid rgba(218, 227, 235, 1);
+  border-radius: 0 0 5px 5px;
+}
+
+.tableFooterLabel {
+  text-align: right;
+  margin-right: 10px;
+}
+
+@media (max-width: 1000px) {
+  .table {
+    display: none;
+  }
+}

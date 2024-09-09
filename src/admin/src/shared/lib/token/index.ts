@@ -1,5 +1,5 @@
 export const parseJwt = (
-  token: string,
+  token: string
 ): {
   sub: string;
   exp: number;
@@ -14,7 +14,7 @@ export const parseJwt = (
       .map(function (c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join(''),
+      .join('')
   );
 
   return JSON.parse(jsonPayload);
