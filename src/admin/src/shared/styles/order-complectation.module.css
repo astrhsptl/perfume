@@ -77,3 +77,9 @@
   text-align: right;
   margin-right: 10px;
 }
+
+@media (max-width: 1000px) {
+  .table {
+    display: none;
+  }
+}

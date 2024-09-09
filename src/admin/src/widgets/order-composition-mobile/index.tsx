@@ -1,4 +1,5 @@
 import { CartOrders } from '@/entities';
+import { OrderMobileStyles } from '@/shared';
 import React from 'react';
 import { OrderCard } from './ui';
 
@@ -12,7 +13,7 @@ export const OrderCompositionMobile: React.FC<OrderCompositionMobileProps> = ({
   cart,
 }) => {
   return (
-    <section>
+    <section className={OrderMobileStyles.cardContainer}>
       <h2>Состав заказа</h2>
       <div>
         {(isLoading || !cart ? [] : cart.cart_perfume).map((element) => (
