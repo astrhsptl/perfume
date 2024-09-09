@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export const useClientModalStatement = () => {
   const [modalStatement, setModalStatement] = useState(false);
@@ -15,6 +15,6 @@ export const useClientModalStatement = () => {
     toggle: () => {
       setModalStatement(() => !modalStatement);
     },
-    state: modalStatement,
+    state: modalStatement
   };
 };

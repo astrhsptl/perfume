@@ -1,7 +1,7 @@
 export type PaginatedResult<T> = {
-  next: number | null;
-  prev: number | null;
-  pages: number | null;
+  next_page: string | null;
+  previous_page: string | null;
+  page: number | null;
   data: T[];
 };
 
