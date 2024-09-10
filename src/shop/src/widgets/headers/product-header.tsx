@@ -34,7 +34,9 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
       headerLinks={
         <>
           {searchState ? (
-            <SearchForm className={ProductListStyle.searchFormModal} />
+            <>
+              <SearchForm className={ProductListStyle.searchFormModal} />
+            </>
           ) : (
             <>
               <NavLink href={'/'}>Домой</NavLink>

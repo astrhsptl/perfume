@@ -20,4 +20,12 @@ export class ParamManager {
     url.searchParams.delete(key);
     window.history.replaceState({}, '', url);
   }
+
+  static invalidate(window: Window) {
+    const params = ParamManager.readParams(window);
+
+    for (const key of Object.keys(params)) {
+      ParamManager.removeParam(window, key);
+    }
+  }
 }
