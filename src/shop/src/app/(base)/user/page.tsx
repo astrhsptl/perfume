@@ -1,5 +1,6 @@
 import { Perfume, User } from '@/entities';
-import { checkAuthServer, perfumeByCartId } from '@/features';
+import { cartAPIBuild, checkAuthServer, perfumeByCartId } from '@/features';
+import { CART_STATUS_OPEN } from '@/shared/config';
 import { UserHead, UserStoryCard } from '@/widgets';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -8,8 +9,10 @@ interface UserProps {}
 
 export default async function UserPage({}: UserProps) {
   const credentialStorage = cookies();
+  const cartApi = cartAPIBuild.serverApi();
 
   let user: User | null = null;
+  let products: Perfume[] = [];
   const authPayload = await checkAuthServer(
     credentialStorage.get('access')?.value,
     credentialStorage.get('refresh')?.value
@@ -27,14 +30,28 @@ export default async function UserPage({}: UserProps) {
     return redirect('/sign-in');
   }
 
-  const products: Perfume[] =
-    (await perfumeByCartId('b0cf8181-5e06-4999-bd38-a0a1b0f5f1e2')) ?? [];
+  const payload = await cartApi
+    .fetchAll({
+      params: {
+        user_id: user.id,
+        quantity: 1,
+        status_id: CART_STATUS_OPEN,
+        order_by: '-create_time',
+      },
+    })
+    .then(({ data }) => {
+      if (data.data.length === 0) return null;
+      return data.data[0];
+    });
+
+  if (payload) {
+    products = (await perfumeByCartId(payload?.id)) ?? [];
+  }
 
   return (
     <div style={{ paddingTop: 70 }}>
       <UserHead email={user.email} username={user.username} />
       <UserStoryCard title='Текущий заказ' payload={products} />
-      <UserStoryCard title='История заказов' />
     </div>
   );
 }

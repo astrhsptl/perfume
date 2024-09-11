@@ -21,30 +21,19 @@ export const SignUpForm = ({}: SignUpFormProps) => {
     }
 
     toast.success(result.comment);
-    return router.push('/product');
+    return router.push('/products');
   };
 
   return (
     <AuthLayout title='Вход' submit={authSubmit}>
       <DefaultInput
-        name='first_name'
-        placeholder='Имя'
+        name='username'
+        placeholder='ФИО'
         type='text'
         registerOptions={{
           required: {
             value: true,
-            message: 'Имя обязательно',
-          },
-        }}
-      />
-      <DefaultInput
-        name='last_name'
-        placeholder='Фамилия'
-        type='text'
-        registerOptions={{
-          required: {
-            value: true,
-            message: 'Фамилия обязательна',
+            message: 'ФИО обязательно',
           },
         }}
       />
@@ -56,6 +45,17 @@ export const SignUpForm = ({}: SignUpFormProps) => {
           required: {
             value: true,
             message: 'Телефон обязателен',
+          },
+        }}
+      />
+      <DefaultInput
+        name='address'
+        placeholder='Адрес'
+        type='text'
+        registerOptions={{
+          required: {
+            value: true,
+            message: 'Адрес обязателен',
           },
         }}
       />
