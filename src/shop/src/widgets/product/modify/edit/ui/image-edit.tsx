@@ -128,11 +128,7 @@ export const ImageEdit: React.FC<ImageEditProps> = ({ perfume: { id } }) => {
         </label>
       </div>
       <div>
-        <div
-          style={{
-            backgroundColor: 'lightgrey',
-          }}
-        >
+        <div>
           <Image
             alt='Текущее изображение'
             src={currentImage.url}

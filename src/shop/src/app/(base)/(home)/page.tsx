@@ -1,7 +1,6 @@
 import { DefaultButton, HomeStyle, lora, montserrat } from '@/shared';
 import clsx from 'clsx';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -41,13 +40,6 @@ export default async function Page() {
           <DefaultButton>Попробовать</DefaultButton>
         </Link>
       </section>
-      <div className={HomeStyle.perfume}>
-        <Image
-          src={'/perfume.png'}
-          alt={'Магазин духов ростов ростов-на-дону'}
-          fill={true}
-        />
-      </div>
       <section className={HomeStyle.videoContainer}>
         <video muted loop autoPlay src='/smoke.mp4'></video>
       </section>

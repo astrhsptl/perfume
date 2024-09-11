@@ -1,5 +1,5 @@
 import '@/shared/styles/base.css';
-import { CartModal, HeaderModal, RootProvider } from '@/widgets';
+import { CartModal, Footer, HeaderModal, RootProvider } from '@/widgets';
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -19,6 +19,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             <CartModal />
           </div>
         </RootProvider>
+        <Footer />
       </body>
     </html>
   );

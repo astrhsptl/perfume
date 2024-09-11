@@ -1,6 +1,7 @@
 export * from './auth';
 export * from './auth-layout';
 export { WithEmpty } from './empty-data';
+export * from './footer';
 export * from './headers';
 export * from './modals';
 export * from './product';

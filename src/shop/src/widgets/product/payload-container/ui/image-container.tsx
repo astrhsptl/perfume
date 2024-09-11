@@ -35,11 +35,7 @@ export const ImageContainer = ({
         ))}
       </div>
       <div>
-        <div
-          style={{
-            backgroundColor: 'lightgrey',
-          }}
-        >
+        <div>
           <Image
             alt='Текущее изображение'
             src={currentImage.link}
