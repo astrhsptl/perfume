@@ -10,3 +10,10 @@ export type EntityId = string | number;
 export interface WrongResponse {
   detail: string;
 }
+
+export interface ModalTools {
+  open?: () => void;
+  close?: () => void;
+  toggle: () => void;
+  state: boolean;
+}
