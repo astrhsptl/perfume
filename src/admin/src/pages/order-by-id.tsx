@@ -1,4 +1,5 @@
 import { CartOrders } from '@/entities';
+import { checkAuth } from '@/features';
 import { API_SERVER_URL, QueryKeys } from '@/shared';
 import {
   HeaderCommon,
@@ -7,7 +8,7 @@ import {
 } from '@/widgets';
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -34,6 +35,12 @@ export const OrderByIdPage: React.FC<OrderByIdProps> = () => {
   });
 
   const orderTitle = currentCart.data?.id.toString().split('-')[0] ?? '';
+
+  useEffect(() => {
+    checkAuth().catch(() => {
+      window.location.replace('/sign-in');
+    });
+  }, []);
 
   return (
     <div>

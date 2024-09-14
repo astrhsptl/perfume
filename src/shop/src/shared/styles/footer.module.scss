@@ -1,0 +1,37 @@
+@import './base.module.scss';
+
+.footer {
+  @include font(12px);
+  background: var(--black);
+  padding: 20px 10%;
+  border-top: 1px solid var(--white);
+}
+
+.columnContainer {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.columnTitle {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.columnLink {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  gap: 5px;
+  color: var(--white);
+  margin-bottom: 6px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media (max-width: 650px) {
+  .columnContainer {
+    flex-direction: column;
+  }
+}

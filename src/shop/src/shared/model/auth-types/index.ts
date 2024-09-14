@@ -1,6 +1,6 @@
 export interface ISignUp {
-  first_name: string;
-  last_name: string;
+  username: string;
+  address: string;
   email: string;
   phone: string;
   password: string;

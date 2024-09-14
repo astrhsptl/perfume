@@ -6,7 +6,7 @@
   justify-content: center;
   justify-items: center;
 
-  height: calc(100dvh - var(--header-height));
+  height: 80dvh;
 }
 
 .homeTitle {
@@ -18,8 +18,10 @@
 }
 
 .perfume {
+  position: relative;
   width: 90%;
-  max-width: 228px;
+  width: 228px;
+  height: 300px;
   user-select: none;
   z-index: $content-index;
 }

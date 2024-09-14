@@ -2,14 +2,14 @@
 
 import { ErrorMessage } from '@hookform/error-message';
 import clsx, { ClassValue } from 'clsx';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RegisterOptions, useFormContext } from 'react-hook-form';
 import { BaseStyle, montserrat } from '../styles';
 import { InputError } from './input-error';
 
 type DefaultInputProps = JSX.IntrinsicElements['input'] & {
   name: string;
-  registerOptions: RegisterOptions;
+  registerOptions?: RegisterOptions;
   className?: ClassValue;
 };
 
@@ -26,6 +26,10 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
     register,
   } = useFormContext();
   const currentError = errors[name];
+
+  useEffect(() => {
+    if (props.value !== '') setIsActiveInput(() => true);
+  }, [props.value]);
 
   return (
     <div className={clsx(BaseStyle.defaultInput, montserrat.className)}>

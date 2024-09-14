@@ -20,15 +20,15 @@ export const OrderCard: React.FC<OrderCardProps> = ({
 
   return (
     <div className={OrderCommonStyles.mobileCard}>
-      <p className={OrderCommonStyles.mobileFlex}>
+      <div className={OrderCommonStyles.mobileFlex}>
         <span>Заказ: {id.toString().split('-')[0]}</span>
         <Link to={`/admin/${id}`}>
-          <img src='/arrow-forward.svg' alt='' />
+          <img src='/arrow-forward.svg' alt='Перейти' />
         </Link>
-      </p>
-      <p className={OrderCommonStyles.mobileTitleText}>
+      </div>
+      <div className={OrderCommonStyles.mobileTitleText}>
         {user.username}, на {cost}$
-      </p>
+      </div>
       <ul>
         <li onClick={() => write(user.phone)}>
           <img src='/phone.svg' alt='' /> {user.phone}
@@ -37,10 +37,10 @@ export const OrderCard: React.FC<OrderCardProps> = ({
           <img src='/mail.svg' alt='' /> {user.email}
         </li>
       </ul>
-      <p className={OrderCommonStyles.mobileFlex}>
+      <div className={OrderCommonStyles.mobileFlex}>
         <Status cart_id={id} status_id={status_id} />
         {currentDate.toLocaleString('ru')}
-      </p>
+      </div>
     </div>
   );
 };

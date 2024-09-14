@@ -41,6 +41,8 @@
   justify-content: space-between;
   height: min-content;
 
+  margin-bottom: 15px;
+
   & > img {
     cursor: pointer;
   }
@@ -66,4 +68,47 @@
   @include flex();
   justify-content: space-between;
   margin-bottom: 30px;
+}
+
+.cartItem {
+  @include font(16px);
+  color: var(--white);
+
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 100px auto;
+
+  margin-top: 15px;
+}
+
+.payloadContainer {
+  display: grid;
+  grid-template-rows: 20px 15px auto 25px;
+}
+
+.cartImageContainer {
+  height: 100px;
+  width: 100px;
+}
+
+.cartTextContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+
+  &.topLine {
+    font-weight: 600;
+    font-size: 18px;
+  }
+}
+
+.quantityCounter {
+  display: flex;
+  justify-content: space-between;
+  max-width: 80px;
+  width: 100%;
+  align-items: center;
+  padding: 3px 7px;
+  border: 1px solid var(--white);
+  border-radius: 5px;
 }

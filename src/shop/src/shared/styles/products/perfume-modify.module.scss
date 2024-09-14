@@ -1,0 +1,110 @@
+@import '../base.module.scss';
+
+.dataInputContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.descriptionArea {
+  width: 100%;
+  height: 130px;
+  background: var(--black);
+  padding: 10px;
+  border: 2px solid var(--white);
+  border-radius: 5px;
+
+  @include font(14px);
+}
+
+.radioChoose {
+  &.sex {
+    margin-bottom: 10px;
+  }
+
+  &.radioContainer {
+    display: flex;
+    gap: 10px;
+  }
+}
+
+.imageInputContainer {
+  color: var(--white);
+}
+
+.imageInputLabel {
+  @include font(16px);
+
+  cursor: pointer;
+
+  width: 100%;
+  height: 100%;
+
+  border: 2px dashed var(--white);
+  border-radius: 5px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 30px;
+  align-items: center;
+  justify-content: center;
+
+  & > input[type='file'] {
+    display: none;
+  }
+}
+
+.VMI {
+  &.container {
+    position: relative;
+    background: var(--black);
+    border: 2px solid var(--white);
+    padding: 20px;
+    border-radius: 5px;
+  }
+
+  &.cross {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  &.title {
+    @include font(20px);
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  &.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
+.choiser {
+  position: relative;
+  padding: 20px 40px;
+  background: var(--black);
+  border: 2px solid var(--white);
+  border-radius: 5px;
+}
+
+.volumeContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 20px;
+  padding-top: 20px;
+}
+
+.volume {
+  @include font(14px);
+  @include flex();
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--white);
+  border-radius: 5px;
+}

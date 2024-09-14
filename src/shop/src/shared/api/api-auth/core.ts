@@ -1,12 +1,5 @@
 import { User } from '@/entities';
-import {
-  IAccessToken,
-  IRefreshToken,
-  ISignIn,
-  ISignUp,
-  TokenPair,
-  WrongResponse,
-} from '@/shared';
+import { ISignIn, ISignUp, TokenPair, WrongResponse } from '@/shared';
 import { API_SERVER_URL } from '@/shared/config';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { BaseAPICore } from '../base';
@@ -52,11 +45,17 @@ class _Auth extends BaseAPICore {
   }
 
   async refresh(
-    data: IRefreshToken,
+    data: string,
     tries = DefaultTriesCount
-  ): Promise<AxiosResponse<IAccessToken>> {
+  ): Promise<
+    AxiosResponse<{
+      access_token: string;
+    }>
+  > {
     return await axios
-      .post<IAccessToken>(`${this.url}/refresh`, data)
+      .post<{
+        access_token: string;
+      }>(`${this.url}/refresh-token`, { refresh_token: data })
       .catch((error: AxiosError<WrongResponse>) => {
         return this.retry<ReturnType<typeof this.refresh>>(
           (tries) => this.refresh(data, tries),
@@ -67,7 +66,7 @@ class _Auth extends BaseAPICore {
   }
 
   async userByToken(
-    token: string,
+    token: string = '',
     tries = DefaultTriesCount
   ): Promise<AxiosResponse<User>> {
     return await axios

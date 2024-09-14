@@ -1,5 +1,5 @@
 import { AuthStyle } from '@/shared';
-import { SignUpForm } from '@/widgets/auth/ui/sign-up';
+import { SignUpForm } from '@/widgets';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: 'https://perfume.labofdev.ru/sign-in',
+    url: 'https://perfume.labofdev.ru/sign-up',
     countryName: 'Россия',
     siteName: 'Famous perfume',
     title: 'Famous perfume',

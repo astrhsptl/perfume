@@ -21,7 +21,7 @@ export const SignInForm = ({}: SignInFormProps) => {
     }
 
     toast.success(result.comment);
-    return router.push('/product');
+    return router.push('/products');
   };
 
   return (

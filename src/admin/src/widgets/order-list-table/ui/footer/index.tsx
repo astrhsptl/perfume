@@ -22,13 +22,12 @@ export const Footer: React.FC<Footer> = ({
   return (
     <>
       <section className={OrderCommonStyles.table_footer}>
-        <p className={OrderCommonStyles.text_footer}>
+        <div className={OrderCommonStyles.text_footer}>
           Показать:{' '}
           {pages.map((data, index) => {
             return (
-              <>
+              <span key={data.toString()}>
                 <span
-                  key={data}
                   style={{
                     color: pagination.quantity === data ? 'black' : '#63B6F2',
                     cursor: 'pointer',
@@ -44,10 +43,10 @@ export const Footer: React.FC<Footer> = ({
                   {data}
                 </span>
                 {index === pages.length - 1 ? ' ' : ' / '}
-              </>
+              </span>
             );
           })}
-        </p>
+        </div>
         <div className={OrderCommonStyles.pages}>
           <button
             className={clsx(

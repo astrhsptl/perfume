@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@mui/material';
+import { ButtonProps } from '@mui/material';
 import clsx, { ClassValue } from 'clsx';
 import { ReactNode } from 'react';
 import { BaseStyle, montserrat } from '../styles';
@@ -18,7 +18,7 @@ export function DefaultButton({
   ...other
 }: DefaultButtonProps) {
   return (
-    <Button
+    <button
       {...other}
       className={
         className
@@ -31,6 +31,6 @@ export function DefaultButton({
       }
     >
       {children}
-    </Button>
+    </button>
   );
 }

@@ -1,7 +1,6 @@
 import { DefaultButton, HomeStyle, lora, montserrat } from '@/shared';
 import clsx from 'clsx';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -37,18 +36,9 @@ export default async function Page() {
         <h2 className={clsx(montserrat.className)}>
           Новая коллекция уже в продаже
         </h2>
-        <Link href={'/product'}>
+        <Link href={'/products'}>
           <DefaultButton>Попробовать</DefaultButton>
         </Link>
-      </section>
-      <section className={HomeStyle.perfume}>
-        <Image
-          src={'/perfume.png'}
-          alt={'Магазин духов ростов ростов-на-дону'}
-          width={228}
-          height={328}
-          layout='responsive'
-        />
       </section>
       <section className={HomeStyle.videoContainer}>
         <video muted loop autoPlay src='/smoke.mp4'></video>
