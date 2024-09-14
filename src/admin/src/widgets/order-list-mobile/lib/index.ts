@@ -1,12 +1,13 @@
 import toast from 'react-hot-toast';
 
 export const useClipboard = () => {
-  const clipboard = navigator.clipboard;
-
   return {
-    write: (text: string) =>
-      clipboard
+    write: async (text: string) => {
+      const clipboard = navigator.clipboard;
+
+      await clipboard
         .writeText(text)
-        .then(() => toast.success('Успешно скопировано!')),
+        .then(() => toast.success('Успешно скопировано!'));
+    },
   };
 };

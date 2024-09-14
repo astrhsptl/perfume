@@ -4,6 +4,7 @@ import { signIn } from '@/features/auth';
 import { DefaultButton, DefaultInput, ISignIn } from '@/shared';
 import { AuthLayout } from '@/widgets';
 import { useRouter } from 'next/navigation';
+import { useCallback } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import toast from 'react-hot-toast';
 
@@ -11,8 +12,7 @@ interface SignInFormProps {}
 
 export const SignInForm = ({}: SignInFormProps) => {
   const router = useRouter();
-
-  const authSubmit: SubmitHandler<ISignIn> = async (data) => {
+  const authSubmit: SubmitHandler<ISignIn> = useCallback(async (data) => {
     const { result, isError } = await signIn(data);
 
     if (isError) {
@@ -22,10 +22,15 @@ export const SignInForm = ({}: SignInFormProps) => {
 
     toast.success(result.comment);
     return router.push('/products');
-  };
+  }, []);
 
   return (
-    <AuthLayout title='Вход' submit={authSubmit}>
+    <AuthLayout
+      title='Вход'
+      submit={authSubmit}
+      anotherLink='sign-up'
+      anotherLinkTitle='Нет аккунта? Зарегистрироваться'
+    >
       <DefaultInput
         name='email'
         placeholder='Email'

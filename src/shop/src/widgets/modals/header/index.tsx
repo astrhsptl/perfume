@@ -1,6 +1,10 @@
 'use client';
 
-import { currentHeaderModal, headerModalActions } from '@/entities';
+import {
+  cartModalActions,
+  currentHeaderModal,
+  headerModalActions,
+} from '@/entities';
 import { useAppDispatch, useAppSelector } from '@/features';
 import { HeaderStyle, NavLink, montserrat } from '@/shared';
 import clsx from 'clsx';
@@ -25,7 +29,17 @@ export const HeaderModal = ({}: HeaderModalProps) => {
     >
       <article className={HeaderStyle.navLinks}>
         <NavLink href={'/'}>Домой</NavLink>
+        <NavLink href={'/user'}>Вы</NavLink>
         <NavLink href={'/products'}>Товары</NavLink>
+        <NavLink href={'/favorites'}>Любимое</NavLink>
+        <div
+          onClick={() => {
+            dispatch(close());
+            dispatch(cartModalActions.toggle());
+          }}
+        >
+          Корзина
+        </div>
       </article>
     </nav>
   );
