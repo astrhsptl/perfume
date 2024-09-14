@@ -25,7 +25,12 @@ export const SignUpForm = ({}: SignUpFormProps) => {
   };
 
   return (
-    <AuthLayout title='Вход' submit={authSubmit}>
+    <AuthLayout
+      title='Регистрация'
+      submit={authSubmit}
+      anotherLink='sign-in'
+      anotherLinkTitle='Есть аккунт? Войти'
+    >
       <DefaultInput
         name='username'
         placeholder='ФИО'

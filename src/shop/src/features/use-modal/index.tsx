@@ -19,13 +19,28 @@ export function useModal<PromiseType, T = unknown>(
         return setModalPromise(
           new Promise<PromiseType>((resolve, reject) => {
             const modalRoot = document.getElementById('modal-root')!;
+            let body = document.getElementsByTagName('body')[0];
+            body.style.overflow = 'hidden';
+
+            const resolver = (
+              value: PromiseType | PromiseLike<PromiseType>
+            ) => {
+              let body = document.getElementsByTagName('body')[0];
+              body.style.overflow = 'auto';
+              resolve(value);
+            };
             const rejector = () => {
               setModalPromise(null);
               reject();
             };
+
             const portal = createPortal(
               <ModalContext.Provider
-                value={{ resolve, reject: rejector, payload: payload }}
+                value={{
+                  resolve: resolver,
+                  reject: rejector,
+                  payload: payload,
+                }}
               >
                 {node}
               </ModalContext.Provider>,

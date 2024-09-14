@@ -41,7 +41,7 @@ export default async function Page() {
         </Link>
       </section>
       <section className={HomeStyle.videoContainer}>
-        <video muted loop autoPlay src='/smoke.mp4'></video>
+        {/* <video muted loop autoPlay src='/smoke.mp4'></video> */}
       </section>
     </div>
   );
