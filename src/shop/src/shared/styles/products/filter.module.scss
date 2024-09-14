@@ -7,7 +7,7 @@
   left: -100%;
 
   height: 100dvh;
-  width: 100dvw;
+  min-width: 400px;
 
   transition: left 0.3s ease-in-out;
   z-index: $modal-background-index;
