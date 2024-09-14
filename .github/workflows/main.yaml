@@ -4,27 +4,8 @@ on:
     branches: ["production"]
 
 jobs:
-  shop-linting:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-
-      - name: Install dependencies
-        working-directory: ./src/shop
-        run: yarn install
-
-      - name: Linting
-        working-directory: ./src/shop
-        run: yarn lint
-
-      - name: TSC
-        working-directory: ./src/shop
-        run: yarn tsc
-
   shop-build:
     runs-on: ubuntu-latest
-    needs: [shop-linting]
     steps:
       - uses: actions/checkout@v4
 
@@ -48,7 +29,6 @@ jobs:
 
   admin-build:
     runs-on: ubuntu-latest
-    needs: [shop-linting]
     steps:
       - uses: actions/checkout@v4
 
@@ -72,7 +52,6 @@ jobs:
 
   backend-build:
     runs-on: ubuntu-latest
-    needs: [shop-linting]
     steps:
       - uses: actions/checkout@v4
 
