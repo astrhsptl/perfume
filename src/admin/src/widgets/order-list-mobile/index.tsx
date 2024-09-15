@@ -1,11 +1,11 @@
 import { CartOrders } from '@/entities';
 import {
-  CART_STATUS_CLOSE,
-  CART_STATUS_OPEN,
-  EntityId,
-  OrderCommonStyles,
-  OrderMobileStyles,
-  PaginatedResult,
+    CART_STATUS_CLOSE,
+    CART_STATUS_OPEN,
+    EntityId,
+    OrderCommonStyles,
+    OrderMobileStyles,
+    PaginatedResult,
 } from '@/shared';
 import { UseQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
@@ -57,7 +57,7 @@ export const OrderListMobile: React.FC<OrderListMobileProps> = ({
               width: '100%',
             }}
           >
-            <img src={'/new-order.svg'} />
+            <img src={'/admin/new-order.svg'} />
             <p>Открыт</p>
           </div>
         </SwiperSlide>
@@ -75,7 +75,7 @@ export const OrderListMobile: React.FC<OrderListMobileProps> = ({
               width: '100%',
             }}
           >
-            <img src={'/complete-order.svg'} />
+            <img src={'/admin/complete-order.svg'} />
             <p>Закрыт</p>
           </div>
         </SwiperSlide>

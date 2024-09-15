@@ -1,47 +1,16 @@
 version: "3.9"
 services:
-  perfume-backend:
-    image: xoriax/perfume-backend:latest
-    restart: always
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.perfume-backend.service=perfume-backend"
-      - "traefik.http.routers.perfume-backend.rule=Host(`api.localhost`)"
-      - "traefik.http.services.perfume-backend.loadbalancer.server.port=4005"
-    command: >
-      sh -c "uvicorn api.main:app --port 4005 --host 0.0.0.0"
-    environment:
-      - SECRET_KEY=a)&tg!@-@liw2+v!_64!v1_o+2r%e3ufl#e!n*_ar5a$q=9n!p
-      - DB_LINK=postgresql+asyncpg://postgresql:postgresql@postgresql:5432/perfume
-    networks:
-      - web
-    ports:
-      - "4005:4005"
-
   perfume-admin:
-    build: ./src/admin
+    image: xoriax/perfume-admin:latest
+    container_name: perfume-admin
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=web"
       - "traefik.http.routers.perfume-admin.service=perfume-admin"
-      - "traefik.http.routers.perfume-admin.rule=Host(`shop.localhost`) && PathPrefix(`/admin`)"
+      - "traefik.http.routers.perfume-admin.rule=Host(`perfume.localhost`) && PathPrefix(`/admin`)"
       - "traefik.http.services.perfume-admin.loadbalancer.server.port=80"
     networks:
       - web
-
-  perfume-frontend:
-    image: xoriax/perfume-shop:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=web"
-      - "traefik.http.routers.perfume-frontend.service=perfume-frontend"
-      - "traefik.http.routers.perfume-frontend.rule=Host(`shop.localhost`)"
-      - "traefik.http.services.perfume-frontend.loadbalancer.server.port=3000"
-    networks:
-      - web
-    ports:
-      - "3000:3000"
 
 networks:
   web:
