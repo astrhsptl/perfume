@@ -45,8 +45,8 @@ export const Status: React.FC<Status> = ({ cart_id, status_id }) => {
       <img
         src={
           status_id === CART_STATUS_OPEN
-            ? '/new-order.svg'
-            : '/complete-order.svg'
+            ? '/admin/new-order.svg'
+            : '/admin/complete-order.svg'
         }
       />
       <p>{status_id === CART_STATUS_OPEN ? 'Открыт' : 'Закрыт'}</p>
