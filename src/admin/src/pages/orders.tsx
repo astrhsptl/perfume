@@ -35,9 +35,13 @@ export const OrdersPage: React.FC<OrdersProps> = () => {
   });
 
   useEffect(() => {
-    checkAuth().catch(() => {
-      window.location.replace('/sign-in');
-    });
+    checkAuth()
+      .then((data) => {
+        if (!data) window.location.replace('/sign-in');
+      })
+      .catch(() => {
+        window.location.replace('/sign-in');
+      });
   }, []);
 
   return (

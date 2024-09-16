@@ -14,7 +14,7 @@ export const productCreate = async (
     aroma,
     brand_id,
     description,
-    images = new FileList(),
+    images = [],
     name,
     perfume_type_id,
     sex,
@@ -40,9 +40,9 @@ export const productCreate = async (
 
   const perfume = await perfumeAPI.create(perfumeData);
 
-  imageArray.map((img) => {
+  imageArray.map(({ file }) => {
     const data = new FormData();
-    data.append('file', img);
+    data.append('file', file);
 
     fileAPI.create(data, {
       headers: {
@@ -55,12 +55,13 @@ export const productCreate = async (
     });
   });
 
-  return Promise.allSettled(
+  Promise.allSettled(
     volumes.map((volume) => {
       volumeApi.create({ ...volume, perfume_id: perfume.data.id });
     })
   ).then(() => {
     toast.success('Сохранено');
-    return router.push(`/products/${perfume.data.id}`);
   });
+
+  return router.push(`/products`);
 };

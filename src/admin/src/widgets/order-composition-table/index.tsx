@@ -1,6 +1,7 @@
 import { CartOrders } from '@/entities';
 import { OrderCommonStyles, OrderComplectation } from '@/shared';
 import React, { useMemo } from 'react';
+import { WithEmpty } from '../with-empty';
 import { Footer, Header, TableRow } from './ui';
 
 interface OrderCompositionTableProps {
@@ -23,6 +24,9 @@ export const OrderCompositionTable: React.FC<OrderCompositionTableProps> = ({
       <div className={OrderComplectation.table}>
         <Header />
         <div className={OrderCommonStyles.payload_container}>
+          <WithEmpty condition={!cart || cart.cart_perfume.length === 0}>
+            <div className={OrderCommonStyles.withEmptyDesktop}>Пусто!</div>
+          </WithEmpty>
           {(isLoading || !cart ? [] : cart.cart_perfume).map((element) => (
             <TableRow key={element.id} cartPerfume={element} />
           ))}

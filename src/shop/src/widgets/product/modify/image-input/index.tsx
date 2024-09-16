@@ -1,34 +1,30 @@
 'use client';
 
-import { ProductCreateData } from '@/entities';
+import { FileInput, ProductCreateData } from '@/entities';
 import { InputError, montserrat, PerfumeModify } from '@/shared';
 import { ErrorMessage } from '@hookform/error-message';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useState } from 'react';
-import { useFormContext } from 'react-hook-form';
-import { ImageContainer } from '../../payload-container/ui';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
+import { ImageContainerCreate } from './ui';
 
 interface ImageInputProps {}
 
 export const ImageInput = ({}: ImageInputProps) => {
-  const emptyFileList: never[] = [];
   const {
     register,
-    getValues,
+    control,
     formState: { errors },
   } = useFormContext<ProductCreateData>();
-  const [images, setImages] = useState<FileList | never[]>(
-    getValues('images') ?? emptyFileList
-  );
-
+  const images = useWatch<ProductCreateData>({
+    name: 'images',
+    control: control,
+  }) as FileInput[];
   return (
     <>
       {images?.length > 0 ? (
-        <ImageContainer
-          images={Array.from(images).map((img) => ({
-            link: URL.createObjectURL(img),
-          }))}
+        <ImageContainerCreate
+          images={images}
           description={
             <>
               <textarea
@@ -49,34 +45,39 @@ export const ImageInput = ({}: ImageInputProps) => {
         />
       ) : (
         <>
-          <label
-            className={clsx(
-              PerfumeModify.imageInputLabel,
-              montserrat.className
-            )}
-          >
-            <Image
-              src={'/image-input.svg'}
-              alt='Добавить изображения'
-              height={75}
-              width={75}
-            />
-            <h2>Добавить изображения</h2>
+          <Controller
+            name='images'
+            render={({ field: { onChange } }) => (
+              <label
+                className={clsx(
+                  PerfumeModify.imageInputLabel,
+                  montserrat.className
+                )}
+              >
+                <Image
+                  src={'/image-input.svg'}
+                  alt='Добавить изображения'
+                  height={75}
+                  width={75}
+                />
+                <h2>Добавить изображения</h2>
 
-            <input
-              type='file'
-              accept='image/*'
-              multiple={true}
-              {...register('images', {
-                onChange: () =>
-                  setImages(() => getValues('images') ?? emptyFileList),
-                required: {
-                  message: 'Выберете изображения',
-                  value: true,
-                },
-              })}
-            />
-          </label>
+                <input
+                  type='file'
+                  accept='image/*'
+                  multiple={true}
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files ?? []);
+                    const processedFiles: FileInput[] = files.map((file) => ({
+                      file: file,
+                      link: URL.createObjectURL(file),
+                    }));
+                    onChange(processedFiles);
+                  }}
+                />
+              </label>
+            )}
+          />
           <ErrorMessage
             errors={errors}
             name={'images'}

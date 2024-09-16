@@ -4,6 +4,11 @@ export type VolumeInputType = {
   quantity: number;
 };
 
+export type FileInput = {
+  file: File;
+  link: string;
+};
+
 export interface ProductCreateData {
   name: string;
   description: string;
@@ -13,6 +18,6 @@ export interface ProductCreateData {
   brand_id: string;
 
   // external
-  images?: FileList;
+  images: FileInput[];
   volumes: VolumeInputType[];
 }
