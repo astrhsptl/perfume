@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '@/features';
 import { BaseStyle, montserrat, ProductListStyle } from '@/shared';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import { WithEmpty } from './ui';
 
 interface ProductListProps {
   products?: Perfume[];
@@ -26,14 +27,16 @@ export const ProductList = ({ products = [] }: ProductListProps) => {
   return (
     <div
       className={clsx(
-        ProductListStyle.productContainer,
+        storedProducts.data.length > 0 && ProductListStyle.productContainer,
         BaseStyle.container,
         montserrat.className
       )}
     >
-      {storedProducts.data.map((perfume) => (
-        <PerfumeListItem key={perfume.id} perfume={perfume} />
-      ))}
+      <WithEmpty emptyCondition={storedProducts.data.length === 0}>
+        {storedProducts.data.map((perfume) => (
+          <PerfumeListItem key={perfume.id} perfume={perfume} />
+        ))}
+      </WithEmpty>
     </div>
   );
 };
