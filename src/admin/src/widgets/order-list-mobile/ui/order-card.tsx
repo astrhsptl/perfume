@@ -23,7 +23,7 @@ export const OrderCard: React.FC<OrderCardProps> = ({
       <div className={OrderCommonStyles.mobileFlex}>
         <span>Заказ: {id.toString().split('-')[0]}</span>
         <Link to={`/admin/${id}`}>
-          <img src='/arrow-forward.svg' alt='Перейти' />
+          <img src='/admin/arrow-forward.svg' alt='Перейти' />
         </Link>
       </div>
       <div className={OrderCommonStyles.mobileTitleText}>
@@ -31,10 +31,10 @@ export const OrderCard: React.FC<OrderCardProps> = ({
       </div>
       <ul>
         <li onClick={() => write(user.phone)}>
-          <img src='/phone.svg' alt='' /> {user.phone}
+          <img src='/admin/phone.svg' alt='' /> {user.phone}
         </li>
         <li onClick={() => write(user.email)}>
-          <img src='/mail.svg' alt='' /> {user.email}
+          <img src='/admin/mail.svg' alt='' /> {user.email}
         </li>
       </ul>
       <div className={OrderCommonStyles.mobileFlex}>

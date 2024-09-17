@@ -5,6 +5,7 @@ import { checkAuth } from '@/features';
 import { BaseStyle, montserrat, ProductListStyle } from '@/shared';
 import clsx from 'clsx';
 import { useEffect } from 'react';
+import { WithEmpty } from '../product-list/ui';
 
 interface FavoritesListProps {
   willCredentialsUpdate?: boolean;
@@ -22,14 +23,16 @@ export const FavoritesList = ({
   return (
     <div
       className={clsx(
-        ProductListStyle.productContainer,
+        data.length > 0 && ProductListStyle.productContainer,
         BaseStyle.container,
         montserrat.className
       )}
     >
-      {data.map(({ perfume }) => (
-        <PerfumeListItem key={perfume.id} perfume={perfume} />
-      ))}
+      <WithEmpty emptyCondition={data.length === 0}>
+        {data.map(({ perfume }) => (
+          <PerfumeListItem key={perfume.id} perfume={perfume} />
+        ))}
+      </WithEmpty>
     </div>
   );
 };

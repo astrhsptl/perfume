@@ -4,6 +4,7 @@ import { UseQueryResult } from '@tanstack/react-query';
 import { AxiosResponse } from 'axios';
 import clsx from 'clsx';
 import React from 'react';
+import { WithEmpty } from '../with-empty';
 import { Footer, OrderListHeader, StatePicker, TableRow } from './ui';
 
 type Pagination = {
@@ -52,6 +53,15 @@ export const OrderListTable: React.FC<OrderListTable> = ({
           <section className={OrderCommonStyles.table_row_container}>
             <OrderListHeader />
             <div className={OrderCommonStyles.payload_container}>
+              <WithEmpty
+                condition={
+                  payload.isLoading ||
+                  !payload.data ||
+                  payload.data.data.data.length === 0
+                }
+              >
+                <div className={OrderCommonStyles.withEmptyDesktop}>Пусто!</div>
+              </WithEmpty>
               {(payload.isLoading ? [] : payload.data!.data.data).map(
                 (element) => (
                   <TableRow key={element.id} cart={element} />

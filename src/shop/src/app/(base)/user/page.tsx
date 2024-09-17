@@ -2,8 +2,17 @@ import { Perfume, User } from '@/entities';
 import { cartAPIBuild, checkAuthServer, perfumeByCartId } from '@/features';
 import { CART_STATUS_OPEN } from '@/shared/config';
 import { UserHead, UserStoryCard } from '@/widgets';
+import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'Магазин духов | Famous perfume',
+  description: 'Личный кабинет магазина духов в Ростове (Ростове-на-Дону)',
+  icons: {
+    icon: '/favicon.svg',
+  },
+};
 
 interface UserProps {}
 

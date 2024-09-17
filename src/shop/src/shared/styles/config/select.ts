@@ -4,7 +4,7 @@ export const SelectDarkStyle: StylesConfig = {
   control: (provided) => ({
     ...provided,
     maxWidth: 300,
-    backgroundColor: '#000',
+    backgroundColor: 'var(--black)',
     borderColor: '#fff',
     color: '#fff',
     boxShadow: 'none',
@@ -26,16 +26,16 @@ export const SelectDarkStyle: StylesConfig = {
     fontSize: 14,
     maxWidth: 300,
     backgroundColor: state.isSelected
-      ? '#000'
+      ? 'var(--black)'
       : state.isFocused
-      ? '#000'
-      : '#000',
+      ? 'var(--black)'
+      : 'var(--black)',
     color: '#fff',
   }),
   menu: (provided) => ({
     ...provided,
     maxWidth: 300,
-    backgroundColor: '#000',
+    backgroundColor: 'var(--black)',
     color: '#fff',
   }),
 };
