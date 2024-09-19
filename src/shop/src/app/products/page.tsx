@@ -25,14 +25,6 @@ export const metadata: Metadata = {
     siteName: 'Famous perfume',
     title: 'Famous perfume',
     description: 'Сайт для продажи духов в Ростове (Ростове-на-Дону)',
-    images: [
-      {
-        url: 'https://perfume.labofdev.ru/og-preview.png',
-        width: 1300,
-        height: 500,
-        alt: 'Famous perfume духи',
-      },
-    ],
   },
 };
 

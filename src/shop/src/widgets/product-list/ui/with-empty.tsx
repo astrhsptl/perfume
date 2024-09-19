@@ -1,3 +1,5 @@
+'use client';
+
 import { ProductListStyle } from '@/shared';
 import React from 'react';
 
@@ -6,7 +8,7 @@ interface WithEmptyProps {
   children: React.ReactNode;
 }
 
-export const WithEmpty = async ({
+export const WithEmpty = ({
   children,
   emptyCondition = false,
 }: WithEmptyProps) => {
