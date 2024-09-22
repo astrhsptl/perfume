@@ -23,13 +23,29 @@ export const CustomSelect = ({
   value,
 }: CustomSelectProps) => {
   return (
-    <Select
-      placeholder={placeholder}
-      styles={SelectDarkStyle}
-      options={options}
-      onChange={(newValue) => onChange && onChange(newValue as BaseOption)}
-      required={true}
-      defaultValue={value}
-    />
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 30px',
+        maxWidth: 300,
+        gap: 5,
+      }}
+    >
+      <Select
+        placeholder={placeholder}
+        styles={SelectDarkStyle}
+        options={options}
+        onChange={(newValue) => onChange && onChange(newValue as BaseOption)}
+        required={true}
+        defaultValue={value}
+      />
+      <button
+        style={{
+          maxWidth: 30,
+        }}
+      >
+        asdf
+      </button>
+    </div>
   );
 };

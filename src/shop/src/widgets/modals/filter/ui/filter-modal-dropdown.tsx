@@ -34,7 +34,6 @@ export function FilterModalDropdown({
     <List
       sx={{
         width: '100%',
-        maxWidth: 360,
         color: '#fff',
         '& .MuiTypography-root': { fontFamily: 'inherit' },
         '& .MuiButtonBase-root': {
