@@ -31,6 +31,8 @@ export function useModal<PromiseType, T = unknown>(
             };
             const rejector = () => {
               setModalPromise(null);
+              let body = document.getElementsByTagName('body')[0];
+              body.style.overflow = 'auto';
               reject();
             };
 

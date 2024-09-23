@@ -9,7 +9,7 @@ import {
   User,
 } from '@/entities';
 import { createFavorite, useAppDispatch } from '@/features';
-import { DefaultButton, lora, ProductStyle } from '@/shared';
+import { BaseStyle, DefaultButton, lora, ProductStyle } from '@/shared';
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -54,7 +54,10 @@ export const PayloadContainer = ({
               display: user?.is_admin ? 'inline' : 'none',
             }}
           >
-            <Link href={`/products/${perfume.id}/edit`}>
+            <Link
+              href={`/products/${perfume.id}/edit`}
+              className={BaseStyle.pointer}
+            >
               <Image src='/edit.svg' alt='edit' width={16} height={16} />
             </Link>
           </span>
@@ -95,6 +98,7 @@ export const PayloadContainer = ({
             alt='Любимое'
             height={24}
             width={24}
+            className={BaseStyle.pointer}
             onClick={() => createFavorite(perfume.id, router)}
           />
         </div>

@@ -35,7 +35,6 @@ export const DefaultInput: React.FC<DefaultInputProps> = ({
 
   useEffect(() => {
     if (inputValue && inputValue !== '') {
-      console.log(')))))))))))))');
       setIsActiveInput(() => true);
     }
   }, [inputValue]);

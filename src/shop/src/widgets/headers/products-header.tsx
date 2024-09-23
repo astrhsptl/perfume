@@ -42,7 +42,10 @@ export const ProductsHeader = async ({}: ProductsHeaderProps) => {
     >
       <HeaderFilterToggler />
       <h1>Парфюм для вас</h1>
-      <div className={ProductListStyle.__filterPlug} onClick={invalidate}>
+      <div
+        className={clsx(ProductListStyle.__filterPlug, BaseStyle.pointer)}
+        onClick={invalidate}
+      >
         <Image src={'/reset.svg'} alt='Сброс' height={30} width={30} />
       </div>
       <SearchForm />

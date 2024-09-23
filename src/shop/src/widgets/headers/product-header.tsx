@@ -7,7 +7,12 @@ import {
   User,
 } from '@/entities';
 import { checkAuth, useAppDispatch, useAppSelector } from '@/features';
-import { NavLink, ProductListStyle, useClientModalStatement } from '@/shared';
+import {
+  BaseStyle,
+  NavLink,
+  ProductListStyle,
+  useClientModalStatement,
+} from '@/shared';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -49,10 +54,10 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
       headerIcons={
         !user || !user.is_admin ? (
           <>
-            <div onClick={toggleSearch}>
+            <div onClick={toggleSearch} className={BaseStyle.pointer}>
               <Image src={'/search.svg'} alt={'Поиск'} width={28} height={28} />
             </div>
-            <Link href={'/favorite'}>
+            <Link href={'/favorite'} className={BaseStyle.pointer}>
               <Image
                 src={'/favorite.svg'}
                 alt={'Избранное'}
@@ -60,13 +65,16 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
                 height={28}
               />
             </Link>
-            <div onClick={() => dispatch(cartModalActions.toggle())}>
+            <div
+              onClick={() => dispatch(cartModalActions.toggle())}
+              className={BaseStyle.pointer}
+            >
               <Image src={'/cart.svg'} alt={'Корзина'} width={28} height={28} />
             </div>
           </>
         ) : (
           <>
-            <Link href={'/admin'}>
+            <Link href={'/admin'} className={BaseStyle.pointer}>
               <Image
                 src={'/shield-admin.svg'}
                 alt={'Админка'}
@@ -74,7 +82,7 @@ export const ProductHeader = ({}: ProductHeaderProps) => {
                 height={28}
               />
             </Link>
-            <Link href={'/products/create'}>
+            <Link href={'/products/create'} className={BaseStyle.pointer}>
               <Image
                 src={'/add-product.svg'}
                 alt={'Добавить продукт'}

@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 
 interface Params {
   [key: string]: string;
-  suck: string;
 }
 
 interface ProductProps {

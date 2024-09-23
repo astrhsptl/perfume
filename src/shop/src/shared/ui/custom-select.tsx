@@ -1,7 +1,9 @@
 'use client';
 
+import clsx from 'clsx';
 import dynamic from 'next/dynamic';
-import { SelectDarkStyle } from '../styles';
+import Image from 'next/image';
+import { BaseStyle, PerfumeModify, SelectDarkStyle } from '../styles';
 
 const Select = dynamic(() => import('react-select').then((mod) => mod.default));
 
@@ -13,6 +15,7 @@ interface CustomSelectProps {
   options: BaseOption[];
   placeholder?: string;
   onChange?: (newValue: BaseOption) => void | undefined;
+  modifyHandler?: () => unknown;
   value?: BaseOption;
 }
 
@@ -20,6 +23,7 @@ export const CustomSelect = ({
   options,
   placeholder,
   onChange,
+  modifyHandler,
   value,
 }: CustomSelectProps) => {
   return (
@@ -40,11 +44,11 @@ export const CustomSelect = ({
         defaultValue={value}
       />
       <button
-        style={{
-          maxWidth: 30,
-        }}
+        type='button'
+        onClick={modifyHandler}
+        className={clsx(BaseStyle.pointer, PerfumeModify.modifySelectButton)}
       >
-        asdf
+        <Image src='/volume-input.svg' alt='Добавить' height={35} width={35} />
       </button>
     </div>
   );

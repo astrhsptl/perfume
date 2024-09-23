@@ -2,12 +2,19 @@
 
 import {
   Brand,
+  BrandCreate,
   Perfume,
+  PerfumeCreate,
   PerfumeType,
   ProductUpdateData,
   VolumeInputType,
 } from '@/entities';
-import { editPerfume, FormBaseLayout } from '@/features';
+import {
+  editPerfume,
+  FormBaseLayout,
+  useBrandModalSubscribe,
+  usePerfumeTypeModalSubscribe,
+} from '@/features';
 import { useModal } from '@/features/use-modal';
 import {
   CustomSelect,
@@ -16,9 +23,10 @@ import {
   PerfumeModify,
   ProductStyle,
 } from '@/shared';
-import { AddVolume } from '@/widgets';
+import { AddBrand, AddPerfumeType, AddVolume } from '@/widgets';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { SexChoose } from '../form/ui';
 import { ImageEdit, VolumeEdit } from './ui';
@@ -34,30 +42,52 @@ export function PerfumeEditForm({
   brands,
   perfumeTypes,
 }: PerfumeEditProps) {
+  const router = useRouter();
+  const [brandList, setBrandList] = useState<Brand[]>(brands ?? []);
+  const [perfumeTypeList, setPerfumeTypeList] = useState<PerfumeType[]>(
+    perfumeTypes ?? []
+  );
   const methods = useForm<ProductUpdateData>({
     values: perfume,
   });
   const { child, toggle, modalPromise } = useModal<VolumeInputType>(
     <AddVolume />
   );
-  const router = useRouter();
+  const {
+    child: childType,
+    toggle: toggleType,
+    modalPromise: promiseType,
+  } = useModal<PerfumeCreate>(<AddPerfumeType />);
+  const {
+    child: childBrand,
+    toggle: toggleBrand,
+    modalPromise: promiseBrand,
+  } = useModal<BrandCreate>(<AddBrand />);
 
-  const perfumeTypeMap = !perfumeTypes
-    ? []
-    : perfumeTypes.map(({ id, name }) => ({
-        value: id as string,
-        label: name,
-      }));
-  const brandMap = !brands
-    ? []
-    : brands.map(({ id, title }) => ({
-        value: id as string,
-        label: title,
-      }));
-  const initialPerfumeType = perfumeTypeMap.find(
-    (item) => item.value === perfume.perfume_type_id
-  );
-  const initialBrand = brandMap.find((item) => item.value === perfume.brand_id);
+  const { initialPerfumeType, perfumeTypeMap } = useMemo(() => {
+    const perfumeTypeMap = perfumeTypeList.map(({ id, name }) => ({
+      value: id as string,
+      label: name,
+    }));
+    const initialPerfumeType = perfumeTypeMap.find(
+      (item) => item.value === perfume.perfume_type_id
+    );
+    return { perfumeTypeMap, initialPerfumeType };
+  }, [perfumeTypeList]);
+
+  const { brandMap, initialBrand } = useMemo(() => {
+    const brandMap = brandList.map(({ id, title }) => ({
+      value: id as string,
+      label: title,
+    }));
+    const initialBrand = brandMap.find(
+      (item) => item.value === perfume.brand_id
+    );
+    return { brandMap, initialBrand };
+  }, [brandList]);
+
+  useBrandModalSubscribe(promiseBrand, setBrandList);
+  usePerfumeTypeModalSubscribe(promiseType, setPerfumeTypeList);
 
   return (
     <>
@@ -104,6 +134,7 @@ export function PerfumeEditForm({
                 placeholder='Тип'
                 options={perfumeTypeMap}
                 value={initialPerfumeType}
+                modifyHandler={toggleType}
                 onChange={({ value }) => onChange(value)}
               />
             )}
@@ -122,6 +153,7 @@ export function PerfumeEditForm({
                 placeholder='Бренд'
                 options={brandMap}
                 value={initialBrand}
+                modifyHandler={toggleBrand}
                 onChange={({ value }) => onChange(value)}
               />
             )}
@@ -131,6 +163,8 @@ export function PerfumeEditForm({
         </div>
       </FormBaseLayout>
       {child}
+      {childBrand}
+      {childType}
     </>
   );
 }

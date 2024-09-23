@@ -108,3 +108,23 @@
   border: 2px solid var(--white);
   border-radius: 5px;
 }
+
+.modifySelectButton {
+  @include flexCenter();
+  height: 35px;
+  width: 35px;
+  background: none;
+  border: none;
+}
+
+.addSubEntitiesModel {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100dvw;
+  background: var(--modal-background);
+}
